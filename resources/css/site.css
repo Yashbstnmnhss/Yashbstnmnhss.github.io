@@ -32,11 +32,14 @@ html, body, .full {
 }
 
 .text-outline {
-    text-shadow: -1px 0 rgba(255, 255, 255, 1), 0 1px rgba(255, 255, 255, 1), 1px 0 rgba(255, 255, 255, 1), 0 -1px rgba(255, 255, 255, 1);
+    /*text-shadow: -0.5px 0 rgba(200, 200, 200, 1), 0 0.5px rgba(200, 200, 200, 1), 0.5px 0 rgba(200, 200, 200, 1), 0 -0.5px rgba(200, 200, 200, 1);*/
+    color: white;
+    text-shadow: 0 0 4px #32003C;
 }
 
 .text-outline-black {
-    text-shadow: -1px 0 rgba(0, 0, 0, 1), 0 1px rgba(0, 0, 0, 1), 1px 0 rgba(0, 0, 0, 1), 0 -1px rgba(0, 0, 0, 1);
+    color: black;
+    text-shadow: 0 0 4px #c4c4c4;
 }
 
 .carousel-image-size {
