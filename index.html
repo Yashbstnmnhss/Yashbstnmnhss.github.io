@@ -296,9 +296,9 @@
 			</div>-->
 	</div>
 
-	<div class="modal fade" id="fuzedialog" role="dialog" data-bs-backdrop="static"
+	<div class="modal modal-fullscreen fade" id="fuzedialog" role="dialog" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticbackdroplabel" aria-hidden="true">
-		<div class="modal-dialog modal-fullscreen-sm-down">
+		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title text-danger text-center" id="staticbackdroplabel">警告</h5>
@@ -316,11 +316,7 @@
 
 	<script src="/resources/js/jquery.js"></script>
 	<script>
-		$(function() {
-			$('#fuzedialog').modal({
-				keyboard: false
-			});
-		});
+		$('#fuzedialog').modal('show');
 	</script>
 	<script src="/resources/js/site.js"></script>
 	<script src="/resources/js/popper.min.js"></script>
