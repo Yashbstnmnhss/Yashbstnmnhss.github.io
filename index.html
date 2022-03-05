@@ -318,8 +318,12 @@
 	<script src="/resources/js/site.js"></script>
 	<script src="/resources/js/popper.min.js"></script>
 	<script src="/resources/js/bootstrap.min.js"></script>
+	
 	<script>
-		$('#fuzedialog').modal('show');
+		var modal = new bootstrap.Modal(document.getElementById('fuzedialog'), {
+			keyboard: false
+		});
+		modal.show();
 	</script>
 </body>
 
