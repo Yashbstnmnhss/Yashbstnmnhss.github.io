@@ -27,6 +27,7 @@ html, body, .full {
 .card-acrylic {
     /*background: rgba(255, 255, 255, 0.5);*/
     box-shadow: 0 5px 15px rgba(20, 20, 20, 0.6);
+    transition: box-shadow .3s linear;
     border-radius: 50px;
     backdrop-filter: blur(50px);
 }
