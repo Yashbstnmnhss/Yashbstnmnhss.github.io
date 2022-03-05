@@ -291,8 +291,30 @@
 			</div>-->
 	</div>
 
+	<div class="modal fade modal-dialog modal-fullscreen-sm-down" id="fuzedialog"
+		data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticbackdroplabel" aria-hidden="true">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title text-danger text-center" id="staticbackdroplabel">警告</h5>
+			</div>
+			<div class="modal-body">
+				Fuze对不起😭😭 对不起Fuze😭😭
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">继续作死</button>
+				<button type="button" class="btn btn-primary" 
+				 	onclick="close_fuze()">不了不了</button>
+			</div>
+		</div>
 	</div>
 
+	<script>
+		var modal = new bootstrap.Modal(document.getElementById('fuzedialog'), {
+			keyboard: false
+		});
+		modal.show();
+	</script>
+	<script src="/resources/js/site.js"></script>
 	<script src="/resources/js/popper.min.js"></script>
 	<script src="/resources/js/bootstrap.min.js"></script>
 
