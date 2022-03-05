@@ -29,7 +29,7 @@
 						<div class="card-title display-5">
 							<strong>F U Z E</strong>
 						</div>
-						
+
 						<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 							<li class="nav-item" role="presentation">
 								<button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
@@ -37,13 +37,14 @@
 									aria-selected="true">Fuze简介</button>
 							</li>
 							<li class="nav-item dropdown">
-								<button class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-									aria-expanded="false">哲♂学名言</button>
+								<button class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+									role="button" aria-expanded="false">哲♂学名言</button>
 								<ul class="dropdown-menu">
-									<li><a id="pills-original-tab" class="dropdown-item"
-											data-bs-target="#fuzeoriginal" data-bs-toggle="pill" href="#fuzeoriginal">原版</a></li>
+									<li><a id="pills-original-tab" class="dropdown-item" data-bs-target="#fuzeoriginal"
+											data-bs-toggle="pill" href="#fuzeoriginal">原版</a></li>
 									<li><a id="pills-translated-tab" class="dropdown-item"
-											data-bs-target="#fuzetranslated" data-bs-toggle="pill" href="#fuzetranslated">生草版(谷歌翻译)</a></li>
+											data-bs-target="#fuzetranslated" data-bs-toggle="pill"
+											href="#fuzetranslated">生草版(谷歌翻译)</a></li>
 								</ul>
 							</li>
 							<!--<li class="nav-item" role="presentation">
@@ -56,7 +57,8 @@
 							<div class="tab-pane fade show active" id="home" role="tabpanel"
 								aria-labelledby="pills-home-tab">
 								<div class="clearfix">
-									<img src="/resources/image/fuze/fuze.jpg" class="col-md-6 float-md-end mb-3 ms-md-3" alt="Fuze好帅">
+									<img src="/resources/image/fuze/fuze.jpg" class="col-md-6 float-md-end mb-3 ms-md-3"
+										alt="Fuze好帅">
 
 									<p>
 										<mark>Fuze</mark> (fuze, fUzE, FUZE, FUze, fuZE, FuzE, fUZe, ...)
@@ -65,8 +67,11 @@
 
 									<p>
 										114514岁, 是带哲学家, 曾在<strong>Discord</strong>上大肆蛊惑式宣传自己的事迹
-										<span class="spoiler">(当 代 希 特 勒)</span>, 最常见的一句话为<em>"u r a weird guy who kept saying the word "fuze"!"(你是个大聪明)</em> <span class="spoiler">(震声)</span>,
-										<small>(经常在宣传的后面)</small>用来<strong>强下定义</strong>, 打别人个措手不及, 营造一种莫名其妙但好像真的是<s>那个大聪明一样</s> 这种手段被称为——————<strong>下 定 义</strong> (<small>define</small>)
+										<span class="spoiler">(当 代 希 特 勒)</span>, 最常见的一句话为<em>"u r a weird guy who kept
+											saying the word "fuze"!"(你是个大聪明)</em> <span class="spoiler">(震声)</span>,
+										<small>(经常在宣传的后面)</small>用来<strong>强下定义</strong>, 打别人个措手不及,
+										营造一种莫名其妙但好像真的是<s>那个大聪明一样</s> 这种手段被称为——————<strong>下 定 义</strong>
+										(<small>define</small>)
 									</p>
 
 									<p> "Fuze, 你没尊严!" </p>
@@ -291,28 +296,30 @@
 			</div>-->
 	</div>
 
-	<div class="modal fade modal-dialog modal-fullscreen-sm-down" id="fuzedialog"
-		data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticbackdroplabel" aria-hidden="true">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title text-danger text-center" id="staticbackdroplabel">警告</h5>
-			</div>
-			<div class="modal-body">
-				Fuze对不起😭😭 对不起Fuze😭😭
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">继续作死</button>
-				<button type="button" class="btn btn-primary" 
-				 	onclick="close_fuze()">不了不了</button>
+	<div class="modal fade" id="fuzedialog" role="dialog" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticbackdroplabel" aria-hidden="true">
+		<div class="modal-dialog modal-fullscreen-sm-down">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title text-danger text-center" id="staticbackdroplabel">警告</h5>
+				</div>
+				<div class="modal-body">
+					Fuze对不起😭😭 对不起Fuze😭😭
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">继续作死</button>
+					<button type="button" class="btn btn-primary" onclick="close_fuze()">不了不了</button>
+				</div>
 			</div>
 		</div>
 	</div>
 
 	<script>
-		var modal = new bootstrap.Modal(document.getElementById('fuzedialog'), {
-			keyboard: false
+		$(function() {
+			$('#fuzedialog').modal({
+				keyboard: false
+			});
 		});
-		modal.show();
 	</script>
 	<script src="/resources/js/site.js"></script>
 	<script src="/resources/js/popper.min.js"></script>
