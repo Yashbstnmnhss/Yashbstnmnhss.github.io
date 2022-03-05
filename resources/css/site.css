@@ -35,6 +35,10 @@ html, body, .full {
     text-shadow: -1px 0 rgba(255, 255, 255, 1), 0 1px rgba(255, 255, 255, 1), 1px 0 rgba(255, 255, 255, 1), 0 -1px rgba(255, 255, 255, 1);
 }
 
+.text-outline-black {
+    text-shadow: -1px 0 rgba(0, 0, 0, 1), 0 1px rgba(0, 0, 0, 1), 1px 0 rgba(0, 0, 0, 1), 0 -1px rgba(0, 0, 0, 1);
+}
+
 .carousel-image-size {
     max-width: 100%;
     max-height: 100%;
