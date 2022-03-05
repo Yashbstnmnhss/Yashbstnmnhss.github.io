@@ -47,3 +47,15 @@ html, body, .full {
     width: 680;
     height: 425;
 }
+
+.spoiler {
+    background-color: black;
+    color: black;
+    /*user-select: none;
+    cursor: help;*/
+    transition: background-color 0.3s ease 0.2s, color 0.2s ease 0.25s;
+}
+    .spoiler:hover,
+    .spoiler:focus {
+        color: inherit;           
+    }
