@@ -64,11 +64,10 @@ html, body, .full {
         color: inherit;           
     }
 
-.grid-sizer,
 .grid-item {
-    width: 20%;
+    width: 250%;
     margin-bottom: 5px;
 }
 .grid-item-width {
-    width: 40%;
+    width: 400%;
 }

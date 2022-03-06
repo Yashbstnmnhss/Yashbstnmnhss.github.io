@@ -22,7 +22,6 @@
 
 		<div class="card-body container-fluid">
 			<div class="row grid">
-				<div class="grid-sizer"/>
 				<!--<div class="col-md-10 offset-md-1 g-4">-->
 				<div class="col-md-4 col-sm-6 grid-item">
 					<div class="card w-100 card-acrylic page-padding text-outline"
@@ -329,9 +328,8 @@
 
 				var $grid = $('.grid');
 				$grid.masonry({
-					columnWidth: '.grid-sizer',
+					columnWidth: '250',
 					itemSelector: '.grid-item',
-					percentPosition: true,
 					gutter: 5
 				});
 
