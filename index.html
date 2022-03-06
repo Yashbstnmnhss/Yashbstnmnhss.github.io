@@ -21,8 +21,7 @@
 		</h2>
 
 		<div class="card-body container-fluid">
-			<div class="row grid js-masonry" 
-				data-masonry='{ "itemSelector: ".grid-item", "columnWidth": 250 }'>
+			<div class="row grid">
 				<!--<div class="col-md-10 offset-md-1 g-4">-->
 				<div class="col-md-4 col-sm-6 grid-item">
 					<div class="card w-100 card-acrylic page-padding text-outline"
@@ -320,10 +319,25 @@
 		<script src="/resources/js/masonry.js"></script>
 
 		<script>
-			var modal = new bootstrap.Modal(document.getElementById('fuzedialog'), {
-				keyboard: false
-			});
-			modal.show();
+			(function ($) {
+
+				/*var modal = new bootstrap.Modal(document.getElementById('fuzedialog'), {
+					keyboard: false
+				});
+				modal.show();*/
+
+				var $modal = $('#fuzedialog');
+				$modal.modal({
+					keyboard: false
+				});
+
+				var $grid = $('.grid');
+				$grid.masonry({
+					columnWidth: '.grid-item',
+					itemSelector: '.grid-item'
+				});
+
+			})(jQuery);
 		</script>
 </body>
 
