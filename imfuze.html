@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="resources/favicon.ico">
+
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/css/site.css">
+
+    <title>Im Fuze</title>
+</head>
+
+<body class="page-background">
+
+    <div class="page page-padding">
+        <div class="card-body container-fluid">
+            <canvas id="canvas" stlye="background:black;"></canvas>
+            <style>
+                body {
+                    margin: 0;
+                    padding: 0;
+                    overflow: hidden;
+                }
+            </style>
+            <script>
+                window.onload = function () {
+                    var canvas = document.getElementById('canvas');
+                    var context = canvas.getContext("2d");
+                    var w = window.innerWidth;
+                    var h = window.innerHeight;
+
+                    canvas.width = w;
+                    canvas.height = h;
+
+                    var fontsize = 15;
+                    var colunms = Math.floor(w / fontsize);
+                    var drops = [];
+
+                    for (var i = 0; i < colunms; i++) {
+                        drops.push(0)
+                    }
+
+                    var str = "FUZE";
+                    function draw() {
+                        context.fillStyle = "rgba(0, 0, 0, 0.5)";
+                        context.fillRect(0, 0, w, h);
+                        context.font = fontsize + 'px arial';
+                        context.fillStyle = "green"; for (var i = 0; i < colunms; i++) {
+                            var index = Math.floor(Math.random() * str.length);
+                            var x = i * fontsize;
+                            var y = drops[i] * fontsize;
+                            context.fillText(str[index], x, y);
+
+                            if (y >= canvas.height && Math.random() > 0.92) {
+                                drops[i] = 0;
+                            }
+                            drops[i]++;
+                        }
+                    };
+
+                    function randColor() {
+                        var r = Math.floor(Math.random() * 256);
+                        var g = Math.floor(Math.random() * 256);
+                        var b = Math.floor(Math.random() * 256);
+                        return "rgb(" + r + "," + g + "," + b + ")";
+                    }
+
+                    draw();
+                    setInterval(draw, 33);
+                }
+            </script>
+        </div>
+    </div>
+
+    <script src="/resources/js/jquery.js"></script>
+    <script src="/resources/js/site.js"></script>
+    <script src="/resources/js/popper.min.js"></script>
+    <script src="/resources/js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>

@@ -26,12 +26,17 @@ html, body, .full {
 
 .card-acrylic {
     /*background: rgba(255, 255, 255, 0.5);*/
-    box-shadow: 0 5px 15px rgba(20, 20, 20, 0.4);
-    transition: all .6s cubic-bezier(0.165, 0.84, 0.44, 1);
-    -webkit-transition: all .6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 0 5px 5px rgba(20, 20, 20, 0.2);
+    transition: box-shadow .6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    -webkit-transition: box-shadow .6s cubic-bezier(0.165, 0.84, 0.44, 1);
     border-radius: 15px;
     backdrop-filter: blur(50px);
 }
+    .card-acrylic:hover {
+        box-shadow: 0 0 10px 10px rgba(20, 20, 20, 0.5);
+        transition: box-shadow .6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        -webkit-transition: box-shadow .6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
     /*.card-acrylic:hover {
         -webkit-transform: scale(1.25, 1.25);
         transform: scale(1.25, 1.25);
