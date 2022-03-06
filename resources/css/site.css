@@ -26,11 +26,33 @@ html, body, .full {
 
 .card-acrylic {
     /*background: rgba(255, 255, 255, 0.5);*/
-    box-shadow: 0 5px 15px rgba(20, 20, 20, 0.6);
-    transition: box-shadow .3s linear;
-    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(20, 20, 20, 0.4);
+    transition: all .6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    -webkit-transition: all .6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border-radius: 15px;
     backdrop-filter: blur(50px);
 }
+    /*.card-acrylic:hover {
+        -webkit-transform: scale(1.25, 1.25);
+        transform: scale(1.25, 1.25);
+    }
+
+    .card-acrylic::after { 
+        content: '';
+        border-radius: 15px;
+        z-index: -1;
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        box-shadow: 0 5px 15px rgba(20, 20, 20, 0.6);
+        opacity: 0;
+        -webkit-transition: all .6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        transition: all .6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .card-acrylic:hover::after {
+        opacity: 1;
+    }*/
 
 .text-outline {
     /*text-shadow: -0.5px 0 rgba(200, 200, 200, 1), 0 0.5px rgba(200, 200, 200, 1), 0.5px 0 rgba(200, 200, 200, 1), 0 -0.5px rgba(200, 200, 200, 1);*/
@@ -67,7 +89,7 @@ html, body, .full {
 .masonry {
     width: 1440px;
     margin: 20px auto;
-    columns: 4;
+    columns: 2;
     column-gap: 30px;
 }
 
@@ -78,7 +100,7 @@ html, body, .full {
 }
 
 .masonry-item img {
-    width: 100%;
+    width: auto;
 }
 
 .masonry-item h2 {
@@ -88,7 +110,7 @@ html, body, .full {
 @media screen and (min-width: 1024px) and (max-width: 1439.98px) {
     .masonry {
       width: 96vw;
-      columns: 3;
+      columns: 2;
       column-gap: 20px;
     }
 }
@@ -96,7 +118,7 @@ html, body, .full {
 @media screen and (min-width: 768px) and (max-width: 1023.98px) {
     .masonry {
       width: 96vw;
-      columns: 2;
+      columns: 1;
       column-gap: 20px;
     }
 }
