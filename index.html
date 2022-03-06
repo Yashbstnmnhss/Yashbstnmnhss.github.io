@@ -23,7 +23,6 @@
 
 		<div class="card-body container-fluid">
 			<div class="row grid">
-				<div class="grid-sizer"></div>
 				<div class="col-md-4 col-sm-6 grid-item">
 					<div class="card w-100 card-acrylic page-padding text-outline"
 						style="background: rgba(255, 255, 255, 0.25);">
@@ -226,7 +225,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 grid-item grid-item-width">
+				<div class="col-md-4 col-sm-6 grid-item">
 					<div class="card card-acrylic page-padding" style="background: rgba(255, 255, 255, 0.25);">
 						<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
 							<div class="carousel-indicators">
@@ -322,9 +321,9 @@
 
 			var $grid = $('.grid');
 			$grid.masonry({
-				columnWidth: '.grid-sizer',
+				columnWidth: 225,
 				itemSelector: '.grid-item',
-				percentPosition: true,
+				/*percentPosition: true,*/
 				gutter: 5
 			});
 

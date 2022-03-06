@@ -48,8 +48,8 @@ html, body, .full {
 }
 
 .carousel-image-size {
-    width: 680;
-    height: 425;
+    width: 680px;
+    height: 425px;
 }
 
 .spoiler {
@@ -66,9 +66,9 @@ html, body, .full {
 
 .grid-sizer,
 .grid-item {
-    width: 30%;
+    width: 225px;
     margin-bottom: 5px;
 }
 .grid-item-width {
-    width: 60%;
+    width: 450px;
 }
