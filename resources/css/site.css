@@ -43,6 +43,10 @@ html, body, .full {
     text-shadow: 0 0 4px #c4c4c4;
 }
 
+.text-overflow-auto {
+    overflow: auto;
+}
+
 .carousel-image-size {
     width: 680;
     height: 425;
@@ -59,3 +63,10 @@ html, body, .full {
     .spoiler:focus {
         color: inherit;           
     }
+
+.grid-item {
+    width: 250px;
+}
+.grid-item-width {
+    width: 500px;
+}
