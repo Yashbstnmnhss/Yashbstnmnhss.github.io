@@ -322,7 +322,10 @@
 		<script>
 			(function ($) {
 
-				$('#fuzedialog').modal('show');
+				var $modal = new bootstrap.Modal(document.getElementById('fuzedialog'), {
+					keyboard: false
+				});
+				$modal.show();
 
 				var $grid = $('.grid');
 				$grid.masonry({
