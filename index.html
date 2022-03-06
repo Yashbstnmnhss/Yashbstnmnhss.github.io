@@ -22,8 +22,9 @@
 		</h2>
 
 		<div class="card-body container-fluid">
-			<div class="row grid">
-				<div class="col-md-4 col-sm-6 grid-item">
+			<div class="row grid" 
+				data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'>
+				<div class="col grid-item">
 					<div class="card w-100 card-acrylic page-padding text-outline"
 						style="background: rgba(255, 255, 255, 0.25);">
 						<div class="card-title display-5">
@@ -188,7 +189,7 @@
 						<!--</div>-->
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 grid-item">
+				<div class="col grid-item">
 					<div class="card card-acrylic text-overflow-auto page-padding text-outline"
 						style="background: rgba(255, 255, 255, 0.25);">
 						<div class="card-title display-5">
@@ -225,7 +226,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 grid-item">
+				<div class="col grid-item">
 					<div class="card card-acrylic page-padding" style="background: rgba(255, 255, 255, 0.25);">
 						<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
 							<div class="carousel-indicators">
@@ -277,7 +278,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 grid-item">
+				<div class="col grid-item">
 					<div class="card card-acrylic text-overflow-auto page-padding text-outline"
 						style="background: rgba(255, 255, 255, 0.25);">
 						12321
@@ -319,14 +320,14 @@
 			});
 			$modal.show();
 
-			var $grid = $('.grid');
+			/*var $grid = $('.grid');
 			$grid.masonry({
 				columnWidth: 225,
 				itemSelector: '.grid-item',
-				/*percentPosition: true,*/
+				percentPosition: true,
 				gutter: 5
 			});
-
+			*/
 		})(jQuery);
 	</script>
 
