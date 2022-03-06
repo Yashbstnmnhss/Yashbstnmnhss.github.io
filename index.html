@@ -22,6 +22,7 @@
 
 		<div class="card-body container-fluid">
 			<div class="row grid">
+				<div class="grid-sizer"/>
 				<!--<div class="col-md-10 offset-md-1 g-4">-->
 				<div class="col-md-4 col-sm-6 grid-item">
 					<div class="card w-100 card-acrylic page-padding text-outline"
@@ -225,7 +226,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 grid-item">
+				<div class="col-md-4 col-sm-6 grid-item grid-item-width">
 					<div class="card card-acrylic page-padding" style="background: rgba(255, 255, 255, 0.25);">
 						<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
 							<div class="carousel-indicators">
@@ -320,13 +321,15 @@
 
 		<script>
 			(function ($) {
-				
+
 				$('#fuzedialog').modal('show');
 
 				var $grid = $('.grid');
 				$grid.masonry({
-					columnWidth: '.grid-item',
-					itemSelector: '.grid-item'
+					columnWidth: '.grid-sizer',
+					itemSelector: '.grid-item',
+					percentPosition: true,
+					gutter: 5
 				});
 
 			})(jQuery);
