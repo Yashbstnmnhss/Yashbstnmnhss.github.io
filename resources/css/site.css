@@ -55,8 +55,8 @@ html, body, .full {
 .spoiler {
     background-color: black;
     color: black;
-    /*user-select: none;
-    cursor: help;*/
+    /*user-select: none;*/
+    cursor: help;
     transition: background-color 0.3s ease 0.2s, color 0.2s ease 0.25s;
 }
     .spoiler:hover,
@@ -64,10 +64,11 @@ html, body, .full {
         color: inherit;           
     }
 
+.grid-sizer,
 .grid-item {
-    width: 250px;
+    width: 30%;
     margin-bottom: 5px;
 }
 .grid-item-width {
-    width: 400px;
+    width: 60%;
 }
