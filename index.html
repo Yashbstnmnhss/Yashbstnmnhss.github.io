@@ -14,6 +14,7 @@
 </head>
 
 <body class="page-background">
+
 	<div class="page page-padding">
 		<h2 class="card-title display-5 text-center text-outline">
 			<strong>Fuze</strong>
@@ -284,57 +285,51 @@
 					</div>
 				</div>
 			</div>
-			<!--<div class="row row-cols-1 row-cols-md-2 g-4">
-				<div class="col">
-					1212123123123
-				</div>
-				<div class="col">
-					1212123123123
-				</div>
-			</div>-->
 		</div>
+	</div>
 
-		<div class="modal modal-fullscreen fade" id="fuzedialog" role="dialog" data-bs-backdrop="static"
-			data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticbackdroplabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title text-danger text-center" id="staticbackdroplabel">警告</h5>
-					</div>
-					<div class="modal-body">
-						Fuze对不起😭😭 对不起Fuze😭😭
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">继续作死</button>
-						<button type="button" class="btn btn-primary" onclick="close_fuze()">不了不了</button>
-					</div>
+	<div class="modal modal-fullscreen fade" id="fuzedialog" role="dialog" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticbackdroplabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title text-danger text-center" id="staticbackdroplabel">警告</h5>
+				</div>
+				<div class="modal-body">
+					Fuze对不起😭😭 对不起Fuze😭😭
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">继续作死</button>
+					<button type="button" class="btn btn-primary" onclick="close_fuze()">不了不了</button>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<script src="/resources/js/jquery.js"></script>
-		<script src="/resources/js/site.js"></script>
-		<script src="/resources/js/popper.min.js"></script>
-		<script src="/resources/js/bootstrap.min.js"></script>
-		<script src="/resources/js/masonry.js"></script>
+	<script src="/resources/js/jquery.js"></script>
+	<script src="/resources/js/site.js"></script>
+	<script src="/resources/js/popper.min.js"></script>
+	<script src="/resources/js/bootstrap.min.js"></script>
+	<script src="/resources/js/masonry.js"></script>
 
-		<script>
-			(function ($) {
+	<script>
+		(function ($) {
 
-				var $modal = new bootstrap.Modal(document.getElementById('fuzedialog'), {
-					keyboard: false
-				});
-				$modal.show();
+			var $modal = new bootstrap.Modal(document.getElementById('fuzedialog'), {
+				keyboard: false
+			});
+			$modal.show();
 
-				var $grid = $('.grid');
-				$grid.masonry({
-					columnWidth: '250',
-					itemSelector: '.grid-item',
-					gutter: 5
-				});
+			var $grid = $('.grid');
+			$grid.masonry({
+				columnWidth: '250',
+				itemSelector: '.grid-item',
+				gutter: 5
+			});
 
-			})(jQuery);
-		</script>
+		})(jQuery);
+	</script>
+	
 </body>
 
 <footer>

@@ -65,9 +65,9 @@ html, body, .full {
     }
 
 .grid-item {
-    width: 250%;
+    width: 250;
     margin-bottom: 5px;
 }
 .grid-item-width {
-    width: 400%;
+    width: 400;
 }
