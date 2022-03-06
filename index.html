@@ -320,16 +320,8 @@
 
 		<script>
 			(function ($) {
-
-				/*var modal = new bootstrap.Modal(document.getElementById('fuzedialog'), {
-					keyboard: false
-				});
-				modal.show();*/
-
-				var $modal = $('#fuzedialog');
-				$modal.modal({
-					keyboard: false
-				});
+				
+				$('#fuzedialog').modal('show');
 
 				var $grid = $('.grid');
 				$grid.masonry({
