@@ -67,7 +67,7 @@ html, body, .full {
 .masonry {
     width: 1440px;
     margin: 20px auto;
-    columns: 3;
+    columns: 4;
     column-gap: 30px;
 }
 
