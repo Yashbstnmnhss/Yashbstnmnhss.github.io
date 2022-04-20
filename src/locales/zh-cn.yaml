@@ -1,0 +1,53 @@
+basic:
+  langID:
+    zhCN: 中文
+    enUS: 英文
+    ruRU: 俄文
+    jaJP: 日文
+  themes:
+    dark: 暗黑
+    light: 明亮
+  langAndTheme: 语言&主题
+  links: 链接
+components:
+  ConfigSelector:
+    lang: 语言
+    theme: 主题
+  OtherLinks:
+    mainSite: 主站
+    fasterSite: 加速站
+layouts:
+  JokesLayout:
+    fuze: F U Z E
+    fuze-sayings: 名言金句
+    fuze-sayings-original: 伪版
+    fuze-sayings-translated: 真·版
+    fuze-sounds: 余音缭绕
+    fuze-images: 帅!帅!帅!
+    joke-home: 主页
+    sayings: 沉浸版名言金句
+    fuze-videos: 珍贵录像
+    update: 更新日志
+views:
+  fuzeblockisnotagame:
+    question:
+      content: 图中的男人在干什么?
+      title: 简单的问题
+      options:
+        a: 呆着
+        b: 傻乎乎呆呆张嘴
+        c: 呐喊
+        d: 彷徨
+  jokes:
+    fuze:
+      videos:
+        items:
+          fuzeonlineclass: FUZEの语文网课
+          fuzeonlineclasspure: FUZE网课沉浸享受版
+          gcfrombilibilinoscare: 就是把创价学会放在这里
+          gcscare: 不可视九本 (有高能)
+      sounds:
+        items:
+          fuzedemamawenwen: 这语音发的, 跟那傻子一样, 下面这个多少钱啊? 你说Fuze买不起, Fuze的妈妈问问? 看能买得起吗?
+          kanbaxiaohuogaoxingde: 看把小伙高兴的
+          wocaoxing: 卧槽彳亍

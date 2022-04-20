@@ -1,0 +1,53 @@
+components:
+  ConfigSelector:
+    lang: 言語
+    theme: テーマ
+  OtherLinks:
+    fasterSite: 加速ステーション
+    mainSite: メインサイト
+layouts:
+  JokesLayout:
+    fuze: F U Z E
+    fuze-images: ハンサム！ハンサム！ハンサム！
+    fuze-sayings: 有名な名言
+    fuze-sayings-original: 偽のバージョン
+    fuze-sayings-translated: 実際のバージョン
+    fuze-sounds: 余韻
+    joke-home: 家
+    sayings: 有名な引用の没入型バージョン
+    fuze-videos: 貴重なビデオ
+    update: 変更ログ
+basic:
+  langID:
+    enUS: 英語
+    jaJP: 日本
+    ruRU: ロシア
+    zhCN: 中国語
+  themes:
+    dark: 闇
+    light: 明るい
+  langAndTheme: 言語
+  links: リンク
+views:
+  fuzeblockisnotagame:
+    question:
+      content: 写真の男は何をしているのですか？
+      options:
+        a: 止まる
+        b: 口を開ける
+        c: 叫ぶ
+        d: 躊躇する
+      title: 簡単な質問
+  jokes:
+    fuze:
+      sounds:
+        items:
+          fuzedemamawenwen: この声はあのバカと同じですが、次はいくらですか？風瀬には余裕がないとおっしゃっていましたが、風瀬のお母さんに聞いてみましたか？
+          kanbaxiaohuogaoxingde: 幸せそうに見える
+          wocaoxing: 横になる
+      videos:
+        items:
+          fuzeonlineclass: FUZEの中国語オンラインクラス
+          fuzeonlineclasspure: FUZEオンラインクラスイマージョンエンジョイバージョン
+          gcfrombilibilinoscare: ここに創価学会を置くことです
+          gcscare: インビジブルナイン（高エネルギー）

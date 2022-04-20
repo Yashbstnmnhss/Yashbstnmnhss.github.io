@@ -1,0 +1,56 @@
+components:
+  ConfigSelector:
+    lang: язык
+    theme: тема
+  OtherLinks:
+    fasterSite: станция ускорения
+    mainSite: Главный сайт
+layouts:
+  JokesLayout:
+    fuze: Ф У З Е
+    fuze-images: Красивый! Красивый! Красивый!
+    fuze-sayings: Известные цитаты
+    fuze-sayings-original: поддельная версия
+    fuze-sayings-translated: реальная версия
+    fuze-sounds: протяжный звук
+    joke-home: Дом
+    sayings: Иммерсивная версия известных цитат
+    fuze-videos: драгоценное видео
+    update: Список изменений
+basic:
+  langID:
+    enUS: Английский
+    jaJP: Японский
+    ruRU: Русский
+    zhCN: Китайский
+  themes:
+    dark: темный
+    light: яркий
+  langAndTheme: язык
+  links: Связь
+views:
+  fuzeblockisnotagame:
+    question:
+      content: Что делает мужчина на картинке?
+      options:
+        a: остаться
+        b: открытый рот
+        c: кричать
+        d: нерешительный
+      title: простой вопрос
+  jokes:
+    fuze:
+      sounds:
+        items:
+          fuzedemamawenwen: >-
+            "Этот голос такой же, как тот дурак. Сколько стоит следующее? Вы
+            сказали, что Фьюз не может себе этого позволить, — спросила мать
+            Фьюза? Вы можете себе это позволить?"
+          kanbaxiaohuogaoxingde: выглядеть счастливым
+          wocaoxing: прилягте
+      videos:
+        items:
+          fuzeonlineclass: FUZE の Онлайн-курс китайского языка
+          fuzeonlineclasspure: Версия для погружения в онлайн-класс FUZE
+          gcfrombilibilinoscare: Здесь нужно разместить Сока Гаккай.
+          gcscare: Невидимая девятка (с высокой энергией)
