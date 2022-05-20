@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Spoiler from '../components/Spoiler.vue'
+import Logger from '../utils/logger'
 </script>
 
 <template>

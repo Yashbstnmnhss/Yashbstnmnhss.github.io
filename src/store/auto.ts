@@ -4,7 +4,7 @@ import { getItem, setItem } from "../utils/storage"
 import Logger from '../utils/logger'
 
 export type States<Class, Key extends keyof Class = keyof Class> = {
-    [Item in Key]: State<Class, Class[Key]> 
+    [Item in Key]: State<Class, Class[Item]> 
 }
 
 export type State<Class, Item> = {

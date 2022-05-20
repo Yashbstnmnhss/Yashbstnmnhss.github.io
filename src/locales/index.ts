@@ -11,11 +11,13 @@ import jaJP from './ja.yaml'
 const locale = getItem('language') || navigator.language.replace('-', '') || DefaultLanguage
 Logger.debug('[Locales]', 'locale', '=', locale)
 
+const loaded: Languages[] = []
+
 const i18n = createI18n({
     legacy: false,
     globalInjection: true,
     fallbackLocale: DefaultLanguage.toString(),
-    locale: locale,
+    locale: ensureLanguage(locale),
 
     messages: {
         zhCN: zhCN,
@@ -27,7 +29,23 @@ const i18n = createI18n({
 
 export default i18n
 
-export function setLanguage(lang : Languages) {
-    i18n.global.locale.value = lang.toString()
-    document.querySelector('html')?.setAttribute('lang', lang.toString())
+export function setLanguage(lang: Languages) {
+    const id = ensureLanguage(lang.toString())
+    i18n.global.locale.value = id
+    document.querySelector('html')?.setAttribute('lang', id.toString())
 }
+
+export function ensureLanguage(langStr: string) {
+    return langStr in Languages ? Languages[langStr as keyof typeof Languages] : DefaultLanguage
+}
+
+/*async function asyncLoad(lang: Languages) {
+    const id = lang in LanguageFiles ? lang : DefaultLanguage
+    if (loaded.includes(lang))
+        return id
+    const msgs = await import(`../locales/${LanguageFiles[id]}`)
+    console.log(msgs)
+    i18n.global.setLocaleMessage(id, msgs.default)
+    loaded.push(lang)
+    return id
+}*/

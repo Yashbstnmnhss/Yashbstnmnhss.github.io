@@ -4,172 +4,138 @@ import {
     NLayoutHeader,
     NLayoutSider,
     NLayoutFooter,
-    NMenu,
-    NSpace,
-    NPopover,
-    NButton,
-    NIcon
+    NSpace
 } from 'naive-ui'
+import type { MenuOption } from 'naive-ui/lib'
 import Viewer from '../components/Viewer.vue'
-import ConfigSelector from '../components/ConfigSelector.vue'
-import OtherLinks from '../components/OtherLinks.vue'
-import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router'
+import Footer from '../components/Footer.vue'
 import { useStore } from '../store'
-import { ref, watchEffect, onMounted } from 'vue'
-import { renderIcon, renderLink } from '../utils/render'
-import {
-    PersonOutline as PersonIcon,
-    BookOutline as BookIcon,
-    BookmarkOutline as BookmarkIcon,
-    VolumeHighOutline as VolumeIcon,
-    ImageOutline as ImageIcon,
-    HomeOutline as HomeIcon,
-    TextOutline as TextIcon,
-    VideocamOutline as VideoIcon,
-    LogoMarkdown as MarkdownIcon,
-    LinkOutline as LinkIcon,
-    LanguageOutline as LanguageIcon
-} from '@vicons/ionicons5'
+import { ref, onMounted } from 'vue'
+import SideMenu from '../components/SideMenu.vue'
+import { Icons } from '../utils/icon'
+import { useAchiever } from '../composables/achievements'
 
-const i18n = useI18n()
-const route = useRoute()
 const store = useStore()
+const achiever = useAchiever()
 
 const getMenuOptions = () => {
-    const $t = i18n.t
-
-    const fuzeMenuOptions = [
+    const fuzeMenuOptions: MenuOption[] = [
         {
-            label: renderLink(
-                {
-                    to: {
-                        path: "/jokes/fuzeinfo",
-                    },
-                },
-                $t("layouts.JokesLayout.fuze")
-            ),
+            link: "/jokes/fuzeinfo",
             key: "fuze",
-            icon: renderIcon(PersonIcon),
+            iconType: Icons['person'],
         },
         {
-            label: $t("layouts.JokesLayout.fuze-sayings"),
             key: "fuze-sayings",
-            icon: renderIcon(BookIcon),
+            iconType: Icons['book'],
             children: [
                 {
-                    label: renderLink(
-                        {
-                            to: {
-                                path: "/jokes/fuze/sayings/original",
-                            },
-                        },
-                        $t("layouts.JokesLayout.fuze-sayings-original")
-                    ),
+                    link: "/jokes/fuze/sayings/original",
                     key: "fuze-sayings-original",
-                    icon: renderIcon(BookmarkIcon),
+                    iconType: Icons['bookmark']
                 },
                 {
-                    label: renderLink(
-                        {
-                            to: {
-                                path: "/jokes/fuze/sayings/translated",
-                            },
-                        },
-                        $t("layouts.JokesLayout.fuze-sayings-translated")
-                    ),
+                    link: "/jokes/fuze/sayings/translated",
                     key: "fuze-sayings-translated",
-                    icon: renderIcon(BookmarkIcon),
+                    iconType: Icons['bookmark']
                 },
             ],
         },
         {
-            label: renderLink(
-                {
-                    to: {
-                        path: "/jokes/fuze/sounds",
-                    },
-                },
-                $t("layouts.JokesLayout.fuze-sounds")
-            ),
+            link: "/jokes/fuze/sounds",
             key: "fuze-sounds",
-            icon: renderIcon(VolumeIcon),
+            iconType: Icons['volume']
         },
         {
-            label: renderLink(
-                {
-                    to: {
-                        path: "/jokes/fuze/images",
-                    },
-                },
-                $t("layouts.JokesLayout.fuze-images")
-            ),
+            link: "/jokes/fuze/images",
             key: "fuze-images",
-            icon: renderIcon(ImageIcon),
+            iconType: Icons['image'],
         },
         {
-            label: renderLink(
-                {
-                    to: {
-                        path: "/jokes/fuze/videos",
-                    },
-                },
-                $t("layouts.JokesLayout.fuze-videos")
-            ),
+            link: "/jokes/fuze/videos",
             key: "fuze-videos",
-            icon: renderIcon(VideoIcon),
+            iconType: Icons['video'],
+        },
+    ]
+    const gclMenuOptions: MenuOption[] = [
+        {
+            link: "/jokes/gclinfo",
+            key: "gcl",
+            iconType: Icons['person'],
+        },
+        {
+            key: "gcl-books",
+            iconType: Icons['book'],
+            children: [
+                {
+                    link: "/jokes/gcl/books/depression",
+                    key: "gcl-books-depression",
+                    iconType: Icons['bookmark']
+                },
+                {
+                    link: "/jokes/gcl/books/indonesian",
+                    key: "gcl-books-indonesian",
+                    iconType: Icons['bookmark']
+                },
+                {
+                    link: "/jokes/gcl/books/yandere",
+                    key: "gcl-books-yandere",
+                    iconType: Icons['bookmark']
+                },
+                {
+                    link: "/jokes/gcl/books/bangsat",
+                    key: "gcl-books-bangsat",
+                    iconType: Icons['bookmark']
+                }
+            ],
+        },
+        {
+            link: "/jokes/gcl/images",
+            key: "gcl-images",
+            iconType: Icons['image'],
         },
     ]
 
-    const jokeMenuOptions = [
+    const jokeMenuOptions: MenuOption[] = [
         {
-            label: $t('layouts.JokesLayout.fuze'),
             key: 'fuze',
-            icon: renderIcon(PersonIcon),
+            iconType: Icons['person'],
             children: fuzeMenuOptions
         },
-    ]
-
-    const footerMenuOptions = [
         {
-            label: renderLink(
-                {
-                    to: {
-                        path: "/update",
-                    },
-                },
-                $t("layouts.JokesLayout.update")
-            ),
-            key: "update",
-            icon: renderIcon(MarkdownIcon),
+            key: 'gcl',
+            iconType: Icons['person'],
+            children: gclMenuOptions
         },
     ]
 
-    const menuOptions = [
+    const headerMenuOptions: MenuOption[] = [
         {
-            label: renderLink(
-                {
-                    to: {
-                        path: "/jokes",
-                    },
-                },
-                $t("layouts.JokesLayout.joke-home")
-            ),
+            link: "/jokes",
             key: "joke-home",
-            icon: renderIcon(HomeIcon),
+            iconType: Icons['home']
         },
         {
-            label: renderLink(
-                {
-                    to: {
-                        path: "/sayings",
-                    },
-                },
-                $t("layouts.JokesLayout.sayings")
-            ),
+            link: "/sayings",
             key: "sayings",
-            icon: renderIcon(TextIcon),
+            iconType: Icons['text']
         },
+    ]
+    const footerMenuOptions: MenuOption[] = [
+        {
+            link: {
+                to: "/update",
+                onClick: () => {
+                    achiever.achieve('nothing_interesting_here')
+                }
+            },
+            key: "update",
+            iconType: Icons['markdown']
+        }
+    ]
+
+    const menuOptions: MenuOption[] = [
+        ...headerMenuOptions,
         { type: "divider" },
         {
             type: "group",
@@ -184,9 +150,7 @@ const getMenuOptions = () => {
     return menuOptions
 }
 
-const collapsed = ref(store.state.sidebar)
-const current = ref('')
-const menuOptions = ref(getMenuOptions())
+const collapsed = ref<boolean>()
 
 const toggle = () => {
     store.commit('sidebar', !collapsed.value)
@@ -196,15 +160,6 @@ onMounted(() => {
     collapsed.value = store.state.sidebar
 })
 
-watchEffect(() => {
-    if (route.name !== current.value)
-        current.value = route.name?.toString() ?? ''
-})
-
-store.watch(state => state.language, (val, old) => {
-    if (val !== old)
-        menuOptions.value = getMenuOptions()
-})
 store.watch(state => state.sidebar, (val, old) => {
     collapsed.value = val
 })
@@ -220,58 +175,14 @@ store.watch(state => state.sidebar, (val, old) => {
         <n-layout position="absolute" style="top: 64px; bottom: 64px" has-sider>
             <n-layout-sider :native-scrollbar="false" bordered show-trigger collapse-mode="width" :collapsed-width="5"
                 :show-collapsed-content="false" :collapsed="collapsed" :width="240" @collapse="toggle" @expand="toggle">
-                <n-menu :value="current" :options="menuOptions" :collapsed="collapsed" accordion @update:value="
-                    (k) => {
-                        current = k;
-                    }
-                " />
+                <SideMenu :layout="'JokesLayout'" :collapsed="collapsed" :get-menu-options="getMenuOptions" />
             </n-layout-sider>
             <n-layout content-style="padding: 24px;" :native-scrollbar="false">
                 <Viewer />
             </n-layout>
         </n-layout>
         <n-layout-footer position="absolute" style="height: 64px; padding: 12px" bordered>
-            <n-space justify="center">
-                <n-popover trigger="hover">
-                    <template #trigger>
-                        <n-button>
-                            <template #icon>
-                                <n-icon>
-                                    <LinkIcon />
-                                </n-icon>
-                            </template>
-                            {{ $t('basic.links') }} 
-                        </n-button>
-                    </template>
-                    <OtherLinks />
-                </n-popover>
-                <n-popover trigger="hover">
-                    <template #trigger>
-                        <n-button>
-                            <template #icon>
-                                <n-icon>
-                                    <LanguageIcon />
-                                </n-icon>
-                            </template>
-                            {{ $t('basic.langAndTheme') }}
-                        </n-button>
-                    </template>
-                    <ConfigSelector />
-                </n-popover>
-            </n-space>
+            <Footer />
         </n-layout-footer>
     </n-layout>
 </template>
-
-<!--<style scoped>
-.config-selector {
-    margin-left: auto;
-}
-@media screen and (max-width: 425px) {
-    .config-selector {
-        width: 0%;
-        content: '';
-        visibility: collapse;
-    }
-}
-</style>-->

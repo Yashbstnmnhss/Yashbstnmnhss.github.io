@@ -1,0 +1,41 @@
+sayings_inmind: #
+tonight_is_the_best: #
+gotta_go_man: 
+SCP: #
+  probability: 0.8
+last_days_of_europe: #
+hasi_hasi_hasi:
+  next: i_like_femboy_rather_than_this
+i_like_femboy_rather_than_this: #
+  probability: 0.45
+surely_another_useless: #
+happy_birthday_fuze: #
+number_from_4D: #
+  next: wait_where_are_you_now
+wait_where_are_you_now: #
+already_late_for_fuze_birthday: #
+cant_get_mad_who_havent_dignity: #
+nothing_interesting_here: #
+STOP_PLS:
+HE_IS_TOO_STUPID:
+  requirements:
+    - STOP_PLS
+oh_114514:
+  requirements:
+    - surely_another_useless
+you_know_so_many_languages: #
+  next: gotta_go_man
+WOW_EYES_DIED: #
+haha_you_found_me:
+nearer_my_master: #
+  type: fantastic
+let_more_people_know_this: #
+  next: dont_forget_other_fuzes
+dont_forget_other_fuzes: #
+  requirements: 
+    - sayings_inmind
+ohh_will_fix_this_route_error_later: #
+  type: fantastic
+  next: WTF_WHY_SO_MANY_ERROES
+WTF_WHY_SO_MANY_ERROES: #
+  next: oh_114514

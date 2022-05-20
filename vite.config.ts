@@ -3,11 +3,20 @@ import vue from '@vitejs/plugin-vue'
 import pages from 'vite-plugin-pages'
 import markdown from 'vite-plugin-md'
 import yaml from '@modyfi/vite-plugin-yaml'
+import compression from 'vite-plugin-compression'
 import { resolve } from 'path'
 import hljs, { HighlightOptions } from 'highlight.js'
 
 export default defineConfig({
     base: './',
+    css: {
+        preprocessorOptions: {
+            less: {
+                javascriptEnabled: true,
+                typescriptEnabled: true
+            }
+        }
+    },
     resolve: {
         alias: {
             '@': resolve(__dirname, './src'),
@@ -67,6 +76,7 @@ export default defineConfig({
                 })
             }
         }),
-        yaml()
+        yaml(),
+        compression()
     ]
 })

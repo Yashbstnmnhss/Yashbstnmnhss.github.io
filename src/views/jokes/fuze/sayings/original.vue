@@ -8,27 +8,55 @@ import {
     NSpace,
     NButton,
     NIcon,
-    NBlockquote
+    NBlockquote,
+    useMessage
 } from 'naive-ui'
 import {
     VolumeHighOutline as VolumeIcon
 } from '@vicons/ionicons5'
+import { useI18n } from 'vue-i18n'
+import Logger from '../../../../utils/logger'
+import { isMobile } from '../../../../utils/'
+import { useAchiever } from '../../../../composables/achievements'
+import { randomSeq } from '../../../../utils/'
 
-const synth = window.speechSynthesis
-const msg = new SpeechSynthesisUtterance()
+const achiever = useAchiever()
+const i18n = useI18n()
+const $t = i18n.t
+const mobile = isMobile()
+const message = useMessage()
+
+const synth = !mobile ? window.speechSynthesis : null
+const msg = !mobile ? new SpeechSynthesisUtterance() : null
 var isSpeaking = false
 
 const read = () => {
+    if (mobile || !synth || !msg) {
+        message.error($t('views.jokes.fuze.sayings.readerNotSupported'))
+        return
+    }
     if (isSpeaking) {
         synth.cancel()
         isSpeaking = false
         return
     }
-    msg.text = document.getElementById('text')?.innerText ?? '114514 怎么undefined了'
+    var str = document.getElementById('text')?.innerText
+    if (str) {
+        //生成随机多个ha
+        var has = '笑死我了打不过'
+        has += randomSeq('哈', 5, 15)
+        str = str.replace(/12\-3/, `12-3${has}`)
+    }
+    Logger.log('[Jokes.Fuze.Sayings.Original]', 'reader.text', '=', str)
+    msg.text = str ?? $t('views.jokes.fuze.sayings.readerNotFound')
     msg.lang = 'zh-CN'
     msg.volume = 1
-    msg.rate = 0.8
-    msg.pitch = 2
+    msg.rate = Math.random() * (1.875 - 0.5) + 0.5
+    msg.pitch = Math.random() * (2 - 1) + 1
+    msg.onstart = () => {
+        isSpeaking = true
+        achiever.achieve('sayings_inmind')
+    }
     msg.onerror = msg.onend = () => {
         isSpeaking = false
     }
@@ -46,11 +74,11 @@ const read = () => {
                     <VolumeIcon />
                 </n-icon>
             </template>
-            听听<strong>仅部分设备支持</strong>的语音
+            {{ $t('views.jokes.fuze.sayings.readButton') }}
         </n-button>
     </n-space>
-    <s>摘自《圣经》第二章第三节</s>
-    <n-blockquote id="text">
+    <s>{{ $t('views.jokes.fuze.sayings.wrongFrom') }}</s>
+    <n-blockquote @copy="achiever.achieve('let_more_people_know_this')" id="text">
         网络上的感情不要带到现实里
         <br /> 绝望是来自过去的
         <br /> 没事

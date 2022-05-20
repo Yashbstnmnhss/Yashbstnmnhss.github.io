@@ -8,6 +8,7 @@ export interface StateClass {
     sidebar: boolean,
     theme: Themes,
     language: Languages,
+    achievements: string[],
 }
 
 export const store = toStore<StateClass>({
@@ -17,13 +18,15 @@ export const store = toStore<StateClass>({
     },
     theme: {
         type: 'storage',
-        //storageKey: 'THEME',
         defaultValue: DefaultTheme
     },
     language: {
         type: 'storage',
-        //storageKey: 'LANGUAGE',
         defaultValue: DefaultLanguage
+    },
+    achievements: {
+        type: 'storage',
+        defaultValue: []
     }
 })
 

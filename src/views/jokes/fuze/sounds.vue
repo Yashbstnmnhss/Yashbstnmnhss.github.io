@@ -10,10 +10,22 @@ import {
     NEllipsis
 } from 'naive-ui'
 import { toImportInfo } from '../../../utils/imports'
+import { useAchiever } from '../../../composables/achievements'
 
 const sounds = toImportInfo(
     import.meta.globEager('@/assets/sounds/jokes/fuze/**/*.{mp3,wav,ogg}')
 )
+const achiever = useAchiever()
+var dignityPlayTimes = 0
+
+const onPlay = (e: Event) => {
+    var target = e.target as HTMLVideoElement
+    if (target.getAttribute('key') === 'wocaoxing') {
+        dignityPlayTimes++
+        if (dignityPlayTimes === 10)
+            achiever.achieve('cant_get_mad_who_havent_dignity')
+    }
+}
 </script>
 
 <template>
@@ -22,10 +34,11 @@ const sounds = toImportInfo(
         <n-thing v-for="sound in sounds" :key="sound.name">
             <template #header>
                 <n-ellipsis line-clamp="3">
-                    {{ $t('views.jokes.fuze.sounds.items.' + sound.name) }}
+                    {{ $t(`views.jokes.fuze.sounds.items.${sound.name}`) }}
                 </n-ellipsis>
             </template>
-            <audio :src="sound.path" controls :title="$t('views.jokes.fuze.sounds.items.' + sound.name)" />
+            <audio :src="sound.path" controls @play="e => onPlay(e)" :key="sound.name"
+                :title="$t(`views.jokes.fuze.sounds.items.${sound.name}`)" />
         </n-thing>
     </n-space>
 </template>

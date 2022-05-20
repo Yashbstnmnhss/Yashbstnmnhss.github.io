@@ -1,9 +1,25 @@
 # 更新日志 :notebook:
-> bstnmnhss2.0 -> bstnmnhss3.0
+<!-- bstnmnhss2.0 -> bstnmnhss3.0-->
 ------
 
+### 2022/5/4
+- !!**新增gcl**菜单与内容
+- `SideMenu`组件`render`函数优化
+
+### 2022/5/1
+- 终于弄了个**响应式**的`ACS` 很好很好
+- 优化`menuOptions`结构
+- 增添`QRCode`在`fuzeblockisnotagame`中
+- !!**增加`Achievement`系统** 目前共`25`项
+- 重写`storage`部分, 彻底改用`JSON`存取
+- 废除`FuzeEditor`与`fuzelanguage`部分 :sob:
+
+### 2022/4/21
+- 修bug <span class="spoiler">创造bug!</span> ~~:bug:~~
+- 新增**YAUC**(*Yet Another Useless Calculator*), 正如其名
+
 ### 2022/4/20   `3.1.0`
-- !!Fuze部分彻底<span class="spoiler">？</span>完成
+- !!**Fuze部分彻底**<span class="spoiler">？</span>完成
 - 新增页面 (**fuzeblockisnotagame**) 至于路由名是这个我也不知道为什么。 与付泽生日彩蛋？
 - *稍微的*调整了代码结构（还是一样的乱）
 - `jokes`的`layout`的`menuOptions`重新规整，**以便未来引入更多乐子**

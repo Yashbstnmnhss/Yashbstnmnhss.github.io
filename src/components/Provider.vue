@@ -1,22 +1,20 @@
 <script setup lang="ts">
-import { NDateLocale, NConfigProvider, NDialogProvider, NMessageProvider, NLoadingBarProvider, NGlobalStyle } from 'naive-ui';
-import { useStore } from '../store';
+import { 
+    NDateLocale, 
+    NConfigProvider, 
+    NNotificationProvider, 
+    NDialogProvider, 
+    NMessageProvider, 
+    NLoadingBarProvider, 
+    NGlobalStyle 
+} from 'naive-ui'
+import { useStore } from '../store'
 import { getLocales, getTheme } from '../utils/naive'
-import { Languages, Themes } from '../utils/constants';
-import { onMounted, ref } from 'vue';
-import { BuiltInGlobalTheme } from 'naive-ui/lib/themes/interface';
+import { Languages, Themes } from '../utils/constants'
+import { onMounted, ref } from 'vue'
+import { BuiltInGlobalTheme } from 'naive-ui/lib/themes/interface'
 import highlightjs from 'highlight.js'
-
-highlightjs.registerLanguage('fuze', (hljs) => {
-    return {
-        name: 'fuze',
-        aliases: [ 'fz' ],
-        keywords: '',
-        contains: [
-
-        ]
-    }
-})
+import Achiever from './Achiever.vue'
 
 const store = useStore()
 
@@ -33,6 +31,7 @@ onMounted(() => {
 store.watch(s => s.language, (v, _) => {
     languageUpdate(v)
 })
+
 store.watch(s => s.theme, (v, _) => {
     themeUpdate(v)
 })
@@ -58,9 +57,13 @@ const themeUpdate = (v: Themes) => {
         <n-global-style />
         <n-loading-bar-provider>
             <n-message-provider>
-                <n-dialog-provider>
-                    <slot />
-                </n-dialog-provider>
+                <n-notification-provider :placement="'bottom-right'">
+                    <n-dialog-provider>
+                        <Achiever>
+                            <slot />
+                        </Achiever>
+                    </n-dialog-provider>
+                </n-notification-provider>
             </n-message-provider>
         </n-loading-bar-provider>
     </n-config-provider>

@@ -1,3 +1,6 @@
+export const Bstnmnhss = "Bstnmnhss"
+export const Version = "3.0.1"
+
 /**语言*/
 export enum Languages {
     "zhCN" = "zhCN",
@@ -5,6 +8,14 @@ export enum Languages {
     "ruRU" = "ruRU",
     "jaJP" = "jaJP",
 }
+
+/*
+export const LanguageFiles = {
+    [Languages.zhCN]: "zh-cn.yaml",
+    [Languages.enUS]: "en.yaml",
+    [Languages.ruRU]: "ru.yaml",
+    [Languages.jaJP]: "ja.yaml",
+}*语言对应的文件*/
 
 export const DefaultLanguage = Languages.zhCN
 

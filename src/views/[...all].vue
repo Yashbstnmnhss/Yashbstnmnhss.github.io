@@ -4,8 +4,15 @@ import {
     NResult 
 } from 'naive-ui'
 import { ref } from 'vue'
+import { useAchiever } from '../composables/achievements'
 
+const achiever = useAchiever()
 const url = ref('')
+
+const onPlay = () => {
+    achiever.achieve('nearer_my_master')
+    url.value = 'https://scp-wiki.wdfiles.com/local--files/fragment:scp-6000-3/interior.jpg'
+}
 </script>
 
 <template>
@@ -32,11 +39,11 @@ const url = ref('')
             ?
         </template>
     </n-result>
-    <audio 
+    <audio
         class="player-center" title="6999"
         src="http://topia.wdfiles.com/local--files/nearer-my-god-to-thee/hymn.mp3" 
         controls loop
-        @play="url = 'https://scp-wiki.wdfiles.com/local--files/fragment:scp-6000-3/interior.jpg'"
+        @play="onPlay()"
     />
 </template>
 

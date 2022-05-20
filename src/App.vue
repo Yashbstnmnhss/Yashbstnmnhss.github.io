@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Provider from './components/Provider.vue';
-import Viewer from './components/Viewer.vue';
+import Provider from './components/Provider.vue'
+import Viewer from './components/Viewer.vue'
 </script>
 
 <template>
