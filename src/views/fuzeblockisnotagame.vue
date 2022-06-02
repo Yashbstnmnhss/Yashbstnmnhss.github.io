@@ -1,6 +1,6 @@
 <route lang="yaml">
 meta:
-  keepAlive: true
+    keepAlive: true
 </route>
 
 <script setup lang="ts">
@@ -19,7 +19,7 @@ import {
     NH1,
     NBackTop,
     NDrawer,
-    NDrawerContent
+    NDrawerContent,
 } from 'naive-ui'
 import { UtilService, Service } from '../api/services'
 import { computed, ref, h, onMounted } from 'vue'
@@ -28,10 +28,15 @@ import { useAchiever } from '../composables/achievements'
 
 const achiever = useAchiever()
 
-const yaucValue = ref([{
-    num: 0
-}])
-const yAv = ref('NaN'), yMo = ref('NaN'), yCe = ref('NaN'), yFc = ref('NaN')
+const yaucValue = ref([
+    {
+        num: 0,
+    },
+])
+const yAv = ref('NaN'),
+    yMo = ref('NaN'),
+    yCe = ref('NaN'),
+    yFc = ref('NaN')
 
 const message = useMessage()
 const birthday = new Date(2007, 6 - 1, 16)
@@ -40,10 +45,9 @@ const curDate = new Date()
 const getNextBirthday = () => {
     const res = new Date(birthday)
     res.setFullYear(
-        curDate.getMonth() > birthday.getMonth() ||
-            curDate.getDay() > birthday.getDay() ?
-            curDate.getFullYear() + 1 :
-            curDate.getFullYear()
+        curDate.getMonth() > birthday.getMonth() || curDate.getDay() > birthday.getDay()
+            ? curDate.getFullYear() + 1
+            : curDate.getFullYear()
     )
     return res
 }
@@ -65,27 +69,23 @@ if (diffTime.value == 0) {
     achiever.achieve('already_late_for_fuze_birthday')
 }
 
-const renderBirthday: CountdownProps['render'] = ({
-    hours, minutes, seconds
-}) => {
+const renderBirthday: CountdownProps['render'] = ({ hours, minutes, seconds }) => {
     const days = Math.floor(hours / 24)
     const hours2 = hours % 24
-    return h(NH1, {
-        prefix: 'bar',
-        type: diffTime.value < 0 ? 'error' : diffTime.value === 0 ? 'success' : 'warning'
-    }, {
-        default: () =>
-            '🎉 ' +
-            days + 'd ' +
-            hours2 + 'h ' +
-            minutes + 'm ' +
-            seconds + 's '
-    })
+    return h(
+        NH1,
+        {
+            prefix: 'bar',
+            type: diffTime.value < 0 ? 'error' : diffTime.value === 0 ? 'success' : 'warning',
+        },
+        {
+            default: () => '🎉 ' + days + 'd ' + hours2 + 'h ' + minutes + 'm ' + seconds + 's ',
+        }
+    )
 }
 
 const calculatorYAUC = () => {
-    if (yaucValue?.value?.length <= 1)
-        return
+    if (yaucValue?.value?.length <= 1) return
     const vs = yaucValue.value.map(v => v.num)
     //算平均数
     const sum = vs.reduce((a, b) => a + b)
@@ -93,10 +93,8 @@ const calculatorYAUC = () => {
     //计算vs的众数 赋值到yMo
     const map = new Map()
     vs.forEach(v => {
-        if (map.has(v))
-            map.set(v, map.get(v) + 1)
-        else
-            map.set(v, 1)
+        if (map.has(v)) map.set(v, map.get(v) + 1)
+        else map.set(v, 1)
     })
     const max = Math.max(...map.values())
     const maxKeys = [...map.entries()].filter(v => v[1] === max).map(v => v[0])
@@ -104,10 +102,8 @@ const calculatorYAUC = () => {
     //计算vs的中位数 赋值到yCe
     const vs2 = vs.sort((a, b) => a - b)
     const mid = vs2.length / 2
-    if (vs2.length % 2 === 0)
-        yCe.value = ((vs2[mid - 1] + vs2[mid]) / 2).toFixed(2)
-    else
-        yCe.value = (vs2[Math.floor(mid)]).toFixed(2)
+    if (vs2.length % 2 === 0) yCe.value = ((vs2[mid - 1] + vs2[mid]) / 2).toFixed(2)
+    else yCe.value = vs2[Math.floor(mid)].toFixed(2)
     //计算vs的方差 赋值到yFc
     const avg = sum / vs.length
     const fc = vs.reduce((a, b) => a + Math.pow(b - avg, 2), 0)
@@ -131,32 +127,54 @@ const generateQRCode = async () => {
 }
 
 onMounted(() => {
-    Service.getRandomSaying().then(res => {
-        qrCodeInput.value = res.data.text
-    })
+    Service.getRandomSaying()
+        .then(res => {
+            qrCodeInput.value = res.data.text
+        })
+        .catch(err => {
+            qrCodeInput.value = err.message || err
+        })
 })
 </script>
 
 <template>
-    <n-space :justify="'space-around'" vertical style="padding: 10px;">
-        <n-card :title="$t('views.fuzeblockisnotagame.question.title')" hoverable closable @close="">
+    <n-space :justify="'space-around'" vertical style="padding: 10px">
+        <n-card
+            :title="$t('views.fuzeblockisnotagame.question.title')"
+            hoverable
+            closable
+            @close=""
+        >
             <template #cover>
                 <img :src="FuzeImage" />
             </template>
-            {{ $t('views.fuzeblockisnotagame.question.content') }} <template #action>
-                <n-button @click="message.warning($t('views.fuzeblockisnotagame.question.options.aa'))">{{
-                        $t('views.fuzeblockisnotagame.question.options.a')
-                }}</n-button>
-                <n-button @click="message.success($t('views.fuzeblockisnotagame.question.options.ba'))">{{
-                        $t('views.fuzeblockisnotagame.question.options.b')
-                }}</n-button>
-                <n-button @click="message.error($t('views.fuzeblockisnotagame.question.options.ca'))"><strong>{{
-                        $t('views.fuzeblockisnotagame.question.options.c')
-                }}</strong></n-button>
-                <n-button @click="() => {
-                    message.loading('THE NEW ORDER ， LAST DAYS OF EUROPE')
-                    achiever.achieve('last_days_of_europe')
-                }"><s>{{ $t('views.fuzeblockisnotagame.question.options.d') }}</s></n-button>
+            {{ $t('views.fuzeblockisnotagame.question.content') }}
+            <template #action>
+                <n-button
+                    @click="message.warning($t('views.fuzeblockisnotagame.question.options.aa'))"
+                >
+                    {{ $t('views.fuzeblockisnotagame.question.options.a') }}
+                </n-button>
+                <n-button
+                    @click="message.success($t('views.fuzeblockisnotagame.question.options.ba'))"
+                >
+                    {{ $t('views.fuzeblockisnotagame.question.options.b') }}
+                </n-button>
+                <n-button
+                    @click="message.error($t('views.fuzeblockisnotagame.question.options.ca'))"
+                >
+                    <strong>{{ $t('views.fuzeblockisnotagame.question.options.c') }}</strong>
+                </n-button>
+                <n-button
+                    @click="
+                        () => {
+                            message.loading('THE NEW ORDER ， LAST DAYS OF EUROPE')
+                            achiever.achieve('last_days_of_europe')
+                        }
+                    "
+                >
+                    <s>{{ $t('views.fuzeblockisnotagame.question.options.d') }}</s>
+                </n-button>
             </template>
         </n-card>
 
@@ -166,15 +184,28 @@ onMounted(() => {
             </template>
 
             <div v-if="diffTime == 0">
-                <n-button @click="() => {
-                    message.success($t('views.fuzeblockisnotagame.itsfuzesbd'))
-                }">{{ $t('views.fuzeblockisnotagame.itsfuzesbd') }}!!!</n-button>
-                <br /> {{ $t('views.fuzeblockisnotagame.hbdfuze') }} <n-button
-                    @click="message.success($t('views.fuzeblockisnotagame.hbdfuze'))">{{
-                            $t('views.fuzeblockisnotagame.hbdfuze')
-                    }}</n-button>
+                <n-button
+                    @click="
+                        () => {
+                            message.success($t('views.fuzeblockisnotagame.itsfuzesbd'))
+                        }
+                    "
+                >
+                    {{ $t('views.fuzeblockisnotagame.itsfuzesbd') }}!!!
+                </n-button>
+                <br />
+                {{ $t('views.fuzeblockisnotagame.hbdfuze') }}
+                <n-button @click="message.success($t('views.fuzeblockisnotagame.hbdfuze'))">
+                    {{ $t('views.fuzeblockisnotagame.hbdfuze') }}
+                </n-button>
                 🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂
-                <br /> 看见拙劣的<code>CSS</code>“超现代艺术"烟花🎇了吗？ <br /><br /><br />
+                <br />
+                看见拙劣的
+                <code>CSS</code>
+                “超现代艺术"烟花🎇了吗？
+                <br />
+                <br />
+                <br />
                 <div class="fireworks-wrap">
                     <div class="fireworks"></div>
                     <div class="fireworks"></div>
@@ -188,7 +219,8 @@ onMounted(() => {
                 </div>
             </div>
 
-            {{ $t('views.fuzeblockisnotagame.fuzebdformat', [nextBirthday.toLocaleDateString()]) }} <br />
+            {{ $t('views.fuzeblockisnotagame.fuzebdformat', [nextBirthday.toLocaleDateString()]) }}
+            <br />
             <n-countdown :render="renderBirthday" :duration="diffTime" active />
         </n-card>
 
@@ -196,7 +228,14 @@ onMounted(() => {
             <template #header-extra>
                 <mark>YAUC</mark>
             </template>
-            <n-dynamic-input v-model:value="yaucValue" :on-create="i => { return { num: 0 } }">
+            <n-dynamic-input
+                v-model:value="yaucValue"
+                :on-create="
+                    i => {
+                        return { num: 0 }
+                    }
+                "
+            >
                 <template #default="{ value }">
                     <n-input-number v-model:value="value.num" />
                 </template>
@@ -232,17 +271,13 @@ onMounted(() => {
                 <img id="qrcode" :src="qrCodeImage" />
             </n-space>
             <template #action>
-                <n-button @click="generateQRCode()">
-                    &lt;(￣︶￣)↗[GO!]
-                </n-button>
+                <n-button @click="generateQRCode()">&lt;(￣︶￣)↗[GO!]</n-button>
             </template>
         </n-card>
     </n-space>
     <n-back-top />
     <n-drawer placement="left">
-        <n-drawer-content>
-            1232132132
-        </n-drawer-content>
+        <n-drawer-content>1232132132</n-drawer-content>
     </n-drawer>
 </template>
 
@@ -261,7 +296,7 @@ onMounted(() => {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    color: #FFE75E;
+    color: #ffe75e;
     border: 4px dotted currentColor;
     transform: scale(0.1);
 }
@@ -292,56 +327,56 @@ onMounted(() => {
 
 .fireworks:nth-child(1) {
     left: 10vw;
-    color: #FFE75E;
-    animation: light-animation 3s ease 2.5s infinite
+    color: #ffe75e;
+    animation: light-animation 3s ease 2.5s infinite;
 }
 
 .fireworks:nth-child(2) {
     left: 20vw;
-    color: #F4EEC7;
-    animation: light-animation 3s ease 3.5s infinite
+    color: #f4eec7;
+    animation: light-animation 3s ease 3.5s infinite;
 }
 
 .fireworks:nth-child(3) {
     left: 30vw;
-    color: #A7E9AF;
-    animation: light-animation 3s ease infinite
+    color: #a7e9af;
+    animation: light-animation 3s ease infinite;
 }
 
 .fireworks:nth-child(4) {
     left: 40vw;
-    color: #FD5E53;
-    animation: light-animation 3s ease 1s infinite
+    color: #fd5e53;
+    animation: light-animation 3s ease 1s infinite;
 }
 
 .fireworks:nth-child(5) {
     left: 50vw;
-    color: #FE9801;
-    animation: light-animation 3s ease 3s infinite
+    color: #fe9801;
+    animation: light-animation 3s ease 3s infinite;
 }
 
 .fireworks:nth-child(6) {
     left: 60vw;
-    color: #BAC7A7;
-    animation: light-animation 3s ease 1.5s infinite
+    color: #bac7a7;
+    animation: light-animation 3s ease 1.5s infinite;
 }
 
 .fireworks:nth-child(7) {
     left: 70vw;
-    color: #CCDA46;
-    animation: light-animation 3s ease 0.5s infinite
+    color: #ccda46;
+    animation: light-animation 3s ease 0.5s infinite;
 }
 
 .fireworks:nth-child(8) {
     left: 80vw;
-    color: #F4EEC7;
-    animation: light-animation 3s ease 4s infinite
+    color: #f4eec7;
+    animation: light-animation 3s ease 4s infinite;
 }
 
 .fireworks:nth-child(9) {
     left: 90vw;
     color: slateblue;
-    animation: light-animation 3s ease 2s infinite
+    animation: light-animation 3s ease 2s infinite;
 }
 
 @keyframes light-animation {

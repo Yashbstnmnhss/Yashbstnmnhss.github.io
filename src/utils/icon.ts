@@ -8,16 +8,18 @@ import {
     TextOutline as TextIcon,
     VideocamOutline as VideoIcon,
     LogoMarkdown as MarkdownIcon,
+    ChatboxOutline as ChatboxIcon,
 } from '@vicons/ionicons5'
 
 export const Icons = {
-    'person': PersonIcon,
-    'book': BookIcon,
-    'bookmark': BookmarkIcon,
-    'volume': VolumeIcon,
-    'image': ImageIcon,
-    'home': HomeIcon,
-    'text': TextIcon,
-    'video': VideoIcon,
-    'markdown': MarkdownIcon,
+    person: PersonIcon,
+    book: BookIcon,
+    bookmark: BookmarkIcon,
+    volume: VolumeIcon,
+    image: ImageIcon,
+    home: HomeIcon,
+    text: TextIcon,
+    video: VideoIcon,
+    markdown: MarkdownIcon,
+    chatbox: ChatboxIcon,
 }

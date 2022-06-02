@@ -13,11 +13,14 @@ export class Service {
             from: from,
         })
     }
+    static async hentai() {
+        return await request('/hentai', 'post')
+    }
 }
 
 export class UtilService {
     static async qrCode(content: string) {
-        return await request('/utils/qrcode', 'get', { content: content })
+        return await request('/utils/qrcode', 'post', { content: content })
     }
     static async bannedWords(text: string, replacement?: string) {
         return await request('/utils/bannedWords', 'get', {
@@ -25,13 +28,16 @@ export class UtilService {
             replacement: replacement,
         })
     }
+    static async getIp() {
+        return await request('/utils/getIp', 'get')
+    }
 }
 
 export class CommentService {
     static async getAll() {
         return await request('/database/comments/getAll', 'get')
     }
-    static async postNew(comment: Models.Comment) {
+    static async postNew(comment: Models.CommentRequest) {
         return await request('/database/comments/post', 'post', comment)
     }
     static async delete(id: string) {
