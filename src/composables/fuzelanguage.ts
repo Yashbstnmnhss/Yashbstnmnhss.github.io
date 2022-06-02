@@ -1,4 +1,4 @@
-import * as monaco from 'monaco-editor'
+/*import * as monaco from 'monaco-editor'
 
 const id = 'fuze'
 const keywords = [ 'fuze', 'ezuf', 'Fuze', 'Ezuf', 'man', 'tou' ]
@@ -18,7 +18,7 @@ export default function register() {
         ],
         tokenizer: {
             root: [
-                [/@?[a-zA-Z_][\w$]*/, {
+                [/@?[a-zA-Z_][\w$]*/ /*, {
                     cases: {
                         '@keywords': 'keyword',
                         '@functions': 'type',
@@ -123,7 +123,7 @@ export default function register() {
             }
         }
     })
-}
+}*/
 
 /*
 enum Token {
