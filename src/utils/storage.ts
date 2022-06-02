@@ -1,7 +1,11 @@
 export function getItem(key: string, defaultVal: any = null): any {
-    var val = localStorage.getItem(key) 
+    var val = localStorage.getItem(key)
     if (!val) return defaultVal
-    return JSON.parse(val)
+    try {
+        return JSON.parse(val)
+    } catch {
+        return defaultVal
+    }
 }
 
 export function setItem(key: string, val: any) {
