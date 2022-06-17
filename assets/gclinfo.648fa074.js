@@ -1,1 +1,0 @@
-import{b as r}from"./route-block.b5bad31b.js";import{_ as c}from"./plugin-vue_export-helper.21dcd24c.js";const o={};function f(n,t){return null}typeof r=="function"&&r(o);var a=c(o,[["render",f]]);export{a as default};

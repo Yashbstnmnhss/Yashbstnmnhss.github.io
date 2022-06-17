@@ -1,0 +1,1 @@
+import{b as a}from"./route-block.b5bad31b.js";import{d as t,ac as e,ad as s,af as r,a3 as n,ah as c,ai as f}from"./index.e161c063.js";import{N as i}from"./headers.5547f39b.js";const p=t({setup(l){return(o,u)=>(n(),e(r(i),null,{default:s(()=>[c(f(o.$t("layouts.JokesLayout.gcl-books-depression")),1)]),_:1}))}});typeof a=="function"&&a(p);export{p as default};
