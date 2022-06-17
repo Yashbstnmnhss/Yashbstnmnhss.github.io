@@ -9,11 +9,21 @@ export default (app: App<Element>) => {
                 if (anchor) {
                     anchor.scrollIntoView({
                         behavior: 'smooth',
-                        block: 'start'
+                        block: 'start',
                     })
                 }
             })
-        }
+        },
     }
     app.directive('anchor', anchor)
+
+    const copy: ObjectDirective = {
+        mounted(el: HTMLElement, { value }) {
+            el.addEventListener('click', () => {
+                const text = value as string
+                navigator.clipboard.writeText(text)
+            })
+        },
+    }
+    app.directive('copy', copy)
 }

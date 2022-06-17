@@ -13,9 +13,9 @@ export default defineConfig({
         preprocessorOptions: {
             less: {
                 javascriptEnabled: true,
-                typescriptEnabled: true
-            }
-        }
+                typescriptEnabled: true,
+            },
+        },
     },
     resolve: {
         alias: {
@@ -24,19 +24,13 @@ export default defineConfig({
     },
     plugins: [
         vue({
-            include: [
-                /\.vue$/, 
-                /\.md$/
-            ]
+            include: [/\.vue$/, /\.md$/],
         }),
         pages({
             pagesDir: 'src/views',
             importMode: 'async',
-            extensions: [
-                'vue',
-                'md'
-            ],
-            routeBlockLang: 'yaml'
+            extensions: ['vue', 'md'],
+            routeBlockLang: 'yaml',
         }),
         markdown({
             markdownItOptions: {
@@ -50,7 +44,7 @@ export default defineConfig({
                         } catch (__) {}
                     }
                     return ''
-                }
+                },
             },
             markdownItSetup(md) {
                 md.use(require('markdown-it-emoji'), {
@@ -71,12 +65,39 @@ export default defineConfig({
                         ':$': 'yum',
                         ':^': 'relieved',
                         ':&': 'satisfied',
-                        ':%': 'mask'
-                    }
+                        ':%': 'mask',
+                    },
                 })
-            }
+            },
         }),
         yaml(),
-        compression()
-    ]
+        compression({
+            verbose: true,
+            disable: false,
+            algorithm: 'gzip',
+            ext: '.gz',
+            deleteOriginFile: true,
+        }),
+    ],
+    build: {
+        terserOptions: {
+            compress: {
+                drop_console: true,
+                drop_debugger: true,
+            },
+        },
+        /*rollupOptions: {
+            output: {
+                chunkFileNames: 'static/js/[name].[hash].js',
+                entryFileNames: 'static/js/[name].[hash].js',
+                assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
+
+                manualChunks(id) {
+                    if (id.includes('node_modules')) {
+                        return id.toString().split('node_modules/')[1].split('/')[0].toString()
+                    }
+                },
+            },
+        },*/
+    },
 })

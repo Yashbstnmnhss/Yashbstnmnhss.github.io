@@ -8,7 +8,7 @@ export interface CommentRequest {
 }
 
 export interface CommentResponse {
-    _id: string
+    id: string
     content: string
     time: Date
     ip: string

@@ -1,6 +1,12 @@
 import { request } from './axios'
 import * as Models from './models'
 
+export class ExternalService {
+    static async getIp() {
+        return request('http://whois.pconline.com.cn/ipJson.jsp?json=true', 'get')
+    }
+}
+
 export class Service {
     static async getSayings(from?: Models.SayingFrom) {
         return await request('/sayings', 'get', {

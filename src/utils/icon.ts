@@ -9,6 +9,7 @@ import {
     VideocamOutline as VideoIcon,
     LogoMarkdown as MarkdownIcon,
     ChatboxOutline as ChatboxIcon,
+    SquareOutline as SquareIcon,
 } from '@vicons/ionicons5'
 
 export const Icons = {
@@ -22,4 +23,5 @@ export const Icons = {
     video: VideoIcon,
     markdown: MarkdownIcon,
     chatbox: ChatboxIcon,
+    square: SquareIcon,
 }

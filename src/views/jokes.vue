@@ -110,15 +110,15 @@ const getMenuOptions = () => {
             iconType: Icons['home'],
         },
         {
-            link: '/sayings',
-            key: 'sayings',
-            iconType: Icons['text'],
+            link: '/jokes/fuzeblockisnotagame',
+            key: 'fuzeblockisnotagame',
+            iconType: Icons['square'],
         },
     ]
     const footerMenuOptions: MenuOption[] = [
         {
             link: {
-                to: '/lastdaysofeurope',
+                to: '/jokes/lastdaysofeurope',
             },
             key: 'lastdaysofeurope',
             iconType: Icons['chatbox'],
