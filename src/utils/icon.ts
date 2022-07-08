@@ -10,6 +10,7 @@ import {
     LogoMarkdown as MarkdownIcon,
     ChatboxOutline as ChatboxIcon,
     SquareOutline as SquareIcon,
+    Square as SquareFullIcon,
 } from '@vicons/ionicons5'
 
 export const Icons = {
@@ -24,4 +25,5 @@ export const Icons = {
     markdown: MarkdownIcon,
     chatbox: ChatboxIcon,
     square: SquareIcon,
+    squareFull: SquareFullIcon,
 }

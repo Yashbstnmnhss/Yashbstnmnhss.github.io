@@ -21,14 +21,19 @@ import {
     NSpin,
     NTabPane,
     NTabs,
-    NNumberAnimation,
+    NStatistic,
+    NAvatar,
+    NThing,
+    NInputGroup,
 } from 'naive-ui'
 import { bsToLetter, letterToBs } from '../../composables/bslang'
-import { UtilService, Service } from '../../api/services'
+import { Service, UtilService } from '../../api/services'
+import { ChineseCharacter } from '../../api/models'
 import { ref, onMounted } from 'vue'
 import FuzeImage from '../../assets/images/jokes/fuze/fuzeshout.png'
 import { useAchiever } from '../../composables/achievements'
 import BirthdayCountdown from '../../components/BirthdayCountDown.vue'
+import { getFlags, dedede } from '../../composables/chinese'
 
 const achiever = useAchiever()
 
@@ -109,6 +114,40 @@ const bslangToEng = () => {
         .join('')
 }
 
+const deReA = ref(''),
+    deReB = ref(''),
+    deReRe = ref(''),
+    deReRe2 = ref(''),
+    deLoading = ref(false)
+const deRe = () => {
+    if (!deReA.value || !deReB.value) {
+        deReRe.value = '...'
+        deReRe2.value = ''
+        return
+    }
+
+    deLoading.value = true
+    getFlags(deReA.value).then(a => {
+        getFlags(deReB.value).then(b => {
+            deLoading.value = false
+            if (!a || !b) {
+                deReRe.value = '的地得'
+                deReRe2.value = '怎么会是null啊呀啊'
+                return
+            }
+            var ax = a[a.length - 1]
+            var bx = b[0]
+            var de = dedede(ax, bx)
+
+            deReRe.value = de
+            deReRe2.value = `${deReA.value}${de}${deReB.value}`
+        })
+    })
+}
+
+const chineseCharacter = ref<ChineseCharacter>(),
+    charLoading = ref(false)
+
 onMounted(() => {
     Service.getRandomSaying()
         .then(res => {
@@ -117,15 +156,40 @@ onMounted(() => {
         .catch(err => {
             qrCodeInput.value = err.message || err
         })
+    charLoading.value = true
+    Service.chineseChar()
+        .then(res => {
+            charLoading.value = false
+            chineseCharacter.value = JSON.parse(
+                new TextDecoder('gbk').decode(new Uint8Array(res.data))
+            )
+        })
+        .catch(err => {
+            chineseCharacter.value = {
+                word: err.message || err,
+                oldword: err.message || err,
+                strokes: '114514',
+                pinyin: 'āáǎà',
+                radicals: '八勹匕冫卜厂刀刂儿二匚阝丷卩冂力冖凵人亻入十厶亠匸讠廴又',
+                explanation: 'ERROR',
+                more: 'ΑαΝνÀàÌì',
+            }
+        })
 })
 </script>
 
 <template>
     <n-h1>{{ $t('layouts.JokesLayout.fuzeblockisnotagame') }}</n-h1>
-    <n-space :justify="'space-around'" vertical style="padding: 10px">
+    <n-space
+        :justify="'space-around'"
+        vertical
+        style="padding: 10px"
+        @contextmenu="(e: any) => e.preventDefault()"
+    >
         <birthday-countdown
-            :date="fuzeBirthday"
             target="FUZE"
+            :date="fuzeBirthday"
+            progress-tooltip="距离下次生日进度"
             :title="$t('views.fuzeblockisnotagame.fuzesbd')"
         >
             <template #onbirthday>
@@ -177,6 +241,20 @@ onMounted(() => {
             </template>
             <template #description>
                 {{ $t('views.fuzeblockisnotagame.fuzebdformat') }}
+            </template>
+            <template #bar-extra>
+                <n-statistic label="其实这一天也是">
+                    <n-thing>
+                        <template #avatar>
+                            <n-avatar
+                                round
+                                src="https://uploadstatic.mihoyo.com/ys-obc/2021/06/10/75276545/10a9e992bf121129710d5d34703ebc7a_3094624363673748747.png"
+                            />
+                        </template>
+                        <template #header>温蒂的生日</template>
+                        <template #description><small>「浪子的真情。」</small></template>
+                    </n-thing>
+                </n-statistic>
             </template>
         </birthday-countdown>
 
@@ -313,11 +391,58 @@ onMounted(() => {
                 </n-tab-pane>
             </n-tabs>
         </n-card>
+        <n-card title="中文">
+            <template #header-extra>
+                并
+                <strong>不</strong>
+                准确
+            </template>
+            <n-tabs type="segment" animated>
+                <n-tab-pane name="char" tab="宀子">
+                    <n-spin :show="charLoading">
+                        <n-thing>
+                            <template #avatar>
+                                <n-avatar>
+                                    {{ chineseCharacter?.oldword }}
+                                </n-avatar>
+                            </template>
+                            <template #header>
+                                {{ chineseCharacter?.word }}
+                            </template>
+                            <template #header-extra>
+                                {{ chineseCharacter?.pinyin }}
+                            </template>
+                            <template #description>
+                                画:
+                                <strong>{{ chineseCharacter?.strokes }}</strong>
+                                , 部:
+                                <strong>{{ chineseCharacter?.radicals || '~' }}</strong>
+                            </template>
+                            {{ chineseCharacter?.explanation }}
+                            <template #footer>
+                                {{ chineseCharacter?.more }}
+                            </template>
+                        </n-thing>
+                    </n-spin>
+                </n-tab-pane>
+                <n-tab-pane name="return" tab="A(的/地/得)B">
+                    <n-spin :show="deLoading">
+                        <n-input-group>
+                            <n-input placeholder="A" v-model:value="deReA" />
+                            <n-input placeholder="B" v-model:value="deReB" />
+                            <n-button @click="deRe()">的/地/得</n-button>
+                        </n-input-group>
+                        <n-h1 prefix="bar">{{ deReRe }}</n-h1>
+                        {{ deReRe2 }}
+                    </n-spin>
+                </n-tab-pane>
+            </n-tabs>
+        </n-card>
     </n-space>
     <n-back-top />
 </template>
 
-<style scoped>
+<style lang="less" scoped>
 .fireworks-wrap {
     position: fixed;
     top: 0;
@@ -336,97 +461,66 @@ onMounted(() => {
     color: #ffe75e;
     border: 4px dotted currentColor;
     transform: scale(0.1);
+
+    &:before {
+        position: absolute;
+        content: '';
+        top: 50%;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 4px dotted currentColor;
+        transform: translate(-50%, -50%) rotate(30deg);
+    }
+    &:after {
+        position: absolute;
+        content: '';
+        top: 50%;
+        left: 50%;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        border: 4px dotted currentColor;
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
 }
 
-.fireworks:before {
-    position: absolute;
-    content: '';
-    top: 50%;
-    left: 50%;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 4px dotted currentColor;
-    transform: translate(-50%, -50%) rotate(30deg);
+@random255: `Math.ceil(Math.random() * 255) `;
+@random1-5: `Number((Math.random() * 5 + 1) .toFixed(1)) `;
+
+.loop(@i) when (@i > 0) {
+    .fireworks:nth-child(@{i}) {
+        left: (@i * 10vw);
+        color: rgb(@random255, @random255, @random255);
+        animation: light-animation (@random1-5 * 1s + 0.5s) ease-in-out (@random1-5 * 1s - 0.5s)
+            infinite;
+    }
+    .loop((@i - 1));
 }
 
-.fireworks:after {
-    position: absolute;
-    content: '';
-    top: 50%;
-    left: 50%;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    border: 4px dotted currentColor;
-    transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.fireworks:nth-child(1) {
-    left: 10vw;
-    color: #ffe75e;
-    animation: light-animation 3s ease 2.5s infinite;
-}
-
-.fireworks:nth-child(2) {
-    left: 20vw;
-    color: #f4eec7;
-    animation: light-animation 3s ease 3.5s infinite;
-}
-
-.fireworks:nth-child(3) {
-    left: 30vw;
-    color: #a7e9af;
-    animation: light-animation 3s ease infinite;
-}
-
-.fireworks:nth-child(4) {
-    left: 40vw;
-    color: #fd5e53;
-    animation: light-animation 3s ease 1s infinite;
-}
-
-.fireworks:nth-child(5) {
-    left: 50vw;
-    color: #fe9801;
-    animation: light-animation 3s ease 3s infinite;
-}
-
-.fireworks:nth-child(6) {
-    left: 60vw;
-    color: #bac7a7;
-    animation: light-animation 3s ease 1.5s infinite;
-}
-
-.fireworks:nth-child(7) {
-    left: 70vw;
-    color: #ccda46;
-    animation: light-animation 3s ease 0.5s infinite;
-}
-
-.fireworks:nth-child(8) {
-    left: 80vw;
-    color: #f4eec7;
-    animation: light-animation 3s ease 4s infinite;
-}
-
-.fireworks:nth-child(9) {
-    left: 90vw;
-    color: slateblue;
-    animation: light-animation 3s ease 2s infinite;
-}
+.loop(9);
 
 @keyframes light-animation {
     0% {
+        opacity: 1;
         top: 100vh;
         transform: scale(0.1);
     }
 
-    70% {
+    65% {
+        opacity: 1;
         transform: scale(0.1);
     }
 
+    95% {
+        opacity: 1;
+        top: 200px;
+        transform: scale(2);
+    }
+
     100% {
+        opacity: 0;
         top: 200px;
         transform: scale(2.5);
     }

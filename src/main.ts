@@ -7,7 +7,7 @@ import { store, key } from './store'
 import directives from './composables/directives'
 
 import './assets/styles/global.less'
-import './assets/styles/markdown.css'
+import './assets/styles/markdown.less'
 import 'highlight.js/styles/tokyo-night-dark.css'
 
 const app = createApp(App)

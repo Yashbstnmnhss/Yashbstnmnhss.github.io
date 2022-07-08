@@ -7,8 +7,87 @@ import FuzeAvatar from '@/assets/images/jokes/fuze/avatar.jpg'
 import { NH1, NThing, NImage, NLi, NButton, NCard, NDivider } from 'naive-ui'
 import { useRouter } from 'vue-router'
 import Spoiler from '../../components/Spoiler.vue'
+import FuzeBlock from '../../components/FuzeBlock.vue'
+import Timetable from '../../components/Timetable.vue'
+
+import P5C from '../../components/P5.vue'
+import P5 from 'p5'
 
 const router = useRouter()
+
+const sketch = (p: P5) => {
+    var w = 20,
+        year = 0,
+        cols: number,
+        rows: number,
+        board: number[][],
+        next: number[][]
+    p.setup = () => {
+        p.createCanvas(720, 400)
+        p.frameRate(1)
+        cols = p.floor(p.width / w)
+        rows = p.floor(p.height / w)
+        board = new Array(cols)
+        next = new Array(cols)
+
+        for (var i = 0; i < cols; i++) {
+            board[i] = new Array(rows)
+            next[i] = new Array(rows)
+        }
+
+        init()
+    }
+    p.mousePressed = () => {
+        init()
+    }
+    function init() {
+        year = 0
+        for (var i = 0; i < cols; i++)
+            for (var j = 0; j < rows; j++) {
+                board[i][j] =
+                    i == 0 || j == 0 || i == cols - 1 || j == rows - 1 ? 0 : p.floor(p.random(2))
+                next[i][j] = 0
+            }
+    }
+    function generate() {
+        year++
+        for (var x = 1; x < cols - 1; x++)
+            for (var y = 1; y < rows - 1; y++) {
+                var neighbors = 0
+                for (var i = -1; i <= 1; i++)
+                    for (var j = -1; j <= 1; j++) neighbors += board[x + i][y + j]
+
+                neighbors -= board[x][y]
+                next[x][y] =
+                    board[x][y] == 1 && neighbors < 2
+                        ? 0 //孤独而亡
+                        : board[x][y] == 1 && neighbors > 3
+                        ? 0 //拥挤而亡
+                        : board[x][y] == 0 && neighbors == 3
+                        ? 1 //诞生新代
+                        : board[x][y] //保持不变
+            }
+
+        var temp = board
+        board = next
+        next = temp
+    }
+    p.draw = () => {
+        p.background(255)
+        generate()
+        for (var i = 0; i < cols; i++)
+            for (var j = 0; j < rows; j++) {
+                p.fill(board[i][j] == 1 ? 0 : 255)
+                p.stroke(0)
+                p.rect(i * w, j * w, w - 1, w - 1)
+            }
+        p.fill(0, 255, 255)
+        p.noStroke()
+        p.textStyle('bold')
+        p.textSize(26)
+        p.text(`FUZE${year}年`, 15, 45)
+    }
+}
 </script>
 
 <template>
@@ -73,7 +152,7 @@ const router = useRouter()
             Fuze, 说普通话!"
         </n-li>
         <template #footer>
-            <n-button @click="router.push('/fuzeblockisnotagame')">
+            <n-button @click="router.push('/jokes/fuzeblockisnotagame')">
                 <mark>FUZE block</mark>
                 <strong>is not</strong>
                 <s>a game!</s>
@@ -90,5 +169,120 @@ const router = useRouter()
             allowfullscreen
             allowpaymentrequest
         ></iframe>
+    </n-card>
+    <n-divider />
+    <n-card title="生命周期">
+        <Timetable
+            :content="[
+                [
+                    [
+                        [6, 0, 0],
+                        [7, 30, 0],
+                    ],
+                    '晨练',
+                ],
+                [
+                    [
+                        [7, 30, 0],
+                        [8, 0, 0],
+                    ],
+                    '吃早饭',
+                ],
+                [
+                    [
+                        [8, 0, 0],
+                        [10, 0, 0],
+                    ],
+                    '完成部分作业',
+                ],
+                [
+                    [
+                        [10, 0, 0],
+                        [10, 30, 0],
+                    ],
+                    '自由活动',
+                ],
+                [
+                    [
+                        [10, 30, 0],
+                        [11, 0, 0],
+                    ],
+                    '预习物理八上',
+                ],
+                [
+                    [
+                        [11, 0, 0],
+                        [12, 0, 0],
+                    ],
+                    '完成部分作业',
+                ],
+                [
+                    [
+                        [12, 0, 0],
+                        [14, 0, 0],
+                    ],
+                    '吃饭、午休',
+                ],
+                [
+                    [
+                        [14, 0, 0],
+                        [16, 0, 0],
+                    ],
+                    '完成部分作业',
+                ],
+                [
+                    [
+                        [16, 0, 0],
+                        [17, 0, 0],
+                    ],
+                    '英语听力',
+                ],
+                [
+                    [
+                        [17, 0, 0],
+                        [18, 0, 0],
+                    ],
+                    '预习数学',
+                ],
+                [
+                    [
+                        [18, 0, 0],
+                        [19, 0, 0],
+                    ],
+                    '吃饭',
+                ],
+                [
+                    [
+                        [19, 0, 0],
+                        [19, 30, 0],
+                    ],
+                    '观看新闻、《话说长江》',
+                ],
+                [
+                    [
+                        [19, 30, 0],
+                        [21, 30, 0],
+                    ],
+                    '预习八上生物、历史、地理、政治',
+                ],
+                [
+                    [
+                        [21, 30, 0],
+                        [22, 30, 0],
+                    ],
+                    '语文阅读',
+                ],
+                [
+                    [
+                        [22, 30, 0],
+                        [6, 0, 0],
+                    ],
+                    '睡觉',
+                ],
+            ]"
+        />
+    </n-card>
+    <n-card title="FUZE维度">
+        <P5C :sketch="sketch" />
     </n-card>
 </template>

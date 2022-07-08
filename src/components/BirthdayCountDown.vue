@@ -7,8 +7,9 @@ import {
     CountdownProps,
     NStatistic,
     NNumberAnimation,
-    NTable,
+    NSpace,
     NProgress,
+    NTooltip,
 } from 'naive-ui'
 import { computed, h } from 'vue'
 
@@ -16,6 +17,7 @@ const props = defineProps<{
     date: Date
     target: string
     title?: string
+    progressTooltip?: string
 }>()
 
 const today = new Date()
@@ -84,30 +86,29 @@ const progress = computed(() => {
         <slot name="description"></slot>
         <br />
         <n-countdown :render="renderCountdown" :duration="diffTime" active />
-        <n-table>
-            <tbody>
-                <tr>
-                    <td>
-                        <n-statistic
-                            :label="$t('components.BirthdayCountdown.yearlabel')"
-                            tabular-nums
-                        >
-                            <n-number-animation
-                                :duration="6000"
-                                :from="0"
-                                :to="today.getFullYear() - props.date.getFullYear()"
-                            />
-                            <template #suffix>
-                                {{ $t('components.BirthdayCountdown.yearold') }}
-                            </template>
-                        </n-statistic>
-                    </td>
-                    <td>
-                        <n-progress :percentage="progress"></n-progress>
-                    </td>
-                </tr>
-            </tbody>
-        </n-table>
+        <n-card hoverable>
+            <n-space :align="'stretch'" :justify="'space-between'">
+                <n-statistic :label="$t('components.BirthdayCountdown.yearlabel')" tabular-nums>
+                    <n-number-animation
+                        :duration="6000"
+                        :from="0"
+                        :to="today.getFullYear() - props.date.getFullYear()"
+                    />
+                    <template #suffix>
+                        {{ $t('components.BirthdayCountdown.yearold') }}
+                    </template>
+                </n-statistic>
+                <slot name="bar-extra"></slot>
+            </n-space>
+            <template #action>
+                <n-progress
+                    :title="props.progressTooltip"
+                    processing
+                    :height="14"
+                    :percentage="progress"
+                />
+            </template>
+        </n-card>
         <slot name="extra"></slot>
     </n-card>
 </template>

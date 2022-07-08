@@ -13,3 +13,13 @@ export interface CommentResponse {
     time: Date
     ip: string
 }
+
+export interface ChineseCharacter {
+    word: string
+    oldword: string
+    strokes: string
+    pinyin: string
+    radicals: string
+    explanation: string
+    more: string
+}

@@ -109,13 +109,13 @@ const getMenuOptions = () => {
             key: 'joke-home',
             iconType: Icons['home'],
         },
+        { type: 'divider' },
         {
             link: '/jokes/fuzeblockisnotagame',
             key: 'fuzeblockisnotagame',
-            iconType: Icons['square'],
+            iconType: Icons['squareFull'],
         },
-    ]
-    const footerMenuOptions: MenuOption[] = [
+
         {
             link: {
                 to: '/jokes/lastdaysofeurope',
@@ -123,6 +123,8 @@ const getMenuOptions = () => {
             key: 'lastdaysofeurope',
             iconType: Icons['chatbox'],
         },
+    ]
+    const footerMenuOptions: MenuOption[] = [
         {
             link: {
                 to: '/update',

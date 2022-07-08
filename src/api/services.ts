@@ -3,7 +3,7 @@ import * as Models from './models'
 
 export class ExternalService {
     static async getIp() {
-        return request('http://whois.pconline.com.cn/ipJson.jsp?json=true', 'get')
+        return request('http://whois.pconline.com.cn/ipJson.jsp?json=true', 'get', null, 'external')
     }
 }
 
@@ -22,6 +22,12 @@ export class Service {
     static async hentai() {
         return await request('/hentai', 'post')
     }
+    /** 返回为ArrayBuffer */
+    static async chineseChar() {
+        return await request('/chineseChar', 'get', null, undefined, {
+            responseType: 'arraybuffer',
+        })
+    }
 }
 
 export class UtilService {
@@ -36,6 +42,9 @@ export class UtilService {
     }
     static async getIp() {
         return await request('/utils/getIp', 'get')
+    }
+    static async lp(content: string) {
+        return await request('/utils/lp', 'post', `"${content}"`)
     }
 }
 

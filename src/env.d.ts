@@ -18,3 +18,8 @@ declare module '*.yaml' {
     const Content: any
     export default Content
 }
+
+declare module '*.vtt' {
+    const Path: string
+    export default Path
+}

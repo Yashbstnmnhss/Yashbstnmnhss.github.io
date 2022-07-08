@@ -9,6 +9,7 @@ import hljs, { HighlightOptions } from 'highlight.js'
 
 export default defineConfig({
     base: './',
+    assetsInclude: ['**/*.vtt', '**/*.srt'],
     css: {
         preprocessorOptions: {
             less: {
@@ -21,6 +22,9 @@ export default defineConfig({
         alias: {
             '@': resolve(__dirname, './src'),
         },
+    },
+    json: {
+        stringify: true,
     },
     plugins: [
         vue({
@@ -73,10 +77,9 @@ export default defineConfig({
         yaml(),
         compression({
             verbose: true,
-            disable: false,
+            disable: true,
             algorithm: 'gzip',
             ext: '.gz',
-            deleteOriginFile: true,
         }),
     ],
     build: {

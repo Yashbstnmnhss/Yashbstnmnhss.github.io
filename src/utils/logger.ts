@@ -35,7 +35,17 @@ export default class Logger {
     }
 
     private static format(str: any[]): any[] {
-        const bstnmnhss = ['%c[Bstnmnhss Logger]', 'background: rgba(0, 0, 255, .5); color: rgba(255, 255, 255, .85);']
+        const bstnmnhss = [
+            '%c[Bstnmnhss Logger]',
+            'background: rgba(0, 0, 255, .5); color: rgba(255, 255, 255, .85);',
+        ]
         return [...bstnmnhss, ...str]
     }
+
+    static readonly LOGO = ['%cBstnmnhss 3.0', 'font-size: 100px;']
+    public static logo() {
+        console.info(...this.LOGO)
+    }
 }
+
+Logger.logo()

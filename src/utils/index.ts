@@ -1,3 +1,5 @@
+import { Time, TimeScope } from './types'
+
 export function isMobile() {
     return /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)
 }
@@ -13,7 +15,7 @@ export function randomSeq(item: string, min = 1, max = 10) {
 export class Counter {
     private count: number = 0
     private stopped: boolean = false
-    private listener: [number,(() => void)][] = []
+    private listener: [number, () => void][] = []
 
     public constructor() {
         this.reset()
@@ -66,4 +68,21 @@ export class Counter {
             this.listener.push([num, callback])
         }
     }
+}
+
+/* 判断小时,分钟,秒是否在范围内 */
+export function isTimeInRange(time: Time, scope: TimeScope): boolean {
+    var [hour, minute, second] = time
+    var [startHour, startMinute, startSecond] = scope[0]
+    var [endHour, endMinute, endSecond] = scope[1]
+
+    var nowTime = new Date()
+    nowTime.setHours(hour, minute, second)
+    var startTime = new Date()
+    startTime.setHours(startHour, startMinute, startSecond)
+    var endTime = new Date()
+    endTime.setHours(endHour, endMinute, endSecond)
+    if (startHour > endHour) endTime.setDate(endTime.getDate() + 1)
+
+    return nowTime.getTime() >= startTime.getTime() && nowTime.getTime() <= endTime.getTime()
 }
