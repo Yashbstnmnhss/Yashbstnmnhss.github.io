@@ -1,15 +1,6 @@
 <script setup lang="ts">
-import {
-    NButton,
-    NButtonGroup,
-    NSpace,
-    NIcon
-} from 'naive-ui'
-import {  
-    LinkOutline,
-    LogoGithub,
-    LogoDiscord
-} from "@vicons/ionicons5"
+import { NButton, NButtonGroup, NSpace, NIcon } from 'naive-ui'
+import { LinkOutline, LogoGithub, LogoDiscord } from '@vicons/ionicons5'
 </script>
 
 <template>
@@ -31,7 +22,11 @@ import {
                 </template>
                 <span>{{ $t('components.OtherLinks.fasterSite') }}</span>
             </n-button>
-            <n-button tag="a" type="info" href="https://github.com/Yashbstnmnhss/yashbstnmnhss.github.io">
+            <n-button
+                tag="a"
+                type="info"
+                href="https://github.com/Yashbstnmnhss/yashbstnmnhss.github.io"
+            >
                 <template #icon>
                     <n-icon>
                         <logo-github />
@@ -45,7 +40,10 @@ import {
                         <logo-discord />
                     </n-icon>
                 </template>
-                <span>Discord</span>
+                <span>
+                    <s>Discord</s>
+                    服务器被我删了呜呜
+                </span>
             </n-button>
         </n-button-group>
     </n-space>

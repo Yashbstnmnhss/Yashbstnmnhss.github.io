@@ -1,6 +1,12 @@
-# 更新日志 :notebook:
+# 日志 :notebook:
 <!-- bstnmnhss2.0 -> bstnmnhss3.0-->
 ------
+
+### 2022/7/26
+- 我在思索这更新日志的存在意义...
+
+### 2022/7/8
+- **更新了*114514*个**
 
 ### 2022/6/14
 - **更新了一堆**
@@ -65,15 +71,16 @@
 
 > 爷出生了
 
-# ~~友情~~链接 :link:
+# 链接 :link:
 > 所谓"加速"似乎也不怎么样
 ------
 - [Github](https://github.com/Yashbstnmnhss/Yashbstnmnhss.github.io) 
 - [Github站点(慢)](https://yashbstnmnhss.github.io)
 - [加速?站点](https://yashbstnmnhss.vercel.app)
+- [~~Discord~~我把服务器删了呜呜呜, 我用户名: Yashbstnmnhss#2235 ??我不确定](https://114514.1919810/277353)
 
 <style>
-    .spoiler {
+.spoiler {
     background-color: black;
     color: black;
     cursor: help;

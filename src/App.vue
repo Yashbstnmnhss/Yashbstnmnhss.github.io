@@ -5,6 +5,8 @@ import Viewer from './components/Viewer.vue'
 
 <template>
     <bstnmnhss3>
+        <by-yashbstnmnhss />
+        <used-vue />
         <!--
             
  _______               __                                        __                             ______  

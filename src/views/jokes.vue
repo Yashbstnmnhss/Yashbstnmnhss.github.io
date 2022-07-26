@@ -50,6 +50,11 @@ const getMenuOptions = () => {
             key: 'fuze-videos',
             iconType: Icons['video'],
         },
+        {
+            link: '/jokes/fuze/document',
+            key: 'fuze-document',
+            iconType: Icons['book'],
+        },
     ]
     const gclMenuOptions: MenuOption[] = [
         {

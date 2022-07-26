@@ -16,7 +16,6 @@ function prepare(inss: Record<string, AxiosRequestConfig<any>>) {
     var result: Record<string, AxiosInstance> = {}
     for (var key of Object.keys(inss)) {
         var ins = axios.create(inss[key])
-        console.log(key, inss, Object.keys(inss), inss[key])
         ins.interceptors.request.use(
             config => {
                 Logger.debug(`[API.${key}] ${config.method} ${config.url}`)

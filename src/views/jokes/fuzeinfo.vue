@@ -4,10 +4,10 @@ name: fuze
 
 <script setup lang="ts">
 import FuzeAvatar from '@/assets/images/jokes/fuze/avatar.jpg'
+import FuzeVideo from '@/assets/videos/jokes/fuze.mp4'
 import { NH1, NThing, NImage, NLi, NButton, NCard, NDivider } from 'naive-ui'
 import { useRouter } from 'vue-router'
 import Spoiler from '../../components/Spoiler.vue'
-import FuzeBlock from '../../components/FuzeBlock.vue'
 import Timetable from '../../components/Timetable.vue'
 
 import P5C from '../../components/P5.vue'
@@ -159,6 +159,10 @@ const sketch = (p: P5) => {
             </n-button>
         </template>
     </n-thing>
+    <n-divider />
+    <n-card>
+        <video :src="FuzeVideo" muted autoplay loop />
+    </n-card>
     <n-divider />
     <n-card title="BILIBILI">
         <iframe
