@@ -1,0 +1,1 @@
+import{b as r}from"./route-block.b5bad31b.js";import{_ as t}from"./plugin-vue_export-helper.21dcd24c.js";const o={};function a(c,e){return"\u{1F6A7}\u{1F6A7}\u{1F6A7}\u{1F6A7}\u{1F6A7}\u{1F6A7}\u{1F6A7}\u{1F6A7}\u{1F6A7}\u{1F6A7}\u{1F6A7}"}typeof r=="function"&&r(o);var _=t(o,[["render",a]]);export{_ as default};
