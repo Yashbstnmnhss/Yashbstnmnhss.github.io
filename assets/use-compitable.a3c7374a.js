@@ -1,0 +1,1 @@
+import{M as f,s as e}from"./index.f590f622.js";function a(u,n){return f(u,r=>{r!==void 0&&(n.value=r)}),e(()=>u.value===void 0?n.value:u.value)}function s(u,n){return e(()=>{for(const r of n)if(u[r]!==void 0)return u[r];return u[n[n.length-1]]})}export{s as a,a as u};
