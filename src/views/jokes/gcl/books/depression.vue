@@ -3,7 +3,7 @@ name: gcl-books-depression
 </route>
 
 <script setup lang="ts">
-import Spoiler from '../../../../components/Spoiler.vue'
+import Spoiler from '../../../../components/models/Spoiler.vue'
 import { NH1, NH3, NTabs, NTabPane, NBlockquote } from 'naive-ui'
 </script>
 

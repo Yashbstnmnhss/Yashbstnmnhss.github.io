@@ -29,6 +29,7 @@ export default defineConfig({
     plugins: [
         vue({
             include: [/\.vue$/, /\.md$/],
+            reactivityTransform: true,
         }),
         pages({
             pagesDir: 'src/views',

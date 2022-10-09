@@ -1,28 +1,11 @@
 <script setup lang="ts">
-import Provider from './components/Provider.vue'
-import Viewer from './components/Viewer.vue'
+import Provider from './components/basic/Provider.vue'
+import Viewer from './components/basic/Viewer.vue'
 </script>
 
 <template>
     <bstnmnhss3>
-        <by-yashbstnmnhss />
-        <used-vue />
-        <!--
-            
- _______               __                                        __                             ______  
-|       \             |  \                                      |  \                           /      \ 
-| $$$$$$$\  _______  _| $$_    _______   ______ ____   _______  | $$____    _______   _______ |  $$$$$$\
-| $$__/ $$ /       \|   $$ \  |       \ |      \    \ |       \ | $$    \  /       \ /       \ \$$__| $$
-| $$    $$|  $$$$$$$ \$$$$$$  | $$$$$$$\| $$$$$$\$$$$\| $$$$$$$\| $$$$$$$\|  $$$$$$$|  $$$$$$$  |     $$
-| $$$$$$$\ \$$    \   | $$ __ | $$  | $$| $$ | $$ | $$| $$  | $$| $$  | $$ \$$    \  \$$    \  __\$$$$$\
-| $$__/ $$ _\$$$$$$\  | $$|  \| $$  | $$| $$ | $$ | $$| $$  | $$| $$  | $$ _\$$$$$$\ _\$$$$$$\|  \__| $$
-| $$    $$|       $$   \$$  $$| $$  | $$| $$ | $$ | $$| $$  | $$| $$  | $$|       $$|       $$ \$$    $$
- \$$$$$$$  \$$$$$$$     \$$$$  \$$   \$$ \$$  \$$  \$$ \$$   \$$ \$$   \$$ \$$$$$$$  \$$$$$$$   \$$$$$$ 
-                                                                                                        
-                                                                                                        
-                                                                                                        
-    Bstnmnhss 3.0 by Yashbstnmnhss used Vue 3 & Naive UI
-        -->
+        <yashbstnmnhss />
     </bstnmnhss3>
     <Provider>
         <Viewer />

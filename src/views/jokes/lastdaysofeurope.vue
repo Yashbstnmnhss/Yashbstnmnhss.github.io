@@ -18,9 +18,10 @@ import {
     NSpin,
 } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
-import { CommentResponse } from '../../api/models'
-import { CommentService, ExternalService } from '../../api/services'
-import Logger from '../../utils/logger'
+import { CommentResponse } from '../../lib/api/types'
+import { CommentService, ExternalService } from '../../lib/api/services'
+import Logger from '../../lib/utils/logger'
+import { choice as choi } from '../../lib/utils'
 
 const message = useMessage()
 const i18n = useI18n()
@@ -31,6 +32,25 @@ const comments = ref<CommentResponse[]>([])
 const postContent = ref<string>('')
 const postLoading = ref<boolean>(false)
 const postStatus = ref<string>()
+
+const commands: Record<string, Function> = {
+    delete: (id: string) => {
+        Logger.log('deleting comment', id)
+        var r = ''
+        CommentService.delete(id)
+            .then(() => (r = `success ${id}`))
+            .catch(e => message.error(e))
+        return
+    },
+    hentai: () => window.open('https://jmcomic.asia/'),
+    choice: (i: any[]) => choi(i),
+    s: (s: string) => document.querySelector(s),
+    ss: (s: string) => document.querySelectorAll(s),
+    ask: (c: any) => {
+        message.info(c)
+        return commands.ask
+    },
+}
 
 const addComment = () => {
     postStatus.value = undefined
@@ -44,22 +64,38 @@ const addComment = () => {
     postContent.value = postContent.value.trim()
     postLoading.value = true
 
-    var delReg = /^\/delete \'(.+)\'/
-    var cmd = delReg.exec(postContent.value)
-    if (delReg.test(postContent.value) && cmd) {
-        Logger.log('deleting comment', cmd[1])
-        CommentService.delete(cmd[1])
-            .then(() => {
-                message.success(i18n.t('comment.delete.success'))
-                postContent.value = ''
-            })
-            .catch(e => {
-                message.error(e)
-            })
-            .finally(() => {
-                postLoading.value = false
-            })
-        return
+    if (
+        postContent.value.startsWith('/god') ||
+        postContent.value.startsWith('/神明啊') ||
+        postContent.value.startsWith('#god')
+    ) {
+        var c = postContent.value.slice(4).trim()
+        if (!c) {
+            postStatus.value = 'warning'
+            postLoading.value = false
+            return
+        }
+        Logger.log('[LDOE]', 'this is eval()', c)
+        postLoading.value = true
+        try {
+            var r = eval(`
+                (function() {
+                const $ = commands
+                    // 我想抽艹神啊啊啊
+                    ${c}
+                })()
+            `)
+            if (r) message.info(r)
+            return
+        } catch (e) {
+            Logger.error('[LDOE]', e, '错错错错错误误误误误!?')
+            postStatus.value = 'warning'
+            postLoading.value = false
+            return
+        } finally {
+            postLoading.value = false
+            postStatus.value = undefined
+        }
     }
 
     var ip: string = 'unknown'
@@ -97,7 +133,7 @@ onMounted(() => {
             loadingComments.value = false
         })
         .catch(e => {
-            message.error(e)
+            message.error(`The End Is Never`)
             Logger.error('[lastdaysofeurope]', e)
             loadingComments.value = false
         })

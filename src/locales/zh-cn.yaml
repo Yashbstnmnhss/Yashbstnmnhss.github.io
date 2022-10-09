@@ -31,7 +31,12 @@ components:
         time: 时间
         content: 内容
 layouts:
+    MainLayout:
+        update: 更新日志
+        back-jokes: 重回阴间
+        grammar: 语法
     JokesLayout:
+        document: 《Crafuzey》
         fuze: F U Z E
         fuze-sayings: 名言金句
         fuze-sayings-original: 伪版
@@ -39,19 +44,27 @@ layouts:
         fuze-sounds: 余音缭绕
         fuze-images: 帅!帅!帅!
         fuze-videos: 珍贵录像
-        fuze-document: 《Fuzeland》
         gcl: Gladys Chandra Clea Lukito
         gcl-books: 骇世大作
         gcl-books-depression: 抑郁症
         gcl-books-indonesian: 家乡话
         gcl-books-yandere: 病娇
         gcl-books-bangsat: 漏出马脚
+        gcl-books-back: 往返自然
         gcl-images: 笑!笑!笑!
+        ayaya: 东南亚联盟
+        zang: 小太阳与瓦林妹
+        zang-images: 神女
+        zang-sounds: 小太阳的呐喊
+        zang-videos: 魔龙妹的日常
+        nan: 个口
+        nan-medias: 个口媒体
         joke-home: 主页
         lastdaysofeurope: THE NEW ORDER
         sayings: 沉浸版名言金句
         update: 更新日志
         fuzeblockisnotagame: FUZE BLOCK IS NOT A GAME
+        back-main: 额外
 views:
     fuzeblockisnotagame:
         question:
@@ -87,10 +100,12 @@ views:
                     verifyco2: Eh元素检验CO₂
             sounds:
                 items:
-                    fuzedemamawenwen: 这语音发的, 跟那傻子一样, 下面这个多少钱啊? 你说Fuze买不起, Fuze的妈妈问问? 看能买得起吗?
+                    fuzedemamawenwen: Fuze的妈妈问问? 看能买得起吗?
                     kanbaxiaohuogaoxingde: 看把小伙高兴的
                     wocaoxing: 卧槽彳亍
                     fuzedontknowchinese: 丈育
+                    seawave: 趁儿子不在浪
+                    pointpointpoint: 实际上点点点点点点点
             images:
                 tip: 👍👍👍帅帅帅(′д｀ )…彡…彡
             sayings:
@@ -106,6 +121,26 @@ views:
                 depression:
                     pane1: 原版发病
                     part: 第{0}章
+        zang:
+            sounds:
+                items:
+                    good: 我真服了你了
+                    handsome: 大帅哥
+                    jian: 稻妻の贱²
+            videos:
+                items:
+                    ugly: 丑小鸭
+                    dead: 风魔龙之死
+                    lkzx: 校花
+                    idiot: 双晦亡中亡
+        nan:
+            sounds:
+                items:
+                    dizhicollege: 墬彘dark雪
+                    licongzhi: 来一个拍一个
+                    pairenshijian: 全员拍人
+                    jinhua: 璃月拍人事件了啦
+                    shishaokang: 忙碌的拾枣人
         lastdaysofeurope:
             post-success: POST成功 refresh!
             post-title: 添加

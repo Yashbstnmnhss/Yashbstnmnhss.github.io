@@ -1,43 +1,16 @@
-import { toStore } from './auto'
-import { useStore as baseUseStore,Store } from "vuex"
-import { DefaultLanguage, DefaultTheme, Languages, Themes } from "../utils/constants"
-import { InjectionKey } from "vue"
-import Logger from '../utils/logger'
+import { defineStore } from 'pinia'
+import { useLocalStorage } from './pinia'
+import Logger from '../lib/utils/logger'
+import { DefaultTheme, DefaultLanguage } from '../lib/constants'
 
-export interface StateClass {
-    sidebar: boolean,
-    theme: Themes,
-    language: Languages,
-    achievements: string[],
-}
-
-export const store = toStore<StateClass>({
-    sidebar: {
-        type: 'storage',
-        defaultValue: false
-    },
-    theme: {
-        type: 'storage',
-        defaultValue: DefaultTheme
-    },
-    language: {
-        type: 'storage',
-        defaultValue: DefaultLanguage
-    },
-    achievements: {
-        type: 'storage',
-        defaultValue: []
-    }
+export const useMain = defineStore('main', {
+    state: () => ({
+        sidebar: false,
+        theme: DefaultTheme,
+        language: DefaultLanguage,
+        achievements: [] as string[],
+    }),
+    persist: useLocalStorage('main'),
 })
 
-Logger.log('[Store]', 'store', '=', store)
-
-export const key : InjectionKey<Store<StateClass>> = Symbol()
-
-export function useStore() {
-    return baseUseStore(key)
-}
-
-export function commit<K extends keyof StateClass, V extends StateClass[K]>(type: K, payload?: V) {
-    store.commit(type, payload)
-}
+Logger.log('[Store]', 'defined stores')

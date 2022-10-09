@@ -3,17 +3,12 @@ name: fuze-sounds
 </route>
 
 <script setup lang="ts">
-import {
-    NH1,
-    NSpace,
-    NThing,
-    NEllipsis
-} from 'naive-ui'
-import { toImportInfo } from '../../../utils/imports'
-import { useAchiever } from '../../../composables/achievements'
+import { NH1, NSpace, NThing, NEllipsis } from 'naive-ui'
+import { toImportInfo } from '../../../lib/utils/imports'
+import { useAchiever } from '../../../lib/models/achievements'
 
 const sounds = toImportInfo(
-    import.meta.globEager('@/assets/sounds/jokes/fuze/**/*.{mp3,wav,ogg}')
+    import.meta.glob('@/assets/sounds/jokes/fuze/**/*.{mp3,wav,ogg}', { eager: true })
 )
 const achiever = useAchiever()
 var dignityPlayTimes = 0
@@ -22,8 +17,7 @@ const onPlay = (e: Event) => {
     var target = e.target as HTMLVideoElement
     if (target.getAttribute('key') === 'wocaoxing') {
         dignityPlayTimes++
-        if (dignityPlayTimes === 10)
-            achiever.achieve('cant_get_mad_who_havent_dignity')
+        if (dignityPlayTimes === 10) achiever.achieve('cant_get_mad_who_havent_dignity')
     }
 }
 </script>
@@ -37,8 +31,13 @@ const onPlay = (e: Event) => {
                     {{ $t(`views.jokes.fuze.sounds.items.${sound.name}`) }}
                 </n-ellipsis>
             </template>
-            <audio :src="sound.path" controls @play="e => onPlay(e)" :key="sound.name"
-                :title="$t(`views.jokes.fuze.sounds.items.${sound.name}`)" />
+            <audio
+                :src="sound.path"
+                controls
+                @play="e => onPlay(e)"
+                :key="sound.name"
+                :title="$t(`views.jokes.fuze.sounds.items.${sound.name}`)"
+            />
         </n-thing>
     </n-space>
 </template>

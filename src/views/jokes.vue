@@ -1,185 +1,66 @@
 <script setup lang="ts">
 import { NLayout, NLayoutHeader, NLayoutSider, NLayoutFooter, NSpace } from 'naive-ui'
-import type { MenuOption } from 'naive-ui/lib'
-import Viewer from '../components/Viewer.vue'
-import Footer from '../components/Footer.vue'
-import { useStore } from '../store'
-import { ref, onMounted } from 'vue'
-import SideMenu from '../components/SideMenu.vue'
-import { Icons } from '../utils/icon'
-import { useAchiever } from '../composables/achievements'
+import Viewer from '../components/basic/Viewer.vue'
+import Footer from '../components/layout/Footer.vue'
+import { useMain } from '../store'
+import { onMounted, watch } from 'vue'
+import getMenuOptions from '../route/menus/jokes'
+import SideMenu from '../components/layout/SideMenu.vue'
 
-const store = useStore()
-const achiever = useAchiever()
+const store = useMain()
+let collapsed = $ref<boolean>()
 
-const getMenuOptions = () => {
-    const fuzeMenuOptions: MenuOption[] = [
-        {
-            link: '/jokes/fuzeinfo',
-            key: 'fuze',
-            iconType: Icons['person'],
-        },
-        {
-            key: 'fuze-sayings',
-            iconType: Icons['book'],
-            children: [
-                {
-                    link: '/jokes/fuze/sayings/original',
-                    key: 'fuze-sayings-original',
-                    iconType: Icons['bookmark'],
-                },
-                {
-                    link: '/jokes/fuze/sayings/translated',
-                    key: 'fuze-sayings-translated',
-                    iconType: Icons['bookmark'],
-                },
-            ],
-        },
-        {
-            link: '/jokes/fuze/sounds',
-            key: 'fuze-sounds',
-            iconType: Icons['volume'],
-        },
-        {
-            link: '/jokes/fuze/images',
-            key: 'fuze-images',
-            iconType: Icons['image'],
-        },
-        {
-            link: '/jokes/fuze/videos',
-            key: 'fuze-videos',
-            iconType: Icons['video'],
-        },
-        {
-            link: '/jokes/fuze/document',
-            key: 'fuze-document',
-            iconType: Icons['book'],
-        },
-    ]
-    const gclMenuOptions: MenuOption[] = [
-        {
-            link: '/jokes/gclinfo',
-            key: 'gcl',
-            iconType: Icons['person'],
-        },
-        {
-            key: 'gcl-books',
-            iconType: Icons['book'],
-            children: [
-                {
-                    link: '/jokes/gcl/books/depression',
-                    key: 'gcl-books-depression',
-                    iconType: Icons['bookmark'],
-                },
-                {
-                    link: '/jokes/gcl/books/indonesian',
-                    key: 'gcl-books-indonesian',
-                    iconType: Icons['bookmark'],
-                },
-                {
-                    link: '/jokes/gcl/books/yandere',
-                    key: 'gcl-books-yandere',
-                    iconType: Icons['bookmark'],
-                },
-                {
-                    link: '/jokes/gcl/books/bangsat',
-                    key: 'gcl-books-bangsat',
-                    iconType: Icons['bookmark'],
-                },
-            ],
-        },
-        {
-            link: '/jokes/gcl/images',
-            key: 'gcl-images',
-            iconType: Icons['image'],
-        },
-    ]
+const toggle = () => (store.sidebar = !collapsed)
 
-    const jokeMenuOptions: MenuOption[] = [
-        {
-            key: 'fuze',
-            iconType: Icons['person'],
-            children: fuzeMenuOptions,
-        },
-        {
-            key: 'gcl',
-            iconType: Icons['person'],
-            children: gclMenuOptions,
-        },
-    ]
+onMounted(() => (collapsed = store.sidebar))
 
-    const headerMenuOptions: MenuOption[] = [
-        {
-            link: '/jokes',
-            key: 'joke-home',
-            iconType: Icons['home'],
-        },
-        { type: 'divider' },
-        {
-            link: '/jokes/fuzeblockisnotagame',
-            key: 'fuzeblockisnotagame',
-            iconType: Icons['squareFull'],
-        },
-
-        {
-            link: {
-                to: '/jokes/lastdaysofeurope',
-            },
-            key: 'lastdaysofeurope',
-            iconType: Icons['chatbox'],
-        },
-    ]
-    const footerMenuOptions: MenuOption[] = [
-        {
-            link: {
-                to: '/update',
-                onClick: () => {
-                    achiever.achieve('nothing_interesting_here')
-                },
-            },
-            key: 'update',
-            iconType: Icons['markdown'],
-        },
-    ]
-
-    const menuOptions: MenuOption[] = [
-        ...headerMenuOptions,
-        { type: 'divider' },
-        {
-            type: 'group',
-            label: 'J O K E S',
-            key: 'joke-group',
-            children: [...jokeMenuOptions],
-        },
-        { type: 'divider' },
-        ...footerMenuOptions,
-    ]
-
-    return menuOptions
-}
-
-const collapsed = ref<boolean>()
-
-const toggle = () => {
-    store.commit('sidebar', !collapsed.value)
-}
-
-onMounted(() => {
-    collapsed.value = store.state.sidebar
-})
-
-store.watch(
-    state => state.sidebar,
-    (val, old) => {
-        collapsed.value = val
-    }
+watch(
+    () => store.sidebar,
+    v => (collapsed = v)
 )
 </script>
 
 <template>
     <n-layout style="height: 100%">
-        <n-layout-header style="height: 64px; padding: 24px" bordered>
-            <n-space>Jokes-Bstnmnhss</n-space>
+        <n-layout-header style="height: 64px" bordered>
+            <n-space>
+                <svg style="max-width: 100%" height="64px" viewBox="0 0 500 64">
+                    <circle
+                        id="iconWrap"
+                        cx="30"
+                        cy="30"
+                        r="15"
+                        style="stroke: var(--n-text-color); stroke-width: 3px; fill: transparent"
+                    />
+                    <text
+                        id="iconText"
+                        x="20"
+                        y="36"
+                        style="
+                            font-size: 20px;
+                            fill: rgb(36, 204, 255);
+                            user-select: none;
+                            cursor: pointer;
+                        "
+                        onclick="window.location.href='/'"
+                    >
+                        楽
+                    </text>
+                    <text
+                        x="55"
+                        y="40"
+                        style="
+                            font-size: 25px;
+                            fill: var(--n-text-color);
+                            user-select: none;
+                            cursor: pointer;
+                        "
+                        onclick="window.location.href='/'"
+                    >
+                        Bstnmnhss 3
+                    </text>
+                </svg>
+            </n-space>
         </n-layout-header>
         <n-layout position="absolute" style="top: 64px; bottom: 64px" has-sider>
             <n-layout-sider

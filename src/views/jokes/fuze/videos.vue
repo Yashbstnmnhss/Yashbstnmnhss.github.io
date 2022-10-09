@@ -4,13 +4,17 @@ name: fuze-videos
 
 <script setup lang="ts">
 import { NH1, NSpace, NThing, NEllipsis, NBackTop, NAnchor, NAnchorLink } from 'naive-ui'
-import { toImportInfo } from '../../../utils/imports'
-import { useAchiever } from '../../../composables/achievements'
+import { toImportInfo } from '../../../lib/utils/imports'
+import { useAchiever } from '../../../lib/models/achievements'
 
 const achiever = useAchiever()
 
-const videos = toImportInfo(import.meta.globEager('@/assets/videos/jokes/fuze/**/*.{mp4,webm,ogv}'))
-const subtitles = toImportInfo(import.meta.globEager('@/assets/videos/jokes/fuze/**/*.{srt,vtt}'))
+const videos = toImportInfo(
+    import.meta.glob('@/assets/videos/jokes/fuze/**/*.{mp4,webm,ogv}', { eager: true })
+)
+const subtitles = toImportInfo(
+    import.meta.glob('@/assets/videos/jokes/fuze/**/*.{srt,vtt}', { eager: true })
+)
 
 const videoAchiever = (e: Event) => {
     var target = e.target as HTMLVideoElement

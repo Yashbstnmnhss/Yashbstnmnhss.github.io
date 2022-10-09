@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { 
-    NWatermark, 
-    NResult 
-} from 'naive-ui'
+import { NWatermark, NResult } from 'naive-ui'
 import { ref } from 'vue'
-import { useAchiever } from '../composables/achievements'
+import { useAchiever } from '../lib/models/achievements'
 
 const achiever = useAchiever()
 const url = ref('')
@@ -33,16 +30,17 @@ const onPlay = () => {
         class="page-margin"
         status="404"
         title="404"
-        description="Not Found"
-        size="huge">
-        <template #footer>
-            ?
-        </template>
+        description="未知的深渊"
+        size="huge"
+    >
+        <template #footer>?</template>
     </n-result>
     <audio
-        class="player-center" title="6999"
-        src="http://topia.wdfiles.com/local--files/nearer-my-god-to-thee/hymn.mp3" 
-        controls loop
+        class="player-center"
+        title="6999"
+        src="http://topia.wdfiles.com/local--files/nearer-my-god-to-thee/hymn.mp3"
+        controls
+        loop
         @play="onPlay()"
     />
 </template>
@@ -50,7 +48,7 @@ const onPlay = () => {
 <style scoped>
 .page-margin {
     margin: 100px;
-    transition: background-image .2s ease .25s;
+    transition: background-image 0.2s ease 0.25s;
 }
 .player-center {
     margin-top: 75rem;

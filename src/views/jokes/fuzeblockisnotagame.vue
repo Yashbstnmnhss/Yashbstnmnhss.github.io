@@ -25,15 +25,21 @@ import {
     NAvatar,
     NThing,
     NInputGroup,
+    NAlert,
+    NBadge,
 } from 'naive-ui'
-import { bsToLetter, letterToBs } from '../../composables/bslang'
-import { Service, UtilService } from '../../api/services'
-import { ChineseCharacter } from '../../api/models'
+import { bsToLetter, letterToBs } from '../../lib/models/bslang'
+import { Service, UtilService } from '../../lib/api/services'
+import { ChineseCharacter } from '../../lib/api/types'
 import { ref, onMounted } from 'vue'
-import FuzeImage from '../../assets/images/jokes/fuze/fuzeshout.png'
-import { useAchiever } from '../../composables/achievements'
-import BirthdayCountdown from '../../components/BirthdayCountDown.vue'
-import { getFlags, dedede } from '../../composables/chinese'
+import FuzeImage from '@/assets/images/jokes/fuze/fuzeshout.png'
+import { useAchiever } from '../../lib/models/achievements'
+import BirthdayCountdown from '../../components/models/BirthdayCountDown.vue'
+import { getFlags, dedede } from '../../lib/models/chinese'
+import { checkWebsite } from '../../lib/utils'
+import { API } from '../../lib/constants'
+
+let apiAlive = $ref<boolean | null>(null)
 
 const achiever = useAchiever()
 
@@ -149,6 +155,7 @@ const chineseCharacter = ref<ChineseCharacter>(),
     charLoading = ref(false)
 
 onMounted(() => {
+    checkWebsite(API).then(v => (apiAlive = v))
     Service.getRandomSaying()
         .then(res => {
             qrCodeInput.value = res.data.text
@@ -186,6 +193,7 @@ onMounted(() => {
         style="padding: 10px"
         @contextmenu="(e: any) => e.preventDefault()"
     >
+        <NAlert v-if="!apiAlive" type="error">API站不可用, 本页面部分功能失效</NAlert>
         <birthday-countdown
             target="FUZE"
             :date="fuzeBirthday"
@@ -299,9 +307,6 @@ onMounted(() => {
         </n-card>
 
         <n-card title="Yet Another Useless 'Calculator'">
-            <template #header-extra>
-                <mark>YAUC</mark>
-            </template>
             <n-dynamic-input
                 v-model:value="yaucValue"
                 :on-create="
@@ -353,6 +358,9 @@ onMounted(() => {
                 <template #action>
                     <n-button @click="generateQRCode()">&lt;(￣︶￣)↗[GO!]</n-button>
                 </template>
+                <template #header-extra>
+                    <NAlert type="warning">依赖API</NAlert>
+                </template>
             </n-card>
         </n-spin>
 
@@ -393,9 +401,7 @@ onMounted(() => {
         </n-card>
         <n-card title="中文">
             <template #header-extra>
-                并
-                <strong>不</strong>
-                准确
+                <NAlert type="warning">依赖API</NAlert>
             </template>
             <n-tabs type="segment" animated>
                 <n-tab-pane name="char" tab="宀子">

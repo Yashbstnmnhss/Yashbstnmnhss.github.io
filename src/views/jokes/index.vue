@@ -3,24 +3,22 @@ name: joke-home
 </route>
 
 <script setup lang="ts">
-import ACSBar from '../../components/ACSBar.vue'
-import { useAchiever } from '../../composables/achievements'
-import P5C from '../../components/P5.vue'
+import ACSBar from '../../components/models/ACSBar.vue'
+import { useAchiever } from '../../lib/models/achievements'
+import P5C from '../../components/models/P5.vue'
 import P5 from 'p5'
 import { NBlockquote, NSpace, NCard, NDivider, NCode } from 'naive-ui'
 import { RouterLink } from 'vue-router'
+import FuMusicBox from '../../components/models/FuMusicBox.vue'
 
-import FUZE1 from '../../assets/images/jokes/fuze/monster.png'
-import FUZE2 from '../../assets/images/jokes/fuze/onTheBus.jpg'
-import FUZE3 from '../../assets/images/jokes/fuze/fuzeShout.png'
-import FUZE4 from '../../assets/images/jokes/fuze/fuzeshoutsmall.jpg'
-import NOTE from '../../assets/images/textures/note_block.png'
+import FUZE1 from '@/assets/images/jokes/fuze/monster.png'
+import FUZE2 from '@/assets/images/jokes/fuze/onTheBus.jpg'
+import FUZE3 from '@/assets/images/jokes/fuze/fuzeShout.png'
+import FUZE4 from '@/assets/images/jokes/fuze/fuzeshoutsmall.jpg'
 
-import { onMounted } from 'vue'
-import { toImportInfo } from '../../utils/imports'
+import { random } from '../../lib/utils'
 
 const achiever = useAchiever()
-const sounds = toImportInfo(import.meta.globEager('../../assets/sounds/fuze/*.mp3'))
 
 const sketch = (p: P5) => {
     let diameter: number,
@@ -171,22 +169,6 @@ const sketch4 = (p: P5) => {
         p.image(f4, 0, 0, 50, 50)
     }
 }
-
-var fumusics: HTMLCollection
-onMounted(() => {
-    fumusics = document.getElementById('fumusics')?.children!
-    for (var i = 0; i < fumusics.length; i++) {
-        var audio = fumusics.item(i) as HTMLAudioElement
-        audio.onended = () => (audio.src = '')
-    }
-})
-const fumusic = (sound: string, index: number) => {
-    var audio = fumusics[index] as HTMLAudioElement
-    audio.pause()
-    audio.src = sound
-    audio.loop = false
-    audio.play()
-}
 </script>
 
 <template>
@@ -227,7 +209,7 @@ const fumusic = (sound: string, index: number) => {
             <mark>常任成员</mark>
             (包括
             <router-link to="/jokes/fuzeinfo">FUZE</router-link>
-            ), {{ Math.ceil(Math.random() * 10050) }}多名普通成员组成
+            ), {{ random(4000, 10086) }}多名普通成员组成
             <br />
             (事实上 普通成员成员数量的变化
             <strong>不可测量</strong>
@@ -323,47 +305,7 @@ const fumusic = (sound: string, index: number) => {
             </n-space>
         </n-card>
         <n-card title="FU音盒" hoverable>
-            <n-space>
-                <img
-                    v-for="(sound, index) in sounds"
-                    :key="index"
-                    :src="NOTE"
-                    :title="sound.name"
-                    :id="sound.name"
-                    class="note-image"
-                    @click="fumusic(sound.path, index)"
-                />
-            </n-space>
-            <div id="fumusics">
-                <audio v-for="(_, index) in sounds" :key="index" hidden src="">
-                    NOT SUPPORTED, NOT SUPPORTED, NOT SUPPORTED
-                </audio>
-            </div>
+            <FuMusicBox />
         </n-card>
     </n-space>
 </template>
-
-<style lang="less" scoped>
-.note-image {
-    width: 15em;
-    height: 100%;
-    image-rendering: optimizeSpeed;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -o-crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: pixelated;
-    -ms-interpolation-mode: nearest-neighbor;
-    z-index: 1;
-    max-width: 100%;
-    max-height: 100%;
-    user-select: none;
-    user-zoom: none;
-
-    &:hover {
-        filter: contrast(125%);
-    }
-    &:active {
-        transform: scale(1.25);
-    }
-}
-</style>

@@ -4,12 +4,14 @@ name: gcl-images
 
 <script setup lang="ts">
 import { NH1, NImageGroup, NSpace, NImage, NBackTop } from 'naive-ui'
-import { toImportInfo } from '../../../utils/imports'
-import { useAchiever } from '../../../composables/achievements'
+import { toImportInfo } from '../../../lib/utils/imports'
+import { useAchiever } from '../../../lib/models/achievements'
 
 const achiever = useAchiever()
 const images = toImportInfo(
-    import.meta.globEager('@/assets/images/jokes/gladyschandraclealukito/**/*.{jpg,png,gif}')
+    import.meta.glob('@/assets/images/jokes/gladyschandraclealukito/**/*.{jpg,png,gif}', {
+        eager: true,
+    })
 )
 
 const onClick = () => {
