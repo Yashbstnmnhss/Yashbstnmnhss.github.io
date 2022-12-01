@@ -134,7 +134,7 @@ import { NH1, NBlockquote, NSpace, NCard, NImage, NScrollbar } from 'naive-ui'
             <br />
             <strong>FEIFEI (陈斐)</strong>
             <br />
-            攒原石ing 为了抽符合xp的人 喜欢内鬼舅舅
+            攒原石中 为了抽符合性癖的人 喜欢内鬼舅舅
             <br />
             <mark>"he(神里绫人) is not handsome"</mark> <br />
         </NCard>
