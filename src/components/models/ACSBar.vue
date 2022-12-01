@@ -14,9 +14,13 @@ import {
     Risk2Icon,
     Disruption2Extra,
     Risk2Extra,
-} from '../../lib/models/acs'
+} from '../../lib/functions/acs'
 import { ACSLevel, ACSClass, ACSSecondaryClass, ACSDisruption, ACSRisk } from '../../lib/types'
-import { onMounted, computed, watch } from 'vue'
+import { onMounted, computed, watch, ref } from 'vue'
+import { useMain } from '../../store'
+import { Themes } from '../../lib'
+
+const store = useMain()
 
 const updateSvg = () => {
     /* Class & Secondary Class */
@@ -65,7 +69,12 @@ const levelColor = computed(() => Level2Color[props.level]),
     secondaryColor = computed(() => Class2Color[props.secondaryCategory!] ?? '属性值无效'),
     disruptColor = computed(() => Disruption2Color[props.disruption]),
     riskColor = computed(() => Risk2Color[props.risk]),
-    secondaryVisible = computed(() => (props.secondaryCategory ? 'visible' : 'hidden'))
+    secondaryVisible = computed(() => (props.secondaryCategory ? 'visible' : 'hidden')),
+    colorOpacity = ref(store.theme === Themes.dark ? 0.8 : 0.3)
+watch(
+    () => store.theme,
+    t => (colorOpacity.value = t === Themes.dark ? 0.8 : 0.3)
+)
 </script>
 
 <template>
@@ -90,7 +99,7 @@ const levelColor = computed(() => Level2Color[props.level]),
             </span>
         </div>
         <div class="divider">
-            <div />
+            <div></div>
         </div>
         <div class="class">
             <div class="container">
@@ -443,6 +452,7 @@ const levelColor = computed(() => Level2Color[props.level]),
     --disrupt-color: v-bind(disruptColor);
     --risk-color: v-bind(riskColor);
     --secondary-visible: v-bind(secondaryVisible);
+    --color-opacity: v-bind(colorOpacity);
 }
 </style>
 <style lang="less" src="../../assets/styles/acs.less" scoped></style>

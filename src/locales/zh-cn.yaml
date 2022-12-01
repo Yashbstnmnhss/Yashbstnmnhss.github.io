@@ -19,7 +19,6 @@ components:
     ACSBar:
         number: '项目编号:'
         level: 等级{0}
-        #level-extra: 'Unrestricted | Restricted | Confidential | Secret | Top Secret | Cosmic Top Secret'
         class-category: '收容等级:'
         class-secondary-category: '次要等级:'
         disrupt-category: '扰动等级:'
@@ -37,14 +36,14 @@ layouts:
         grammar: 语法
     JokesLayout:
         document: 《Crafuzey》
-        fuze: F U Z E
+        fuze: 亻寸氵睾
         fuze-sayings: 名言金句
         fuze-sayings-original: 伪版
         fuze-sayings-translated: 真·版
         fuze-sounds: 余音缭绕
         fuze-images: 帅!帅!帅!
         fuze-videos: 珍贵录像
-        gcl: Gladys Chandra Clea Lukito
+        gcl: 柯莱与格拉迪斯
         gcl-books: 骇世大作
         gcl-books-depression: 抑郁症
         gcl-books-indonesian: 家乡话
@@ -52,8 +51,8 @@ layouts:
         gcl-books-bangsat: 漏出马脚
         gcl-books-back: 往返自然
         gcl-images: 笑!笑!笑!
-        ayaya: 东南亚联盟
-        zang: 小太阳与瓦林妹
+        ayaya: 联合国
+        zang: 神女与神拳
         zang-images: 神女
         zang-sounds: 小太阳的呐喊
         zang-videos: 魔龙妹的日常
@@ -62,8 +61,8 @@ layouts:
         joke-home: 主页
         lastdaysofeurope: THE NEW ORDER
         sayings: 沉浸版名言金句
-        update: 更新日志
-        fuzeblockisnotagame: FUZE BLOCK IS NOT A GAME
+        props: 杂项
+        fuzeblockisnotagame: 付块非游
         back-main: 额外
 views:
     fuzeblockisnotagame:
@@ -76,15 +75,15 @@ views:
                 c: 呐喊
                 d: 彷徨
                 aa: 只是这样吗?
-                ba: 听起来像是馒头の行为)
+                ba: 听起来像是馒头的行为)
                 ca: >-
                     哼哼啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
         hbdfuze: FUZE 生日快乐!
         itsfuzesbd: 今天是FUZE的生日
         fuzeisthebestlanguage: FUZE是最好的语言!
-        fuzesbd: FUZEの生日
-        fuzebdformat: 距离下一次FUZEの生日,还有
-        wentiJbBirthday: btw 这也是温蒂和FUZEJB的生日 温蒂与FUZEJB也生日快乐!
+        fuzesbd: FUZE的生日
+        fuzebdformat: 距离下一次FUZE的生日,还有
+        wentiJbBirthday: 这也是温蒂和FUZEJB的生日 温蒂与FUZEJB也生日快乐!
     jokes:
         images-alt: 加载! 加载!! 加载!!! 不择手段地加载!
         fuze:
@@ -98,6 +97,7 @@ views:
                     AOA: ∠AOA'
                     grandmother: 姥姥
                     verifyco2: Eh元素检验CO₂
+                    tu: 稚嫩的国际友好手势
             sounds:
                 items:
                     fuzedemamawenwen: Fuze的妈妈问问? 看能买得起吗?
@@ -106,6 +106,8 @@ views:
                     fuzedontknowchinese: 丈育
                     seawave: 趁儿子不在浪
                     pointpointpoint: 实际上点点点点点点点
+                    whyklee: 喜新厌旧
+                    yiqi: 可莉伤心
             images:
                 tip: 👍👍👍帅帅帅(′д｀ )…彡…彡
             sayings:
@@ -126,7 +128,7 @@ views:
                 items:
                     good: 我真服了你了
                     handsome: 大帅哥
-                    jian: 稻妻の贱²
+                    jian: 稻妻的贱²
             videos:
                 items:
                     ugly: 丑小鸭
@@ -203,7 +205,7 @@ achievements:
         description: 蛤 只是点着玩的
     WOW_EYES_DIED:
         title: 蹦迪时间o((>ω< ))o
-        description: 俺の眼睛👀!
+        description: 俺的眼睛👀!
     haha_you_found_me:
         title: 找到我喽!
         description: 这次该你藏了

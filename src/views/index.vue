@@ -15,6 +15,7 @@ import {
     NIcon,
     MenuOption as MO,
     NTooltip,
+    useThemeVars,
 } from 'naive-ui'
 import {
     SunnyOutline,
@@ -23,23 +24,23 @@ import {
     CloudOutline,
     CloudOfflineOutline,
     EllipsisHorizontal,
+    InformationOutline,
 } from '@vicons/ionicons5'
 import { Themes } from '../lib/constants'
 import { onMounted } from 'vue'
 import { jokeMOs } from '../route/menus/jokes'
 import { checkWebsite } from '../lib/utils'
-import { API } from '../lib/constants'
 
 const store = useMain(),
     router = useRouter(),
-    locale = useI18n()
+    locale = useI18n(),
+    styles = useThemeVars()
 
 const check = async (link: string) => await checkWebsite(link)
 const websites: [string, string][] = [
     ['主站', 'https://yashbstnmnhss.github.io'],
     ['Netlify站', 'https://bstnmnhss.netlify.app'],
     ['Vercel站', 'https://yashbstnmnhss.vercel.app'],
-    ['API', API],
 ]
 
 let title = $ref('Bstnmnhss'),
@@ -74,45 +75,67 @@ const open = (url: string) => (window.location.href = url)
 
 <template>
     <div class="full wrapper">
-        <div class="layer background-layer blocks">
-            <div class="block bv1 block-vertical animate-vertical" style="left: 2vmin" />
-            <div class="block bh1 block-horizontal animate-horizontal" style="top: 2vmin" />
+        <!--<div class="layer background-layer blocks">
             <div
-                class="block bv2 block-vertical animate-vertical animate-reverse"
-                style="right: 2vmin"
-            />
+                class="block bv1 block-vertical animate-vertical"
+                style="
+                    left: 2vmax;
+                    background: linear-gradient(to top, var(--color), var(--color2));
+                "
+            ></div>
+            <div
+                class="block bh1 block-horizontal animate-horizontal"
+                style="
+                    top: 2vmax;
+                    background: linear-gradient(to left, var(--color), var(--color2));
+                "
+            ></div>
             <div
                 class="block bh2 block-horizontal animate-horizontal animate-reverse"
-                style="bottom: 2vmin"
-            />
-        </div>
+                style="
+                    bottom: 2vmax;
+                    background: linear-gradient(to right, var(--color), var(--color2));
+                "
+            ></div>
+            <div
+                class="block bv2 block-vertical animate-vertical animate-reverse"
+                style="
+                    right: 2vmax;
+                    background: linear-gradient(to bottom, var(--color), var(--color2));
+                "
+            ></div>
+        </div>-->
         <div class="layer content-layer" style="height: 100%">
-            <NSpace :size="15" class="full" vertical justify="center" align="center">
-                <NSpace :size="50" vertical justify="center" align="center">
-                    <span
-                        class="title zoomin"
-                        @mouseover="title = 'Bstпмпhss'"
-                        @mouseleave="title = 'Bstnmnhss'"
-                    >
-                        {{ title }}
-                    </span>
-                    <NSpace :size="25" justify="center" align="center">
-                        <NButton
-                            type="primary"
-                            size="large"
-                            class="start-button zoomin-small delay1"
-                            @click="start()"
+            <NSpace :size="25" class="full" justify="center" align="center" vertical>
+                <NSpace :size="25" justify="center" align="center" vertical>
+                    <NSpace :size="5" justify="center" align="center" vertical>
+                        <span
+                            class="title zoomin"
+                            @mouseover="title = 'Bstuwuhss'"
+                            @mouseleave="title = 'Bstnmnhss'"
                         >
-                            乐子 楽子 樂子
-                        </NButton>
+                            {{ title }}
+                        </span>
+                        <span
+                            style="line-height: 0.5; text-align: center"
+                            class="zoomin-small delay3"
+                        >
+                            <p>这个封面果然还是太简陋了</p>
+                            <p>啊啊啊那咋整</p>
+                        </span>
+                    </NSpace>
+                    <NSpace :size="25" justify="center" align="center">
+                        <NDropdown @select="key => select(key)" scrollable :options="dropdown">
+                            <NButton
+                                type="primary"
+                                size="large"
+                                class="start-button zoomin-small delay1"
+                                @click="start()"
+                            >
+                                乐子?楽子?樂子!
+                            </NButton>
+                        </NDropdown>
                         <NButtonGroup class="zoomin-small delay2">
-                            <NDropdown @select="key => select(key)" scrollable :options="dropdown">
-                                <NButton ghost type="default" size="medium">
-                                    <NIcon size="20">
-                                        <MenuOutline />
-                                    </NIcon>
-                                </NButton>
-                            </NDropdown>
                             <NButton ghost type="default" size="medium" @click="updateTheme()">
                                 <NIcon size="20">
                                     <span v-if="theme === Themes.light">
@@ -123,10 +146,15 @@ const open = (url: string) => (window.location.href = url)
                                     </span>
                                 </NIcon>
                             </NButton>
+                            <NButton ghost type="default" size="medium">
+                                <NIcon size="20">
+                                    <InformationOutline />
+                                </NIcon>
+                            </NButton>
                         </NButtonGroup>
                     </NSpace>
                 </NSpace>
-                <NSpace :size="2" justify="center" align="center" class="zoomin-small delay3">
+                <NSpace :size="2" justify="center" align="end" class="zoomin-small delay3">
                     <NTooltip placement="bottom" v-for="w in websitesAlive">
                         <template #trigger>
                             <NButton
@@ -159,8 +187,8 @@ const open = (url: string) => (window.location.href = url)
 
 <style scoped lang="less">
 .title {
-    font-size: 8vh;
-    font-family: Metropolis, sans-serif;
+    font-size: 10vh;
+    font-family: Consolas, "Courier New", Courier, monospace;
     line-height: 1;
     user-select: none;
     -webkit-user-drag: none;
@@ -174,9 +202,14 @@ const open = (url: string) => (window.location.href = url)
 @RandIndex: `Math.floor(Math.random() * @{TFLength}) `;
 
 * {
-    --n-color: rgba(37, 204, 255, 90%);
-    --color: var(--n-color, rgba(white, 90%));
-    --color2: darken(rgba(37, 204, 255, 90%), 20%);
+    --n-boxshadow: v-bind(styles.boxShadow2);
+    --n-color3: v-bind(styles.textColor3);
+    --n-color: v-bind(styles.primaryColor);
+    --n-color2: v-bind(styles.infoColor);
+    --color: var(--n-color, rgb(36, 204, 255));
+    --color2: var(--n-color2, rgb(56, 150, 178));
+    --color3: var(--n-color3, white);
+    --shadow: var(--n-boxshadow);
     --full-size: 100%;
     --other-size: 3.5vmax;
 }
@@ -199,12 +232,14 @@ const open = (url: string) => (window.location.href = url)
     animation: 1s both;
     animation-name: zoom-in-small;
 }
+
 @seconds: 1, 2, 3;
 each(@seconds, {
     .delay@{value} {
         animation-delay: calc(@value * 1s);
     }
 })
+
 @keyframes zoom-in {
     0% {
         transform: scale(3);
@@ -218,7 +253,7 @@ each(@seconds, {
 }
 
 .wrapper {
-    padding: 10px;
+    padding: 2vh;
     overflow: hidden;
     box-sizing: border-box;
 }
@@ -244,12 +279,14 @@ each(@bs, {
 
 .block {
     position: fixed;
+    opacity: .875;
     background-color: var(--color);
     background: linear-gradient(to bottom, var(--color), var(--color2));
     backdrop-filter: blur(18px);
     filter: drop-shadow(
-        1px 2px 8px hsl(220deg 60% 50%)
+        1px 2px 8px var(--color3)
     );
+    box-shadow: var(--shadow);
     border-radius: 0.5vw;
     border: none;
 }

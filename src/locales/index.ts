@@ -1,6 +1,6 @@
 import { createI18n } from 'vue-i18n'
 import { DefaultLanguage, Languages } from '../lib/constants'
-import Logger from '../lib/utils/logger'
+import { Logger } from '../lib/utils/logger'
 
 import zhCN from './zh-cn.yaml'
 

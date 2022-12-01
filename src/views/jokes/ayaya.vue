@@ -8,53 +8,64 @@ import Cat from '@/assets/images/jokes/ayaya/cat.jpg'
 import Water from '@/assets/images/jokes/ayaya/water.jpg'
 import Night from '@/assets/images/jokes/ayaya/night.jpg'
 import Nani from '@/assets/images/jokes/ayaya/nani.jpg'
-import Ayaya from '@/assets/videos/jokes/ayaya.mp4'
+import Ayaya from '@/assets/videos/jokes/ayaya/ayaya.mp4'
+import Scareful from '@/assets/videos/jokes/ayaya/scareful.mp4'
+import Turkish from '@/assets/sounds/jokes/ayaya/turkish.mp3'
 import { NH1, NBlockquote, NSpace, NCard, NImage, NScrollbar } from 'naive-ui'
 </script>
 
 <template>
     <NH1>{{ $t('layouts.JokesLayout.ayaya') }}</NH1>
-    <NBlockquote>Association of Southeast Asian Nations</NBlockquote>
+    <NBlockquote>越过长城 走向世界</NBlockquote>
     <NSpace vertical>
-        <NCard>
-            东南亚真是正确的，客观的，合理的，明晰的，真实的，辩证的，深刻的，通达的，优美的，巧妙的，精辟的，雅正的，机智的，全面的，明白晓畅的，不偏不倚的，恰如其分的，滴水不漏的，不容质疑的，切中要害的，一针见血的，淋漓尽致的，深谙事理的，真知灼见的，发蒙振聩的，微言大义的，金声玉振的，透过现象看本质的，知其然而知其所以然的，可供世人仿效的，千古颠扑不破的
-        </NCard>
-        <NCard hoverable>
-            <video :src="Ayaya" muted loop controls style="max-width: 100%" />
+        <NCard title="文件一 突然的演讲">
+            <video :src="Ayaya" muted loop controls style="max-width: 100%" /> <br />
+            that's why I got social anxiety i hate going in crowds alone and i always think people
+            are judging me Dealing with social anxiety is veryy hardd like u always feel like people
+            are judging u
             <template #footer>
-                首领绫绫
+                绫绫
                 <Spoiler>ayaya</Spoiler>
                 正在发表振奋人心的演讲
                 <Spoiler>(迫真)</Spoiler>
                 ,视频有些崩坏
             </template>
         </NCard>
-        <NCard title="菲律宾的生活">
-            <NScrollbar x-scrollable>
-                <NImage
-                    object-fit="cover"
-                    width="450"
-                    :src="Water"
-                    title="glasses of water"
-                    alt="glasses of water"
-                />
-            </NScrollbar>
-            <NScrollbar x-scrollable>
-                <NImage
-                    object-fit="cover"
-                    width="450"
-                    :src="Night"
-                    title="菲律宾之夜"
-                    alt="菲律宾之夜"
-                />
-            </NScrollbar>
+        <NCard hoverable title="文件二 皮套人">
+            <video :src="Scareful" muted loop controls style="max-width: 75%" />
+            <template #footer>
+                所以说伪人是存在的 <br />
+                即使你现在不相信 但当她取代了你的生活之时 <br />
+                你就相信了
+            </template>
+        </NCard>
+        <NCard title="文件三一 菲律宾的生活">
+            <NSpace align="stretch">
+                <div>
+                    <NImage
+                        object-fit="cover"
+                        class="jokes-images"
+                        :src="Water"
+                        title="glasses of water"
+                        alt="glasses of water"
+                    />
+                </div>
+                <div>
+                    <NImage
+                        object-fit="cover"
+                        class="jokes-images"
+                        :src="Night"
+                        title="菲律宾之夜"
+                        alt="菲律宾之夜"
+                    />
+                </div>
+            </NSpace>
             <template #footer>[图一]每天一杯水(1/1) [图二]美丽的夜景</template>
         </NCard>
-        <NCard>
+        <NCard title="文件三二 菲律宾的生活">
             <NScrollbar x-scrollable>
                 <NImage
                     object-fit="cover"
-                    width="450"
                     :src="Cat"
                     title="the quality you trust, now made e"
                     alt="the quality you trust, now made e"
@@ -66,22 +77,44 @@ import { NH1, NBlockquote, NSpace, NCard, NImage, NScrollbar } from 'naive-ui'
                 (凯亚单推人)的小猫, 生日快乐! 小猫!
             </template>
         </NCard>
-        <NCard title="骨骼惊奇的四人">
-            元旦夜
+        <NCard title="文件四 骨骼惊奇的四人">
+            几位日炎没见过面的朋友
             <br />
-            听歌
+            元旦夜:
+            <NBlockquote>
+                元旦夜之时 在一起听歌 <br />
+                Helicopter <br />
+                我们的猎奇 <br />
+                "114514是什么" "机车号吗" <br />
+                [触手色图] "114514好恐怖" <br />
+                第一次的扬声器(--speakerphone) <br />
+                "说i did your mom" <br />
+                口嗨陌生人连线 <br />
+                机器人的单词拼写游戏 <br />
+                "plugin!" <br />
+                餐厅吃饭等半小时都没上菜 <br />
+                表情符号充饥法 🥩 🧠 <br />
+                "www 谢谢"
+            </NBlockquote>
+            网易MC
+            <NBlockquote>
+                下载网易MC 还给了她个账号 <br />
+                和FUZE和她一起进语音 <br />
+                找房连接找不到(网易传统艺能) <br />
+                尝试连接服务器 加入房间... <br />
+                区块加不出来载 漂浮在最底层的虚空上 <br />
+                卡死在方块里面 如鱼得水游动在矿道里 <br />
+                FUZE和我向下挖掘 试图把她挖出来<br />
+                但我们根本碰不到她 <br />
+                "你永远无法到达真实" ---FUZE竖告示牌
+            </NBlockquote>
+            复习 狂@
             <br />
-            玩机器人
-            <br />
-            学英语
-            <br />
-            餐厅吃饭等半小时都没上菜
-            <br />
-            复习
-            <br />
-            烤电脑,政治
+            烤电脑,政治 <br />
+            退出服务器! <br />
+            总结: 纯纯的废物
         </NCard>
-        <NCard title="大人">
+        <NCard title="文件五 大人">
             <strong>lads言lads语</strong>
             <br />
             <mark>"你們so mean😭"</mark>
@@ -103,7 +136,24 @@ import { NH1, NBlockquote, NSpace, NCard, NImage, NScrollbar } from 'naive-ui'
             <br />
             攒原石ing 为了抽符合xp的人 喜欢内鬼舅舅
             <br />
-            <mark>"he(神里绫人) is not handsome"</mark>
+            <mark>"he(神里绫人) is not handsome"</mark> <br />
+        </NCard>
+        <NCard title="文件六 火鸡">
+            Ananı sikeyim = fuck your mother <br />
+            Sen değilsin CUKSUZ KURBA BENİM İMDAT <br />
+            MINI WORLD!! (母牛世界!!!) <br />
+            (果然是个幼稚的小孩乐子) <br />
+            <br />
+            <audio :src="Turkish" controls />
+            乐子的火鸡语空谷传响 <br />
+            火鸡国人最喜欢吃馍夹肉了
         </NCard>
     </NSpace>
 </template>
+
+<style scoped lang="less">
+.image {
+    max-width: 50vw;
+    max-height: 50vh;
+}
+</style>

@@ -4,8 +4,8 @@ name: fuze-videos
 
 <script setup lang="ts">
 import { NH1, NSpace, NThing, NEllipsis, NBackTop, NAnchor, NAnchorLink } from 'naive-ui'
-import { toImportInfo } from '../../../lib/utils/imports'
-import { useAchiever } from '../../../lib/models/achievements'
+import { toImportInfo } from '../../portal'
+import { useAchiever } from '../../portal'
 
 const achiever = useAchiever()
 

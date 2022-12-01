@@ -4,7 +4,7 @@ name: zang-videos
 
 <script setup lang="ts">
 import { NH1, NSpace, NThing, NEllipsis, NBackTop, NAnchor, NAnchorLink } from 'naive-ui'
-import { toImportInfo } from '../../../lib/utils/imports'
+import { toImportInfo } from '../../portal'
 
 const videos = toImportInfo(
     import.meta.glob('@/assets/videos/jokes/zang/**/*.{mp4,webm,ogv}', { eager: true })

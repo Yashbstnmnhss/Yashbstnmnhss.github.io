@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { NLayout, NLayoutHeader, NLayoutSider, NLayoutFooter, NSpace } from 'naive-ui'
 import Viewer from '../components/basic/Viewer.vue'
-import Footer from '../components/layout/Footer.vue'
 import { useMain } from '../store'
 import { onMounted, watch } from 'vue'
 import getMenuOptions from '../route/menus/jokes'
-import SideMenu from '../components/layout/SideMenu.vue'
+import SideMenu from '../components/basic/SideMenu.vue'
 
 const store = useMain()
 let collapsed = $ref<boolean>()
@@ -44,7 +43,7 @@ watch(
                         "
                         onclick="window.location.href='/'"
                     >
-                        楽
+                        樂
                     </text>
                     <text
                         x="55"
@@ -62,7 +61,7 @@ watch(
                 </svg>
             </n-space>
         </n-layout-header>
-        <n-layout position="absolute" style="top: 64px; bottom: 64px" has-sider>
+        <n-layout position="absolute" style="top: 64px" has-sider>
             <n-layout-sider
                 :native-scrollbar="false"
                 bordered
@@ -85,8 +84,5 @@ watch(
                 <Viewer />
             </n-layout>
         </n-layout>
-        <n-layout-footer position="absolute" style="height: 64px; padding: 12px" bordered>
-            <Footer />
-        </n-layout-footer>
     </n-layout>
 </template>

@@ -60,7 +60,8 @@ const renderCountdown: CountdownProps['render'] = ({ hours, minutes, seconds }) 
             type: diffTime.value < 0 ? 'error' : diffTime.value === 0 ? 'success' : 'warning',
         },
         {
-            default: () => '🎉 ' + days + 'd ' + hours2 + 'h ' + minutes + 'm ' + seconds + 's ',
+            default: () =>
+                '🎉 ' + days + '天 ' + hours2 + '时 ' + minutes + '分 ' + seconds + '秒 ',
         }
     )
 }

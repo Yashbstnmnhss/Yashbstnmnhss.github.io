@@ -4,7 +4,7 @@ name: zang-images
 
 <script setup lang="ts">
 import { NH1, NImageGroup, NSpace, NImage, NBackTop } from 'naive-ui'
-import { toImportInfo } from '../../../lib/utils/imports'
+import { toImportInfo } from '../../portal'
 
 const images = toImportInfo(
     import.meta.glob('@/assets/images/jokes/zang/**/*.{jpg,png,gif}', { eager: true })

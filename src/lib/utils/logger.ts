@@ -1,7 +1,4 @@
-/**
- * 日志类
- */
-export default class Logger {
+export class Logger {
     public static enable = true
 
     public static log(...args: any[]) {

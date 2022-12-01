@@ -1,5 +1,5 @@
 import type { MenuOption as MO } from 'naive-ui/lib'
-import { Icons } from '../../lib/utils/icon'
+import { Icons } from '../../lib/utils'
 
 const fuzeMOs: MO[] = [
     {
@@ -152,28 +152,20 @@ export default function getMenuOptions() {
             key: 'joke-home',
             iconType: Icons['home'],
         },
-        { type: 'divider' },
+        //{ type: 'divider' },
         {
             link: '/jokes/fuzeblockisnotagame',
             key: 'fuzeblockisnotagame',
             iconType: Icons['squareFull'],
         },
-
-        {
-            link: {
-                to: '/jokes/lastdaysofeurope',
-            },
-            key: 'lastdaysofeurope',
-            iconType: Icons['chatbox'],
-        },
     ]
     const footerMOs: MO[] = [
         {
             link: {
-                to: '/update',
+                to: '/jokes/props',
             },
-            key: 'update',
-            iconType: Icons['markdown'],
+            key: 'props',
+            iconType: Icons['info'],
         },
     ]
 

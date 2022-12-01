@@ -6,10 +6,7 @@ name: fuze-sayings-original
 import { NH1, NSpace, NButton, NIcon, NBlockquote, useMessage } from 'naive-ui'
 import { VolumeHighOutline as VolumeIcon } from '@vicons/ionicons5'
 import { useI18n } from 'vue-i18n'
-import Logger from '../../../../lib/utils/logger'
-import { isMobile } from '../../../../lib/utils/'
-import { useAchiever } from '../../../../lib/models/achievements'
-import { randomRepeat } from '../../../../lib/utils/'
+import { Logger, isMobile, useAchiever, randomRepeat } from '../../../portal'
 
 const achiever = useAchiever()
 const i18n = useI18n()

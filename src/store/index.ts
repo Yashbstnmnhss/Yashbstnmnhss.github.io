@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { useLocalStorage } from './pinia'
-import Logger from '../lib/utils/logger'
+import { Logger } from '../lib/utils/logger'
 import { DefaultTheme, DefaultLanguage } from '../lib/constants'
 
 export const useMain = defineStore('main', {

@@ -4,8 +4,8 @@ name: fuze-sounds
 
 <script setup lang="ts">
 import { NH1, NSpace, NThing, NEllipsis } from 'naive-ui'
-import { toImportInfo } from '../../../lib/utils/imports'
-import { useAchiever } from '../../../lib/models/achievements'
+import { toImportInfo } from '../../portal'
+import { useAchiever } from '../../portal'
 
 const sounds = toImportInfo(
     import.meta.glob('@/assets/sounds/jokes/fuze/**/*.{mp3,wav,ogg}', { eager: true })

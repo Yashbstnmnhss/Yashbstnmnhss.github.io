@@ -107,6 +107,7 @@
     }
 
     .diamond > .container {
+        border-radius: 15px;
         border-top: 0.5rem solid var(--n-title-text-color);
         border-left: none !important;
         border-image: linear-gradient(
@@ -122,6 +123,13 @@
         width: 100%;
         align-content: center;
         justify-content: center;
+    }
+    .class > .container .class-icon,
+    .disrupt > .container .disrupt-icon,
+    .risk > .container .risk-icon {
+        justify-self: right;
+        padding-left: 4vw;
+        padding-right: none !important;
     }
 }
 
@@ -349,6 +357,8 @@
 }
 
 .divider > div {
+    box-sizing: border-box;
+    border-radius: 3px;
     display: block;
     background-color: var(--n-title-text-color);
     height: 0.5rem;
@@ -376,6 +386,7 @@
     justify-content: center;
     box-shadow: 0.25rem 0 0 0 rgb(0 0 0 / 0%);
     & > .container {
+        border-radius: 6px;
         width: 100%;
         height: 100%;
         padding: 0.25rem 0;
@@ -383,7 +394,7 @@
         border-left: 0.85rem solid rgba(255, 211, 0, 1);
         border-left: 0.9rem solid rgb(var(--bar-color));
         background-color: rgba(255, 211, 0, 0.15);
-        background-color: rgba(var(--bar-color), 0.2);
+        background-color: rgba(var(--bar-color), var(--color-opacity));
         & > .contain-class {
             width: 100%;
             height: 100%;
@@ -481,6 +492,7 @@
     justify-content: center;
     box-shadow: 0.25rem 0 0 0 rgb(0 0 0 / 0%);
     & > .container {
+        border-radius: 6px;
         width: 100%;
         height: 100%;
         padding: 0.25rem 0;
@@ -488,7 +500,7 @@
         border-left: 0.85rem solid rgba(0, 135, 189, 1);
         background-color: rgba(0, 135, 189, 0.15);
         border-left: 0.85rem solid rgb(var(--disrupt-color));
-        background-color: rgba(var(--disrupt-color), 0.15);
+        background-color: rgba(var(--disrupt-color), var(--color-opacity));
         & .contain-disrupt {
             width: 100%;
             height: 100%;
@@ -561,6 +573,7 @@
     justify-content: center;
     box-shadow: 0.25rem 0 0 0 rgb(0 0 0 / 0%);
     & > .container {
+        border-radius: 6px;
         width: 100%;
         height: 100%;
         padding: 0.25rem 0;
@@ -568,7 +581,7 @@
         border-left: 0.85rem solid rgba(0, 135, 189, 1);
         background-color: rgba(0, 135, 189, 0.15);
         border-left: 0.85rem solid rgb(var(--risk-color));
-        background-color: rgba(var(--risk-color), 0.15);
+        background-color: rgba(var(--risk-color), var(--color-opacity));
         & .contain-risk {
             width: 100%;
             height: 100%;
@@ -606,6 +619,7 @@
     grid-area: diamond;
     padding: 0.5em;
     & > .container {
+        border-radius: 6px;
         box-sizing: border-box;
         width: 100%;
         height: 100%;
@@ -656,6 +670,7 @@
 }
 
 .acs-container > .bar > div {
+    border-radius: 3px;
     width: 0;
     animation-name: bar;
     animation-duration: calc(0.25s * var(--time-delay)) !important;

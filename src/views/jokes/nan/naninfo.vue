@@ -7,9 +7,13 @@ import { h } from 'vue'
 import { random } from '../../../lib/utils'
 import Ye from '@/assets/images/jokes/nan/ye.png'
 import Sand from '@/assets/images/jokes/nan/sand.png'
+import SSK1 from '@/assets/images/jokes/nan/ssk1.png'
+import SSK2 from '@/assets/images/jokes/nan/ssk2.png'
+import SHUO from '@/assets/images/jokes/nan/shuo.png'
+import Shout from '@/assets/images/jokes/nan/shout.png'
 import Car from '@/assets/videos/jokes/nan/jiang.mp4'
-import { NH1, NSpace, NCard } from 'naive-ui'
-import Chatter from '../../../components/models/Chatter.vue'
+import { NH1, NSpace, NCard, NImage, NScrollbar } from 'naive-ui'
+import Chatter from '../../../components/models/ChatHistory.vue'
 
 const jiang = [
     {
@@ -122,18 +126,22 @@ const hacker = [
                 ♂
             </text>
         </svg>
-        <NCard title="网课时边开车边耶耶耶的屑" hoverable>
+        <NCard title="文件一 网课时边开车边耶耶耶的屑" hoverable>
             <Chatter :msgs="jiang" />
         </NCard>
         <NCard
-            title="黑客牌扫描仪"
+            title="文件二 黑客牌扫描仪"
             :style="`background-image: url(${Sand}); background-position: right center; background-repeat: no-repeat; background-size: contain;`"
             hoverable
         >
             <Chatter :msgs="hacker" />
+            <br />
+            黑客呀! 我都黑不进去 <br />
+            遇到凡事不要慌 先摘眼镜扫描扫描 <br />
+            发个试卷→摘镜扫描 系个鞋带→摘镜扫描 认个熟人→摘镜扫描
         </NCard>
         <NCard
-            title="在东欧打过二战"
+            title="文件三 在东欧打过二战"
             :style="`background-image: url(${Ye}); background-position: right center; background-repeat: no-repeat; background-size: contain;`"
             hoverable
         >
@@ -148,7 +156,22 @@ const hacker = [
             <br />
             我艹你们{{ `亻${random(2, 10)}` }}妈
         </NCard>
-        <NCard>中国</NCard>
+        <NCard
+            title="文件四 拾枣"
+            :style="`background:url(${SSK1}); background-size:contain; background-origin:fixed`"
+        >
+            <NScrollbar x-scrollable>
+                <NImage object-fill="cover" :src="SSK2" />
+            </NScrollbar>
+        </NCard>
+        <NCard title="文件五 熊咆龙吟殷岩泉">
+            <NScrollbar x-scrollable>
+                <NImage object-fill="cover" :src="Shout" />
+            </NScrollbar>
+            <br />
+            钟(离)好帅啊~ <br />
+            ------正打歪着珊瑚宫心海的聪智
+        </NCard>
     </NSpace>
 </template>
 

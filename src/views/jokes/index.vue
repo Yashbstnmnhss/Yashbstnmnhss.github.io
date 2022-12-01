@@ -4,13 +4,13 @@ name: joke-home
 
 <script setup lang="ts">
 import ACSBar from '../../components/models/ACSBar.vue'
-import { useAchiever } from '../../lib/models/achievements'
+import { useAchiever } from '../../lib/functions/achievements'
 import P5C from '../../components/models/P5.vue'
 import P5 from 'p5'
-import { NBlockquote, NSpace, NCard, NDivider, NCode } from 'naive-ui'
+import { NBlockquote, NSpace, NImage, NButton, useMessage, NCard, NDivider, NCode } from 'naive-ui'
 import { RouterLink } from 'vue-router'
-import FuMusicBox from '../../components/models/FuMusicBox.vue'
 
+import FuzeImage from '@/assets/images/jokes/fuze/fuzeshout.png'
 import FUZE1 from '@/assets/images/jokes/fuze/monster.png'
 import FUZE2 from '@/assets/images/jokes/fuze/onTheBus.jpg'
 import FUZE3 from '@/assets/images/jokes/fuze/fuzeShout.png'
@@ -19,6 +19,8 @@ import FUZE4 from '@/assets/images/jokes/fuze/fuzeshoutsmall.jpg'
 import { random } from '../../lib/utils'
 
 const achiever = useAchiever()
+const showFuzeShout = $$<boolean>(true)
+const message = useMessage()
 
 const sketch = (p: P5) => {
     let diameter: number,
@@ -104,13 +106,12 @@ const sketch2 = (p: P5) => {
     }
 }
 const sketch3 = (p: P5) => {
-    let yOff1: number, yOff2: number
+    let yoffset: number
     const step = 15
     p.setup = () => {
         p.createCanvas(500, 80)
         p.frameRate(1)
-        yOff1 = p.height / 2 + 15
-        yOff2 = p.height / 4
+        yoffset = p.height / 2 + 15
     }
 
     function noise(x: number) {
@@ -132,11 +133,11 @@ const sketch3 = (p: P5) => {
         p.strokeWeight(2)
 
         p.stroke(255, 0, 0)
-        drawFunction(noise, yOff1)
+        drawFunction(noise, yoffset)
 
         p.noStroke()
         p.fill(255, 0, 0)
-        p.text('noise(x)', 1, noise(1) + yOff1 + 15)
+        p.text('noise(x)', 1, noise(1) + yoffset + 15)
     }
 }
 const sketch4 = (p: P5) => {
@@ -169,6 +170,41 @@ const sketch4 = (p: P5) => {
         p.image(f4, 0, 0, 50, 50)
     }
 }
+const sketch5 = (p: P5) => {
+    let yoffset: number
+    const mult = 10
+    p.setup = () => {
+        p.createCanvas(500, 80)
+        p.frameRate(1)
+        yoffset = p.height / 2 + 15
+    }
+
+    function midproduct(x: number) {
+        return (((x * 9301 + 49297) % 233280) / 233280) * mult
+    }
+    function drawFunction(func: (x: number) => number, offset: number) {
+        p.beginShape()
+        for (var x = 0; x <= p.width; x += mult) {
+            var y = -func(x)
+            var ry = y + offset
+            p.curveVertex(x, ry)
+        }
+        p.endShape()
+    }
+
+    p.draw = () => {
+        p.background(255)
+        p.noFill()
+        p.strokeWeight(2)
+
+        p.stroke(255, 0, 0)
+        drawFunction(midproduct, yoffset)
+
+        p.noStroke()
+        p.fill(255, 0, 0)
+        p.text('线性同余生成器', 1, midproduct(1) + yoffset + 15)
+    }
+}
 </script>
 
 <template>
@@ -186,9 +222,11 @@ const sketch4 = (p: P5) => {
             </ACSBar>
         </n-card>
         <n-card title="描述" hoverable>
+            乐联是由乐子成员组成的联盟
+            <br />
             乐子旗帜整体为褪色的淡蓝色, 显目的"😂"与
             <router-link to="/jokes/fuzeinfo">F U Z E</router-link>
-            の"F"
+            的"F"
             <em>
                 "一个由乐子组成的
                 <s>反疯子主义</s>
@@ -199,7 +237,7 @@ const sketch4 = (p: P5) => {
             <br />
             <mark>乐子联盟 (乐联)</mark>
             一个
-            <em>赤裸裸の</em>
+            <em>赤裸裸的</em>
             <strong>乐子</strong>
             联盟
             <br />
@@ -219,24 +257,106 @@ const sketch4 = (p: P5) => {
             <br />
             现任主席 (乐子委员会总书记):
             <router-link to="/jokes/fuzeinfo">FUZE</router-link>
-            <n-divider />
-            联盟条约规定:
+
             <n-blockquote>
+                联盟条约规定:
+                <br />
                 联盟中成员如果受到任何疯子或疯子组织的攻击, 其他成员必须一一切方式尽可能的给予援助
             </n-blockquote>
+
             <s>
                 这也就是
                 <mark>风险等级:需谨慎</mark>
                 的原因 (尽管, 我是说也许 也许并不会有任何伤害)
             </s>
+            <br />
+            <br />
+            最初乐联的创立是抵制他人继续将其成员当作乐子看待的抱团措施
+            <br />
+            但最后反而更加规范化了其成员的乐子行为并加之证实
+            <br />
+            也加强了各成员的乐子创造力
+            <br />
+            虽事与愿违 但客观来看其积极性不可轻易抹除
+            <n-divider />
+            乐联的成立时间(抑或叫做被我正式发现认可的时间)较晚, 并且存在时间短暂, 后期便空有其名
+            <br />
+            再到后期(其实刚过了几天都没有), 乐联多数成员宣布联盟岌岌可危, 甚至有人声称将要解体
+            <br />
+            (不过现在来看这些话似乎都得到了证实)
+            <br />
+            就在濒临解散,联盟胎死腹中之时,部分成员(如珊瑚宫心海)发动了
+            <strong>819事件</strong>
+            :
+            <br />
+            在原有联盟基础上进行改组, 联盟主旨为
+            <mark>"针对屑存在感而联合起来"</mark>
+            <br />
+            然而, 819事件在持续不到两天的情况下就杳无音讯, 似乎标志着此次改组完全就是回光返照
+            <n-divider />
+            整个联盟昙花一现, 存在时间甚至以天为单位计量都需要小数点
+            <br />
+            然而, 其所带来的影响不可忽视, 像是这篇文章所记载的一样
+            <br />
+            现在的乐联更多指代的是
+            <strong>这些事与人变成集合的系列名</strong>
+            并不是那个短i命"联盟"
+            <n-divider />
+            而至于继续保留并使用这个联盟的名字, 绝不是纯粹的嘲讽嘲笑, 就像反复说到的一样:
+            <br />
+            <mark>
+                那些包括乐联的父集与乐联的子集和这些所有的全集都是
+                <strong>宝贵的精神财产,历史资料,美好回忆</strong>
+            </mark>
+            <br />
+            借此名字再适合不过了
+            <br />
+            这些文章的意义并不在于让人嘲笑讥讽,在脑子里短暂滑过一笑
+            <br />
+            而在于记录当下或以前美好的时光趣事,不然它们通通会逝去,清空回收站,再也回不来,也回不去
+            <br />
+            "乐联"这个名字太适合作这些东西的标题了 它本身就寄托了很多乐子事
+            <br />
+            现在绝大多数(至少我能知道的) 都可以在这里放着了
+            <br />
+            乐联现在不构成任何威胁 反倒是很多乐子事情的标题
+            <n-divider />
+            后记:
+            <br />
+            乐联的成员很多都失联了 但这里还是会有很多记录的
         </n-card>
         <n-card title="特殊收容措施" hoverable>
             <s>收容啥呀 笑就完事了😂</s>
             <br />
             <strong>切记, 一定要远离 疯子主义 联盟</strong>
+            <n-divider />
+            277353在以每天46386亻的速度递减(约等于五万),主要体现在中国大陆一年一度的
+            <strong>
+                <ruby>
+                    初中学业考试和高中阶段学校招生考试
+                    <rt>中考</rt>
+                </ruby>
+            </strong>
+            中正常参加且获得正规成绩的学生数, 尤其是该数值带有负号时
+            <br />
+            一次著名的事故发生在202■年的中考, 教育部门下发的两个文件中显示:主城区17857
+            <span class="hover-hide">0</span>
+            , 全市125471, 然而主城区却比全市多了五万, 这打破了全集与子集的关系,
+            从而引发第四次数学危机 同时,其又变相证明了量子力学中的量子纠缠与叠加态,
+            又可以成为物理学界一颗璀璨的明星
+            <br />
+            <h2>盒子测试</h2>
+            这儿有个盒子,设法用它装下整个277353并保证它不会逃出, 设想一下 如果是你 你会怎么做?
+            <br />
+            用啥样的盒子? 方的? 圆的? 三角的? 椭圆的? 棱边的? 柱状的? 锥状的? 榫状的? 矛状的?
+            扭曲的? 平直的? 内凹的? 外凸的? 有角的? 有弧的? 有贝塞尔曲线的? 超出三维的立体的?
+            无限小的? 无限大的? 似点的? 似线的? 似面的? 四不像的? 谷形的? 穴形的? 滩形的? 川形的?
+            风形的? U形的? V形的? 棒形的? 丁形的? 十形的? 一形的? 馒头形的?
+            <br />
+            怎么让它逃不走??? 快说啊
         </n-card>
         <n-card title="原理" hoverable>
-            <n-space>
+            <n-space vertical>
                 <P5C :sketch="sketch" />
                 <span>
                     如图 F1,F2做
@@ -299,13 +419,64 @@ const sketch4 = (p: P5) => {
                     <code>noise</code>
                     的函数图像, 缩放15倍
                 </span>
-                <n-divider />
                 <span>综上, 此两条表达式为主要原理</span>
                 <P5C :sketch="sketch4" />
+                <n-divider />
+                <P5C :sketch="sketch5" />
+                <span>
+                    <h3>f(x) = ((x * 9301 + 49297) % 233280) / 233280</h3>
+                </span>
             </n-space>
         </n-card>
-        <n-card title="FU音盒" hoverable>
-            <FuMusicBox />
+
+        <n-card
+            title="并不简单的问题"
+            hoverable
+            closable
+            v-show="showFuzeShout"
+            @close="showFuzeShout = false"
+        >
+            <template #cover>
+                <n-image :src="FuzeImage" />
+            </template>
+            一个男人 但他失踪了 至少联系不上了
+            <template #action>
+                <n-button
+                    @click="message.warning($t('views.fuzeblockisnotagame.question.options.aa'))"
+                >
+                    {{ $t('views.fuzeblockisnotagame.question.options.a') }}
+                </n-button>
+                <n-button
+                    @click="message.success($t('views.fuzeblockisnotagame.question.options.ba'))"
+                >
+                    {{ $t('views.fuzeblockisnotagame.question.options.b') }}
+                </n-button>
+                <n-button
+                    @click="message.error($t('views.fuzeblockisnotagame.question.options.ca'))"
+                >
+                    <strong>{{ $t('views.fuzeblockisnotagame.question.options.c') }}</strong>
+                </n-button>
+                <n-button
+                    @click="
+                        () => {
+                            message.loading('THE NEW ORDER ， LAST DAYS OF EUROPE')
+                            achiever.achieve('last_days_of_europe')
+                        }
+                    "
+                >
+                    <s>{{ $t('views.fuzeblockisnotagame.question.options.d') }}</s>
+                </n-button>
+            </template>
+            <template #footer>
+                <small>他到底去哪了?</small>
+            </template>
         </n-card>
     </n-space>
 </template>
+
+<style lang="less" scoped>
+.hover-hide:hover {
+    opacity: 0;
+    display: none;
+}
+</style>

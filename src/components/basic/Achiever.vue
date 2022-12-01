@@ -3,9 +3,9 @@ import { provide, h, onMounted } from 'vue'
 import { useMain } from '../../store'
 import { useI18n } from 'vue-i18n'
 import { useNotification } from 'naive-ui'
-import { achievements, achieverKey } from '../../lib/models/achievements'
+import { achievements, achieverKey } from '../../lib/functions/achievements'
 import { Achievement, AchieverInst } from '../../lib/types'
-import Logger from '../../lib/utils/logger'
+import { Logger } from '../../lib/utils'
 
 const store = useMain()
 const { t } = useI18n()

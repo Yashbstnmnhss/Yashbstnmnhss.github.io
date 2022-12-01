@@ -4,7 +4,7 @@ import App from './App.vue'
 import i18n from './locales'
 import router from './route'
 import { pinia } from './store/pinia'
-import directives from './lib/directives'
+import directives from './lib/functions/directives'
 
 import './assets/styles/global.less'
 import './assets/styles/markdown.less'

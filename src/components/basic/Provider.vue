@@ -9,7 +9,7 @@ import {
     NGlobalStyle,
 } from 'naive-ui'
 import { useMain } from '../../store'
-import { getLocales, getTheme } from '../../lib/utils/naive'
+import { getLocales, getTheme } from '../../lib/utils'
 import { Languages, Themes } from '../../lib/constants'
 import { onMounted, ref, watch } from 'vue'
 import { BuiltInGlobalTheme } from 'naive-ui/lib/themes/interface'

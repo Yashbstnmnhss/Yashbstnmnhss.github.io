@@ -4,8 +4,8 @@ name: fuze-images
 
 <script setup lang="ts">
 import { NH1, NImageGroup, NSpace, NImage, NBackTop } from 'naive-ui'
-import { toImportInfo } from '../../../lib/utils/imports'
-import { useAchiever } from '../../../lib/models/achievements'
+import { toImportInfo } from '../../portal'
+import { useAchiever } from '../../portal'
 
 const achiever = useAchiever()
 const images = toImportInfo(

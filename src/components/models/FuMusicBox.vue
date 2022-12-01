@@ -12,7 +12,7 @@ import {
     NRadioGroup,
     UploadCustomRequestOptions,
 } from 'naive-ui'
-import { toImportInfo } from '../../lib/utils/imports'
+import { toImportInfo } from '../../lib'
 import NOTE from '@/assets/images/textures/note_block.png'
 import * as Tone from 'tone'
 import { Midi } from '@tonejs/midi'

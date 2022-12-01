@@ -2,9 +2,9 @@
 import { useLoadingBar } from 'naive-ui'
 import { RouterView } from 'vue-router'
 import { KeepAlive } from 'vue'
-import Logger from '../../lib/utils/logger'
+import { Logger } from '../../lib'
 import router from '../../route'
-import { useAchiever } from '../../lib/models/achievements'
+import { useAchiever } from '../../lib'
 
 const achiever = useAchiever()
 const bar = useLoadingBar()

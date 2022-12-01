@@ -4,7 +4,7 @@ name: nan-medias
 
 <script setup lang="ts">
 import { NH1, NSpace, NThing, NEllipsis } from 'naive-ui'
-import { toImportInfo } from '../../../lib/utils/imports'
+import { toImportInfo } from '../../portal'
 
 const sounds = toImportInfo(
     import.meta.glob('@/assets/sounds/jokes/nan/**/*.{mp3,wav,ogg}', { eager: true })

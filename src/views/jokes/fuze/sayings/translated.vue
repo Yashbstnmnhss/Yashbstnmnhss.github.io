@@ -4,7 +4,7 @@ name: fuze-sayings-translated
 
 <script setup lang="ts">
 import { NH1, NTabs, NTabPane, NBlockquote } from 'naive-ui'
-import { useAchiever } from '../../../../lib/models/achievements'
+import { useAchiever } from '../../../portal'
 
 const achiever = useAchiever()
 </script>
@@ -89,6 +89,7 @@ const achiever = useAchiever()
                 我存在的原因是什么，这是什么原因？ 我可以修复损坏吗？ 我是认真的 我知道
                 【开范】在这个新版块使用最新版QQ世界 我们在谈论黑人，黑人
             </n-blockquote>
-        </n-tab-pane>
-    </n-tabs>
+        </n-tab-pane> </n-tabs
+    ><br />
+    为什么会衍生出着三版呢? 问问谷歌生草机吧(现在大陆无法正常访问了[悲])
 </template>
