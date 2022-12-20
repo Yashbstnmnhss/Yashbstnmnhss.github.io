@@ -1,1 +1,0 @@
-import{_ as o}from"./plugin-vue_export-helper.f63bf49c.js";import{o as s,q as t,bg as _}from"./index.d6438343.js";const r={},n={class:"spoiler"};function c(e,a){return s(),t("span",n,[_(e.$slots,"default",{},void 0,!0)])}const d=o(r,[["render",c],["__scopeId","data-v-372603c2"]]);export{d as S};

@@ -1,1 +1,0 @@
-import{K as s,m as r,b2 as a}from"./index.d6438343.js";function f(u,n){return s(u,e=>{e!==void 0&&(n.value=e)}),r(()=>u.value===void 0?n.value:u.value)}function i(u,n){return r(()=>{for(const e of n)if(u[e]!==void 0)return u[e];return u[n[n.length-1]]})}const{c}=a(),o="vueuc-style";export{c as a,i as b,o as c,f as u};
