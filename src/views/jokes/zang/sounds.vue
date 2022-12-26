@@ -1,5 +1,13 @@
 <route lang="yaml">
 name: zang-sounds
+meta:
+    menu:
+        for: jokes
+        key: zang-sounds
+        icon: volume
+        parent:
+            key: zang
+            icon: person
 </route>
 
 <script setup lang="ts">
@@ -12,20 +20,20 @@ const sounds = toImportInfo(
 </script>
 
 <template>
-    <n-h1>{{ $t('layouts.JokesLayout.zang-sounds') }}</n-h1>
-    <n-space vertical>
-        <n-thing v-for="sound in sounds" :key="sound.name">
+    <NH1>{{ $texta.get(['menus', 'jokes', 'zang-sounds']) }}</NH1>
+    <NSpace vertical>
+        <NThing v-for="sound in sounds" :key="sound.name">
             <template #header>
-                <n-ellipsis line-clamp="3">
-                    {{ $t(`views.jokes.zang.sounds.items.${sound.name}`) }}
-                </n-ellipsis>
+                <NEllipsis line-clamp="3">
+                    {{ $texta.get(['views', 'jokes', 'zang', 'sounds', 'items', sound.name]) }}
+                </NEllipsis>
             </template>
             <audio
                 :src="sound.path"
                 controls
                 :key="sound.name"
-                :title="$t(`views.jokes.zang.sounds.items.${sound.name}`)"
+                :title="$texta.get(['views', 'jokes', 'zang', 'sounds', 'items', sound.name])"
             />
-        </n-thing>
-    </n-space>
+        </NThing>
+    </NSpace>
 </template>

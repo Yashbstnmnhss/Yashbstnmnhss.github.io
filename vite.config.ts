@@ -37,7 +37,7 @@ export default defineConfig({
             extensions: ['vue', 'md'],
             routeBlockLang: 'yaml',
         }),
-        markdown({
+        /*markdown({
             markdownItOptions: {
                 html: true,
                 linkify: true,
@@ -74,7 +74,7 @@ export default defineConfig({
                     },
                 })
             },
-        }),
+        }), */
         yaml(),
         compression({
             verbose: true,
@@ -85,7 +85,7 @@ export default defineConfig({
     ],
     build: {
         chunkSizeWarningLimit: 1000,
-        rollupOptions: {
+        /*rollupOptions: {
             output: {
                 chunkFileNames: 'script/[name]-[hash].[ext]',
                 entryFileNames: 'script/[name]-[hash].[ext]',
@@ -95,7 +95,7 @@ export default defineConfig({
                         return id.toString().split('node_modules/')[1].split('/')[0]
                 },
             },
-        },
+        },*/
         terserOptions: {
             compress: {
                 drop_console: true,

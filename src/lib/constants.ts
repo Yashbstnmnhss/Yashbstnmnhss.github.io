@@ -1,15 +1,16 @@
-export const Bstnmnhss = 'Bstnmnhss'
-export const Version = '3.5'
+export const BSTNMNHSS = 'Bstnmnhss'
+export const VERSION = '3.5.27'
 
+/** @deprecated Texta instead of I18n */
 export enum Languages {
     'zhCN' = 'zhCN',
 }
 
-export const DefaultLanguage = Languages.zhCN
+export const DEFAULT_LANGUAGE = Languages.zhCN
 
 export enum Themes {
     'dark' = 'dark',
     'light' = 'light',
 }
 
-export const DefaultTheme = Themes.dark
+export const DEFAULT_THEME = Themes.dark

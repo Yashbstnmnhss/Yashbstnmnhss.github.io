@@ -42,9 +42,13 @@ import {
     ArrowBackOutline as ArrowBackIcon,
     NotificationsOutline as NoticeIcon,
     InformationOutline as InfoIcon,
+    MedalOutline as MedalIcon,
+    BoatOutline as BoatIcon,
+    CloudOfflineOutline as CloudOfflineIcon,
+    AlertSharp as AlertIcon,
 } from '@vicons/ionicons5'
 
-export const Icons = {
+export const Icons: Record<string, Component> = {
     person: PersonIcon,
     book: BookIcon,
     bookmark: BookmarkIcon,
@@ -61,4 +65,8 @@ export const Icons = {
     arrowBack: ArrowBackIcon,
     notice: NoticeIcon,
     info: InfoIcon,
+    medal: MedalIcon,
+    boat: BoatIcon,
+    cloudOffline: CloudOfflineIcon,
+    alert: AlertIcon,
 }

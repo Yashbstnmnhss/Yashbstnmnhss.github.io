@@ -1,5 +1,12 @@
 <route lang="yaml">
 name: fuze-sounds
+meta:
+    menu:
+        for: jokes
+        key: fuze-sounds
+        icon: volume
+        parent:
+            key: fuze
 </route>
 
 <script setup lang="ts">
@@ -23,21 +30,21 @@ const onPlay = (e: Event) => {
 </script>
 
 <template>
-    <n-h1>{{ $t('layouts.JokesLayout.fuze-sounds') }}</n-h1>
-    <n-space vertical>
-        <n-thing v-for="sound in sounds" :key="sound.name">
+    <NH1>{{ $texta.get(['menus', 'jokes', 'fuze-sounds']) }}</NH1>
+    <NSpace vertical>
+        <NThing v-for="sound in sounds" :key="sound.name">
             <template #header>
-                <n-ellipsis line-clamp="3">
-                    {{ $t(`views.jokes.fuze.sounds.items.${sound.name}`) }}
-                </n-ellipsis>
+                <NEllipsis line-clamp="3">
+                    {{ $texta.get(['views', 'jokes', 'fuze', 'sounds', 'items', sound.name]) }}
+                </NEllipsis>
             </template>
             <audio
                 :src="sound.path"
                 controls
                 @play="e => onPlay(e)"
                 :key="sound.name"
-                :title="$t(`views.jokes.fuze.sounds.items.${sound.name}`)"
+                :title="$texta.get(['views', 'jokes', 'fuze', 'sounds', 'items', sound.name])"
             />
-        </n-thing>
-    </n-space>
+        </NThing>
+    </NSpace>
 </template>

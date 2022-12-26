@@ -6,12 +6,11 @@ export default (app: App<Element>) => {
             el.addEventListener('click', () => {
                 const selector = binding.value as string
                 const anchor = el.ownerDocument.querySelector(selector)
-                if (anchor) {
+                if (anchor)
                     anchor.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start',
                     })
-                }
             })
         },
     }

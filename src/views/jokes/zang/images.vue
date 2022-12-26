@@ -1,5 +1,13 @@
 <route lang="yaml">
 name: zang-images
+meta:
+    menu:
+        for: jokes
+        key: zang-images
+        icon: image
+        parent:
+            key: zang
+            icon: person
 </route>
 
 <script setup lang="ts">
@@ -12,20 +20,20 @@ const images = toImportInfo(
 </script>
 
 <template>
-    <n-h1>{{ $t('layouts.JokesLayout.zang-images') }}</n-h1>
-    <n-image-group>
-        <n-space>
-            <n-image
+    <NH1>{{ $texta.get(['menus', 'jokes', 'zang-images']) }}</NH1>
+    <NImageGroup>
+        <NSpace>
+            <NImage
                 v-for="image in images"
                 :src="image.path"
                 :key="image.name"
                 :title="image.name"
                 class="jokes-images"
-                :alt="$t('views.jokes.images-alt')"
+                :alt="$texta.get(['views', 'jokes', 'images-alt'])"
                 object-fit="cover"
                 width="350"
             />
-        </n-space>
-    </n-image-group>
-    <n-back-top />
+        </NSpace>
+    </NImageGroup>
+    <NBackTop />
 </template>

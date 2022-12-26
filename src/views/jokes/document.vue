@@ -8,6 +8,7 @@ import { NH1, NH3, NTabs, NIcon, NTabPane, NBlockquote, NCard, NAlert } from 'na
 </script>
 
 <template>
+    {{ $texta.has(['basic', 'texta']) }}
     <NH1>{{ $t('layouts.JokesLayout.document') }}</NH1>
     <NBlockquote>
         《Crafuzey》,二十五史之一,最初称为《Fuzeland编年史》,通常译为"傅兰",现又称《Crafuzey》,作者不祥

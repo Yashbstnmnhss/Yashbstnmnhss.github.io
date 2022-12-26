@@ -80,9 +80,7 @@ watch(
 <template>
     <div class="acs-container">
         <div class="number">
-            <span class="text">
-                {{ $t('components.ACSBar.number') }}
-            </span>
+            <span class="text"> 项目编号: </span>
             <span class="num">
                 <slot name="project-number"></slot>
             </span>
@@ -91,9 +89,7 @@ watch(
             <div class="animamted-bar" v-for="i in Number(props.level)" :key="i" />
         </div>
         <div class="level">
-            <span class="lvl">
-                {{ $t('components.ACSBar.level', [props.level]) }}
-            </span>
+            <span class="lvl"> 等级{{ props.level }} </span>
             <span class="clearance">
                 {{ Level2Extra[props.level] }}
             </span>
@@ -103,20 +99,16 @@ watch(
         </div>
         <div class="class">
             <div class="container">
-                <n-space align="center" justify="space-between" style="width: 100%; height: 100%">
+                <NSpace align="center" justify="space-between" style="width: 100%; height: 100%">
                     <div class="contain-class">
-                        <div class="class-category">
-                            {{ $t('components.ACSBar.class-category') }}
-                        </div>
+                        <div class="class-category">收容等级:</div>
                         <div class="class-text">
-                            <!--{{ $t('components.ACSBar.class-text') }}-->
                             {{ Class2Text[props.category] }}
                         </div>
                         <div v-if="props.secondaryCategory" class="class-secondary-category">
-                            {{ $t('components.ACSBar.class-secondary-category') }}
+                            次要等级:
                         </div>
                         <div v-if="props.secondaryCategory" class="class-secondary-text">
-                            <!--{{ $t('components.ACSBar.class-text') }}-->
                             {{ Class2Text[props.secondaryCategory] }}
                         </div>
                     </div>
@@ -185,22 +177,16 @@ watch(
                             />
                         </svg>
                     </div>
-                </n-space>
+                </NSpace>
             </div>
         </div>
         <div class="disrupt">
             <div class="container">
-                <n-space
-                    :align="'center'"
-                    justify="space-between"
-                    style="width: 100%; height: 100%"
-                >
+                <NSpace :align="'center'" justify="space-between" style="width: 100%; height: 100%">
                     <div class="contain-disrupt">
                         <span class="disrupt-text">
-                            <span class="disrupt-category">
-                                {{ $t('components.ACSBar.disrupt-category') }}&ThickSpace;
-                            </span>
-                            <!--{{ $t('components.ACSBar.disrupt-text') }}-->
+                            <span class="disrupt-category"> 扰动等级:&ThickSpace; </span>
+
                             <span class="disrupt-normal-text">
                                 {{ Disruption2Text[props.disruption] }}
                             </span>
@@ -247,22 +233,16 @@ watch(
                             />
                         </svg>
                     </div>
-                </n-space>
+                </NSpace>
             </div>
         </div>
         <div class="risk">
             <div class="container">
-                <n-space
-                    :align="'center'"
-                    justify="space-between"
-                    style="width: 100%; height: 100%"
-                >
+                <NSpace :align="'center'" justify="space-between" style="width: 100%; height: 100%">
                     <div class="contain-risk">
                         <span class="risk-text">
-                            <span class="risk-category">
-                                {{ $t('components.ACSBar.risk-category') }}&ThickSpace;
-                            </span>
-                            <!--{{ $t('components.ACSBar.risk-text') }}-->
+                            <span class="risk-category"> 风险等级:&ThickSpace; </span>
+
                             <span class="risk-normal-text">{{ Risk2Text[props.risk] }}</span>
                         </span>
                     </div>
@@ -308,7 +288,7 @@ watch(
                             />
                         </svg>
                     </div>
-                </n-space>
+                </NSpace>
             </div>
         </div>
         <div class="diamond">

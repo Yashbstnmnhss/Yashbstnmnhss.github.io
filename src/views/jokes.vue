@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { NLayout, NLayoutHeader, NLayoutSider, NLayoutFooter, NSpace } from 'naive-ui'
+import { NLayout, NLayoutHeader, NLayoutSider, NSpace } from 'naive-ui'
 import Viewer from '../components/basic/Viewer.vue'
+import { getOrMakeMenus as getMenu } from '../route/menu'
 import { useMain } from '../store'
 import { onMounted, watch } from 'vue'
-import getMenuOptions from '../route/menus/jokes'
 import SideMenu from '../components/basic/SideMenu.vue'
 
 const store = useMain()
@@ -20,9 +20,9 @@ watch(
 </script>
 
 <template>
-    <n-layout style="height: 100%">
-        <n-layout-header style="height: 64px" bordered>
-            <n-space>
+    <NLayout style="height: 100%">
+        <NLayoutHeader style="height: 64px" bordered>
+            <NSpace>
                 <svg style="max-width: 100%" height="64px" viewBox="0 0 500 64">
                     <circle
                         id="iconWrap"
@@ -56,18 +56,18 @@ watch(
                         "
                         onclick="window.location.href='/'"
                     >
-                        Bstnmnhss 3
+                        日丂丅冂从冂廾丂丂三
                     </text>
                 </svg>
-            </n-space>
-        </n-layout-header>
-        <n-layout position="absolute" style="top: 64px" has-sider>
-            <n-layout-sider
+            </NSpace>
+        </NLayoutHeader>
+        <NLayout position="absolute" style="top: 64px" has-sider>
+            <NLayoutSider
                 :native-scrollbar="false"
                 bordered
-                show-trigger
+                show-trigger="bar"
                 collapse-mode="width"
-                :collapsed-width="5"
+                :collapsed-width="0"
                 :show-collapsed-content="false"
                 :collapsed="collapsed"
                 :width="240"
@@ -75,14 +75,14 @@ watch(
                 @expand="toggle"
             >
                 <SideMenu
-                    :layout="'JokesLayout'"
+                    :layout="'jokes'"
                     :collapsed="collapsed"
-                    :get-menu-options="getMenuOptions"
+                    :get-menu-options="() => getMenu('jokes') ?? []"
                 />
-            </n-layout-sider>
-            <n-layout content-style="padding: 24px;" :native-scrollbar="false">
+            </NLayoutSider>
+            <NLayout content-style="padding: 24px;" :native-scrollbar="false">
                 <Viewer />
-            </n-layout>
-        </n-layout>
-    </n-layout>
+            </NLayout>
+        </NLayout>
+    </NLayout>
 </template>

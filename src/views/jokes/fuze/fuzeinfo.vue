@@ -1,5 +1,15 @@
 <route lang="yaml">
-name: fuze
+name: fuze-info
+meta:
+    menu:
+        for: jokes
+        key: fuze-info
+        label: fuze
+        icon: person
+        order: -5
+        parent:
+            key: fuze
+            icon: person
 </route>
 
 <script setup lang="ts">
@@ -16,9 +26,9 @@ import {
     NButton,
     NCard,
     NDivider,
+    NScrollbar,
 } from 'naive-ui'
 import { useRouter } from 'vue-router'
-import Spoiler from '../../../components/models/Spoiler.vue'
 import Timetable from '../../../components/models/Timetable.vue'
 
 import P5C from '../../../components/models/P5.vue'
@@ -103,12 +113,12 @@ const sketch = (p: P5) => {
 
 <template>
     <NBadge value="失联" type="info">
-        <n-h1>{{ $t('layouts.JokesLayout.fuze') }}</n-h1>
+        <NH1>{{ $texta.get(['menus', 'jokes', 'fuze']) }}</NH1>
     </NBadge>
 
-    <n-thing>
+    <NThing>
         <template #avatar>
-            <n-image width="100" :src="FuzeAvatar" />
+            <NImage width="100" :src="FuzeAvatar" />
         </template>
         <template #header>
             <mark>Fuze</mark>
@@ -116,15 +126,15 @@ const sketch = (p: P5) => {
         </template>
         <template #description>
             qilu furniture city (齐鲁家具城)
-            <Spoiler>
+            <spoiler>
                 <strong>七一路</strong>
                 家具城
-            </Spoiler>
+            </spoiler>
             , fuzeland (付兰)
-            <Spoiler>付兰永存!</Spoiler>
+            <spoiler>付兰永存!</spoiler>
             <br />
             <u><strong>LONG LIVE FUZELAND!</strong></u>
-            <Spoiler>*btw</Spoiler>
+            <spoiler>*btw</spoiler>
         </template>
         <NAlert type="error">
             FUZE他失联了 很久很久 我们不知道他怎么了他去哪里了以及他为什么走
@@ -141,7 +151,7 @@ const sketch = (p: P5) => {
         114514岁, 是带哲学家, 曾在
         <strong>Discord</strong>
         上大肆蛊惑式宣传自己的事迹
-        <Spoiler>(当 代 希 特 勒)</Spoiler>
+        <spoiler>(当 代 希 特 勒)</spoiler>
         , 最常见的一句话为
         <em>"u r a weird guy who kept saying the word "fuze"!"(你是个大聪明)</em>
         <span class="spoiler">(震声)</span>
@@ -153,7 +163,7 @@ const sketch = (p: P5) => {
         <s>那个大聪明一样</s>
         这种手段被称为——————
         <strong>下 定 义</strong>
-        <Spoiler>万 恶 之 源</Spoiler>
+        <spoiler>万 恶 之 源</spoiler>
         (
         <small>define</small>
         )
@@ -161,25 +171,25 @@ const sketch = (p: P5) => {
         因头型酷似馒头而得其名, 后又因帝国首领与他磕到嘴并张着大门牙而得名"松鼠",
         其母亲亦称其为"懒猫"
         <br />
-        <n-li>"Fuze, 你没尊严!"</n-li>
-        <n-li>"Fuze, 我们请你吃苹果🍎!"</n-li>
-        <n-li>"Fuze, 你没穿衣服!"</n-li>
-        <n-li>
+        <NLi>"Fuze, 你没尊严!"</NLi>
+        <NLi>"Fuze, 我们请你吃苹果🍎!"</NLi>
+        <NLi>"Fuze, 你没穿衣服!"</NLi>
+        <NLi>
             "Fuze, 你臃肿!"
-            <Spoiler>实 话 实 说</Spoiler>
-        </n-li>
-        <n-li>"Fuze, 你无能狂怒!"</n-li>
-        <n-li>
+            <spoiler>实 话 实 说</spoiler>
+        </NLi>
+        <NLi>"Fuze, 你无能狂怒!"</NLi>
+        <NLi>
             "Fuze, 我们是你的
             <strong>好朋友!</strong>
             "
-            <Spoiler>最 好 的 朋 友</Spoiler>
-        </n-li>
-        <n-li>
+            <spoiler>最 好 的 朋 友</spoiler>
+        </NLi>
+        <NLi>
             "
             <em>dei!</em>
             Fuze, 说普通话!"
-        </n-li>
+        </NLi>
         <br />
         <NCard title="文件一">
             自我认知: 别看疯子了! (主客颠倒 应该是<small>疯子别看了!</small>)
@@ -204,7 +214,7 @@ const sketch = (p: P5) => {
         <br />
         <NCard title="文件二">
             通宵到第二天五点 开始睡觉 六点起床上学
-            <n-blockquote>
+            <NBlockquote>
                 <i
                     >05:{{
                         new Date().getMinutes() < 10
@@ -220,23 +230,23 @@ const sketch = (p: P5) => {
                 哈~~~
                 <br />
                 [图片: 可莉]
-            </n-blockquote>
+            </NBlockquote>
             FUZE肝到了第二天早上五点 终于抽出了他心爱的可莉
-            <n-blockquote>
+            <NBlockquote>
                 "你为什么这么喜欢可莉?" <br />
                 "<strong>因为可莉很刑啊</strong>" [怪强调略显猥琐]
                 <br />
                 "... 萝莉控"
-            </n-blockquote>
+            </NBlockquote>
             FUZE给他的可莉装上了四风原典
-            <n-blockquote>
+            <NBlockquote>
                 [图片: 角色界面的武器栏 可莉托着四风原典 张着口] <br />
                 <br />
                 <strong>是因为四风原典没人用 我才抽可莉</strong> <br />
                 反正我不觉得原因这么简单
-            </n-blockquote>
+            </NBlockquote>
             "蹦蹦炸弹 (╯‵□′)╯炸弹！•••*～● 火力全开~"
-            <n-blockquote>
+            <NBlockquote>
                 <i>数学课上 小伙坐在班级的左前方靠墙 看起来神志不清</i>
                 <br />
                 <i>老师在黑板上写下了一个分式</i> <br />
@@ -248,18 +258,18 @@ const sketch = (p: P5) => {
                 <br />
                 ...... <br />
                 <strong>每天的睡眠一定要保证啊!</strong>
-            </n-blockquote>
+            </NBlockquote>
             又过了不知多久 似乎以月为单位计量
-            <n-blockquote>
+            <NBlockquote>
                 "诶呀 废物可莉 <br />
                 可莉就是个废物"
-            </n-blockquote>
+            </NBlockquote>
             唉, 喜新厌旧的萝莉控FUZE 可莉被抛弃了 真悲哀啊可莉
         </NCard>
         <br />
         <NCard title="文件三">
             好几个小时的JOJO授课
-            <n-blockquote>
+            <NBlockquote>
                 "人终究是要上天堂的!" <br />
                 "MADE IN HEAVEN!" <br />
                 "大总统...平行世界...湮灭" <br />
@@ -268,18 +278,18 @@ const sketch = (p: P5) => {
                 <i><strong>讲着讲着误开摄像头</strong></i
                 ><br />
                 ......
-            </n-blockquote>
+            </NBlockquote>
             日常语音
-            <n-blockquote>
+            <NBlockquote>
                 "能听到吗?" "喂" "喂" "喂" <br />
                 "有.点.笨.电.脑-" <br />
                 "除你语音!" [语音通话已结束]
-            </n-blockquote>
+            </NBlockquote>
         </NCard>
         <br />
         <NCard title="文件四">
             父亲
-            <n-blockquote>
+            <NBlockquote>
                 谁和FUZE在一起?
                 <br />
                 告诉FUZE, 他爸爸回来了 <br />
@@ -290,9 +300,9 @@ const sketch = (p: P5) => {
                 @全体成员 <br />
                 ...... <br />
                 FUZE回来了
-            </n-blockquote>
+            </NBlockquote>
             作文解释
-            <n-blockquote>
+            <NBlockquote>
                 我的宝贝儿啊，我的天，你 看他的卷子你都没看明白它 写的是什么，他写的是跟妈
                 妈生气了，摔门而出，完了 之后妈妈并没有出来追她之 后呢，她在路上看到了一个
                 抱着孩子的妇女，那个女人 身上的衣服很单薄，因为他 把衣服给她怀里的孩子穿上
@@ -314,42 +324,42 @@ const sketch = (p: P5) => {
                 让他爸爸知道，或者他爸爸 看到了可能会跟他生气，明 白了吗?也就是说因为跟我
                 关系好，所以他可以随便 说。
                 <br /><i><small>[转换完成 文件1-4-3]</small></i>
-            </n-blockquote>
+            </NBlockquote>
             新称号
-            <n-blockquote>
+            <NBlockquote>
                 为什么像松鼠呢?我感觉他 像一只猫，尤其是性格非常 像一只猫，懒懒的往那一
                 躺，完了之后呢，还馋不爱 吃好吃的，比如说汉堡啊披 萨呀，完了之后小鸡腿儿
                 啊。整天吃好吃的，因为猫 有两个特别的喜庆，一个是 懒，一个是X1说就是懒猫或
                 者馋猫，没有听说谁说长狗 或者是懒狗，没有吧，基本 上都是懒猫或者是馋猫，所
                 以FUZE非常符合这两遍。
                 <br /><i><small>[转换完成 文件1-4-4]</small></i>
-            </n-blockquote>
+            </NBlockquote>
         </NCard>
         <br />
         <NCard title="文件五">
-            <n-blockquote>
+            <NBlockquote>
                 [:转圈圈:] <br />
                 去世了 <br />
                 随机一天复活 <br />
                 <i><small>[2022/07/16 16:25]</small></i>
-            </n-blockquote>
+            </NBlockquote>
             EOF
         </NCard>
         <br />
         <template #footer>
-            <n-button @click="router.push('/jokes/fuzeblockisnotagame')">
+            <NButton @click="router.push('/jokes/fuzeblockisnotagame')">
                 <mark>FUZE block</mark>
                 <strong>is not</strong>
                 <s>a game!</s>
-            </n-button>
+            </NButton>
         </template>
-    </n-thing>
-    <n-divider />
-    <n-card>
+    </NThing>
+    <NDivider />
+    <NCard>
         <video style="max-width: 100%" :src="FuzeVideo" controls muted loop />
-    </n-card>
-    <n-divider />
-    <n-card title="BILIBILI">
+    </NCard>
+    <NDivider />
+    <NCard title="BILIBILI">
         <iframe
             width="100%"
             height="375px"
@@ -360,120 +370,121 @@ const sketch = (p: P5) => {
             referrerpolicy="origin"
             @error="e => e.preventDefault()"
         ></iframe>
-    </n-card>
-    <n-divider />
-    <n-card title="生命周期">
-        <Timetable
-            :content="[
-                [
+    </NCard>
+    <NDivider />
+    <NCard title="生命周期">
+        <NScrollbar x-scrollable>
+            <Timetable
+                :content="[
                     [
-                        [6, 0, 0],
-                        [7, 30, 0],
+                        [
+                            [6, 0, 0],
+                            [7, 30, 0],
+                        ],
+                        '晨练',
                     ],
-                    '晨练',
-                ],
-                [
                     [
-                        [7, 30, 0],
-                        [8, 0, 0],
+                        [
+                            [7, 30, 0],
+                            [8, 0, 0],
+                        ],
+                        '吃早饭',
                     ],
-                    '吃早饭',
-                ],
-                [
                     [
-                        [8, 0, 0],
-                        [10, 0, 0],
+                        [
+                            [8, 0, 0],
+                            [10, 0, 0],
+                        ],
+                        '完成部分作业',
                     ],
-                    '完成部分作业',
-                ],
-                [
                     [
-                        [10, 0, 0],
-                        [10, 30, 0],
+                        [
+                            [10, 0, 0],
+                            [10, 30, 0],
+                        ],
+                        '自由活动',
                     ],
-                    '自由活动',
-                ],
-                [
                     [
-                        [10, 30, 0],
-                        [11, 0, 0],
+                        [
+                            [10, 30, 0],
+                            [11, 0, 0],
+                        ],
+                        '预习物理八上',
                     ],
-                    '预习物理八上',
-                ],
-                [
                     [
-                        [11, 0, 0],
-                        [12, 0, 0],
+                        [
+                            [11, 0, 0],
+                            [12, 0, 0],
+                        ],
+                        '完成部分作业',
                     ],
-                    '完成部分作业',
-                ],
-                [
                     [
-                        [12, 0, 0],
-                        [14, 0, 0],
+                        [
+                            [12, 0, 0],
+                            [14, 0, 0],
+                        ],
+                        '吃饭、午休',
                     ],
-                    '吃饭、午休',
-                ],
-                [
                     [
-                        [14, 0, 0],
-                        [16, 0, 0],
+                        [
+                            [14, 0, 0],
+                            [16, 0, 0],
+                        ],
+                        '完成部分作业',
                     ],
-                    '完成部分作业',
-                ],
-                [
                     [
-                        [16, 0, 0],
-                        [17, 0, 0],
+                        [
+                            [16, 0, 0],
+                            [17, 0, 0],
+                        ],
+                        '英语听力',
                     ],
-                    '英语听力',
-                ],
-                [
                     [
-                        [17, 0, 0],
-                        [18, 0, 0],
+                        [
+                            [17, 0, 0],
+                            [18, 0, 0],
+                        ],
+                        '预习数学',
                     ],
-                    '预习数学',
-                ],
-                [
                     [
-                        [18, 0, 0],
-                        [19, 0, 0],
+                        [
+                            [18, 0, 0],
+                            [19, 0, 0],
+                        ],
+                        '吃饭',
                     ],
-                    '吃饭',
-                ],
-                [
                     [
-                        [19, 0, 0],
-                        [19, 30, 0],
+                        [
+                            [19, 0, 0],
+                            [19, 30, 0],
+                        ],
+                        '观看新闻、《话说长江》',
                     ],
-                    '观看新闻、《话说长江》',
-                ],
-                [
                     [
-                        [19, 30, 0],
-                        [21, 30, 0],
+                        [
+                            [19, 30, 0],
+                            [21, 30, 0],
+                        ],
+                        '预习八上生物、历史、地理、政治',
                     ],
-                    '预习八上生物、历史、地理、政治',
-                ],
-                [
                     [
-                        [21, 30, 0],
-                        [22, 30, 0],
+                        [
+                            [21, 30, 0],
+                            [22, 30, 0],
+                        ],
+                        '语文阅读',
                     ],
-                    '语文阅读',
-                ],
-                [
                     [
-                        [22, 30, 0],
-                        [6, 0, 0],
+                        [
+                            [22, 30, 0],
+                            [6, 0, 0],
+                        ],
+                        '睡觉',
                     ],
-                    '睡觉',
-                ],
-            ]"
-        />
-    </n-card>
-    <n-card title="FUZE维度">
+                ]"
+        /></NScrollbar>
+    </NCard>
+    <NCard title="FUZE维度">
         <P5C :sketch="sketch" />
-    </n-card>
+    </NCard>
 </template>

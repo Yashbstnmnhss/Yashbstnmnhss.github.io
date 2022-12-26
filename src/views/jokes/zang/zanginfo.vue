@@ -1,5 +1,14 @@
 <route lang="yaml">
-name: zang
+name: zang-info
+meta:
+    menu:
+        for: jokes
+        key: zang-info
+        label: zang
+        icon: person
+        parent:
+            key: zang
+            icon: person
 </route>
 
 <script lang="ts" setup>
@@ -26,7 +35,7 @@ const ws = [
 </script>
 
 <template>
-    <NH1>{{ $t('layouts.JokesLayout.zang') }}</NH1>
+    <NH1>{{ $texta.get(['menus', 'jokes', 'zang']) }}</NH1>
     <NSpace vertical>
         <NCard title="文件一 风魔龙怒怒怒">
             <video

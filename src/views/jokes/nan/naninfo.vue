@@ -1,5 +1,14 @@
 <route lang="yaml">
-name: nan
+name: nan-info
+meta:
+    menu:
+        for: jokes
+        key: nan-info
+        label: nan
+        icon: person
+        parent:
+            key: nan
+            icon: person
 </route>
 
 <script lang="ts" setup>
@@ -9,6 +18,7 @@ import Ye from '@/assets/images/jokes/nan/ye.png'
 import Sand from '@/assets/images/jokes/nan/sand.png'
 import SSK1 from '@/assets/images/jokes/nan/ssk1.png'
 import SSK2 from '@/assets/images/jokes/nan/ssk2.png'
+import SSK3 from '@/assets/images/jokes/nan/ssk3.jpg'
 import SHUO from '@/assets/images/jokes/nan/shuo.png'
 import Shout from '@/assets/images/jokes/nan/shout.png'
 import Car from '@/assets/videos/jokes/nan/jiang.mp4'
@@ -83,7 +93,7 @@ const hacker = [
 </script>
 
 <template>
-    <NH1>{{ $t('layouts.JokesLayout.nan') }}</NH1>
+    <NH1>{{ $texta.get(['menus', 'jokes', 'nan']) }}</NH1>
     <NSpace vertical>
         <svg width="100" height="100" viewBox="0 0 100 100">
             <text
@@ -158,19 +168,56 @@ const hacker = [
         </NCard>
         <NCard
             title="文件四 拾枣"
+            class="bgs"
             :style="`background:url(${SSK1}); background-size:contain; background-origin:fixed`"
         >
-            <NScrollbar x-scrollable>
-                <NImage object-fill="cover" :src="SSK2" />
-            </NScrollbar>
+            <NSpace vertical>
+                <NSpace>
+                    <NScrollbar x-scrollable>
+                        <NImage
+                            :show-toolbar="false"
+                            object-fill="cover"
+                            class="hovernone"
+                            :src="SSK2"
+                        />
+                    </NScrollbar>
+                    <NScrollbar x-scrollable>
+                        <NImage
+                            :show-toolbar="false"
+                            object-fill="cover"
+                            width="200"
+                            class="hovernone"
+                            :src="SSK3"
+                        />
+                    </NScrollbar>
+                </NSpace>
+                <div>网络男神可与空气交流</div>
+            </NSpace>
         </NCard>
         <NCard title="文件五 熊咆龙吟殷岩泉">
             <NScrollbar x-scrollable>
-                <NImage object-fill="cover" :src="Shout" />
+                <NImage :show-toolbar="false" object-fill="cover" :src="Shout" />
             </NScrollbar>
             <br />
             钟(离)好帅啊~ <br />
             ------正打歪着珊瑚宫心海的聪智
+        </NCard>
+        <NCard title="文件六 圣阳世纪电视包装袋">
+            <NScrollbar x-scrollable>
+                <NImage :show-toolbar="false" object-fill="cover" :src="SHUO" />
+            </NScrollbar>
+            <br />
+            "单刃短柄匕首掏出你的心肝五脏!" <br />
+            语文考试中,硕哥举起了手:"老师,'亵渎'的'渎'怎么写?" 老师抬头一言不发地看着他 <br />
+            还是考试,硕哥桌上有很多橡皮屑:"老师我这有点儿橡皮屑" <br />
+            又是考试,硕哥的好同学用异物扔硕哥:"老师我举报有人<strong>投掷</strong>我!"委屈地告状
+            <br />
+            硕哥的好同学们与硕哥打闹:"你们这俩鸟人 该死的! 放开我! 该死的" <br />
+            明媚的早上,硕哥一人拿着自己的繁体字化学笔记,直接坐在楼门口的水泥台上:"什么繁体字我又不是廣東人",本上还贴心地写了提醒备忘录
+            <br />
+            "我们俩班是联班!" <br />
+
+            ------很狠圣阳世纪员工硕哥
         </NCard>
     </NSpace>
 </template>
@@ -201,6 +248,21 @@ const hacker = [
     animation-duration: 2s;
     .mixin(4);
 }
+.hovernone {
+    opacity: 1;
+    transition: opacity ease-in-out 0.5s;
+    .hovernone:hover {
+        opacity: 0;
+    }
+}
+.bgs {
+    animation-name: Background-Slide;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    animation-direction: alternate-reverse;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
 
 @keyframes Fade {
     from {
@@ -211,6 +273,15 @@ const hacker = [
     }
     to {
         opacity: 0;
+    }
+}
+
+@keyframes Background-Slide {
+    from {
+        background-position: -200px 0;
+    }
+    to {
+        background-position: 200px 0;
     }
 }
 </style>

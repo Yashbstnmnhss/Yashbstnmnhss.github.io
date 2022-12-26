@@ -23,12 +23,12 @@ const current = router.currentRoute.value
 <template>
     <router-view v-slot="{ Component }">
         <transition v-if="current.meta.transition" :name="(current.meta.transition as string)">
-            <keep-alive v-if="current.meta.keepAlive" :max="10">
+            <keep-alive v-if="current.meta.keepAlive === true" :max="10">
                 <component :key="current.path" :is="Component" />
             </keep-alive>
             <component v-else :key="current.path" :is="Component" />
         </transition>
-        <keep-alive v-else-if="current.meta.keepAlive" :max="10">
+        <keep-alive v-else-if="current.meta.keepAlive === true" :max="10">
             <component :key="current.path" :is="Component" />
         </keep-alive>
         <component v-else :key="current.path" :is="Component" />

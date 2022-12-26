@@ -5,7 +5,6 @@ meta:
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 import { useMain } from '../store'
 import {
     NButton,
@@ -16,25 +15,31 @@ import {
     MenuOption as MO,
     NTooltip,
     useThemeVars,
+    NH1,
+    NText,
+    NDivider,
+    NScrollbar,
+    NElement,
+    useDialog,
 } from 'naive-ui'
 import {
     SunnyOutline,
     MoonOutline,
-    MenuOutline,
     CloudOutline,
     CloudOfflineOutline,
     EllipsisHorizontal,
     InformationOutline,
 } from '@vicons/ionicons5'
-import { Themes } from '../lib/constants'
 import { onMounted } from 'vue'
-import { jokeMOs } from '../route/menus/jokes'
-import { checkWebsite } from '../lib/utils'
+import { getGroupInMenu } from '../route/menu'
+import { checkWebsite, useAchiever, useTexta, Themes, valueToString } from './portal'
 
 const store = useMain(),
     router = useRouter(),
-    locale = useI18n(),
-    styles = useThemeVars()
+    texta = useTexta(),
+    styles = useThemeVars(),
+    dialog = useDialog(),
+    achiever = useAchiever()
 
 const check = async (link: string) => await checkWebsite(link)
 const websites: [string, string][] = [
@@ -43,14 +48,16 @@ const websites: [string, string][] = [
     ['Vercel站', 'https://yashbstnmnhss.vercel.app'],
 ]
 
-let title = $ref('Bstnmnhss'),
-    theme = $ref<typeof store.theme>(),
+let theme = $ref<typeof store.theme>(),
     dropdown = $ref<MO[]>(
-        jokeMOs.map(
-            v =>
+        (getGroupInMenu('jokes', 'default')!.children ?? []).map(
+            (v: MO) =>
                 ({
-                    label: locale.t(`layouts.JokesLayout.${v.key}`),
-                    key: v.link || v.children?.find(v => v.key === v.key)?.link || v.key,
+                    label:
+                        v.label && texta.has(['menus', 'jokes', valueToString(v.label)])
+                            ? texta.get(['menus', 'jokes', valueToString(v.label)])
+                            : texta.get(['menus', 'jokes', valueToString(v.key)]),
+                    key: v.link || (v.children ?? [])[0]?.link || v.key,
                 } as MO)
         )
     ),
@@ -67,6 +74,25 @@ onMounted(() => {
     getWebsitesAlive().then(v => (websitesAlive = v))
 })
 
+const clickInfo = () => {
+    const d = dialog.create({
+        title: '凹冈!',
+        closable: false,
+        maskClosable: false,
+        closeOnEsc: false,
+        content: `这个图书馆是个僻静的地方,平时几乎无人造访,但依旧会坚持维护她录入新内容,毕竟她的价值与意义绝不是用访客流量来维持的。"All gone So long"这句话可能已应验了,亦或不需说"可能",至少这里会记住一部分的,也妨到"Completely gone"时只能来句"So long"。`,
+        showIcon: false,
+        positiveText: '嗖浪..',
+        negativeText: '力挽狂澜',
+        onNegativeClick() {
+            d.negativeText = undefined
+            d.positiveText = '嗖浪吧'
+            d.content = '无聊! 无用! 无能!'
+            achiever.achieve('useless_bored')
+            return false
+        },
+    })
+}
 const updateTheme = () => (store.theme = theme = theme === Themes.dark ? Themes.light : Themes.dark)
 const start = () => router.push('/jokes')
 const select = (key: string) => router.push(`${key}`)
@@ -74,90 +100,51 @@ const open = (url: string) => (window.location.href = url)
 </script>
 
 <template>
-    <div class="full wrapper">
-        <!--<div class="layer background-layer blocks">
-            <div
-                class="block bv1 block-vertical animate-vertical"
-                style="
-                    left: 2vmax;
-                    background: linear-gradient(to top, var(--color), var(--color2));
-                "
-            ></div>
-            <div
-                class="block bh1 block-horizontal animate-horizontal"
-                style="
-                    top: 2vmax;
-                    background: linear-gradient(to left, var(--color), var(--color2));
-                "
-            ></div>
-            <div
-                class="block bh2 block-horizontal animate-horizontal animate-reverse"
-                style="
-                    bottom: 2vmax;
-                    background: linear-gradient(to right, var(--color), var(--color2));
-                "
-            ></div>
-            <div
-                class="block bv2 block-vertical animate-vertical animate-reverse"
-                style="
-                    right: 2vmax;
-                    background: linear-gradient(to bottom, var(--color), var(--color2));
-                "
-            ></div>
-        </div>-->
-        <div class="layer content-layer" style="height: 100%">
-            <NSpace :size="25" class="full" justify="center" align="center" vertical>
-                <NSpace :size="25" justify="center" align="center" vertical>
-                    <NSpace :size="5" justify="center" align="center" vertical>
-                        <span
-                            class="title zoomin"
-                            @mouseover="title = 'Bstuwuhss'"
-                            @mouseleave="title = 'Bstnmnhss'"
+    <NScrollbar>
+        <div class="full wrapper">
+            <NElement>
+                <NH1 prefix="bar" style="font-size: 5rem" class="zoomin">
+                    <NText type="primary" class="title">
+                        日丂丅冂从冂廾丂丂<span class="blinker">三</span></NText
+                    >
+                </NH1>
+            </NElement>
+            <NDivider />
+            <NSpace :size="25">
+                <NSpace>
+                    <NDropdown @select="key => select(key)" scrollable :options="dropdown">
+                        <NButton
+                            type="primary"
+                            size="large"
+                            class="start-button zoomin-small delay1"
+                            @click="start()"
                         >
-                            {{ title }}
-                        </span>
-                        <span
-                            style="line-height: 0.5; text-align: center"
-                            class="zoomin-small delay3"
-                        >
-                            <p>这个封面果然还是太简陋了</p>
-                            <p>啊啊啊那咋整</p>
-                        </span>
-                    </NSpace>
-                    <NSpace :size="25" justify="center" align="center">
-                        <NDropdown @select="key => select(key)" scrollable :options="dropdown">
-                            <NButton
-                                type="primary"
-                                size="large"
-                                class="start-button zoomin-small delay1"
-                                @click="start()"
-                            >
-                                乐子?楽子?樂子!
-                            </NButton>
-                        </NDropdown>
-                        <NButtonGroup class="zoomin-small delay2">
-                            <NButton ghost type="default" size="medium" @click="updateTheme()">
-                                <NIcon size="20">
-                                    <span v-if="theme === Themes.light">
-                                        <SunnyOutline />
-                                    </span>
-                                    <span v-else>
-                                        <MoonOutline />
-                                    </span>
-                                </NIcon>
-                            </NButton>
-                            <NButton ghost type="default" size="medium">
-                                <NIcon size="20">
-                                    <InformationOutline />
-                                </NIcon>
-                            </NButton>
-                        </NButtonGroup>
-                    </NSpace>
+                            乐子?楽子?樂子!
+                        </NButton>
+                    </NDropdown>
+                    <NButtonGroup class="zoomin-small delay2">
+                        <NButton ghost type="default" size="large" @click="updateTheme()">
+                            <NIcon size="20">
+                                <span v-if="theme === Themes.light">
+                                    <SunnyOutline />
+                                </span>
+                                <span v-else>
+                                    <MoonOutline />
+                                </span>
+                            </NIcon>
+                        </NButton>
+                        <NButton @click="clickInfo()" ghost type="default" size="large">
+                            <NIcon size="20">
+                                <InformationOutline />
+                            </NIcon>
+                        </NButton>
+                    </NButtonGroup>
                 </NSpace>
-                <NSpace :size="2" justify="center" align="end" class="zoomin-small delay3">
+                <NSpace :size="2" class="zoomin-small delay3">
                     <NTooltip placement="bottom" v-for="w in websitesAlive">
                         <template #trigger>
                             <NButton
+                                size="large"
                                 dashed
                                 :type="w[2] === false ? 'error' : 'success'"
                                 @click="open(w[1])"
@@ -182,13 +169,27 @@ const open = (url: string) => (window.location.href = url)
                 </NSpace>
             </NSpace>
         </div>
-    </div>
+    </NScrollbar>
 </template>
 
 <style scoped lang="less">
+.blinker {
+    text-decoration: underline;
+    animation: Blinker 1.5s infinite steps(1, start);
+}
+@keyframes Blinker {
+    0% {
+        text-decoration-color: var(--body-color);
+    }
+    50% {
+        text-decoration-color: var(--text-color-2);
+    }
+    100% {
+        text-decoration-color: var(--body-color);
+    }
+}
+
 .title {
-    font-size: 10vh;
-    font-family: Consolas, "Courier New", Courier, monospace;
     line-height: 1;
     user-select: none;
     -webkit-user-drag: none;
@@ -236,14 +237,14 @@ const open = (url: string) => (window.location.href = url)
 @seconds: 1, 2, 3;
 each(@seconds, {
     .delay@{value} {
-        animation-delay: calc(@value * 1s);
+        animation-delay: calc(@value * 0.5s);
     }
 })
 
 @keyframes zoom-in {
     0% {
-        transform: scale(3);
         opacity: 0;
+        transform: translateY(10px)
     }
 }
 @keyframes zoom-in-small {
@@ -253,24 +254,16 @@ each(@seconds, {
 }
 
 .wrapper {
-    padding: 2vh;
-    overflow: hidden;
+    padding: 5vh;
     box-sizing: border-box;
-}
-.layer {
-    position: relative;
-}
-.content-layer {
-    z-index: 1;
-}
-.background-layer {
-    z-index: -1;
+    height: 100%;
+    max-height: 100%;
 }
 
 @bs: bv1, bv2, bh1, bh2;
 each(@bs, {
     .@{value} {
-        animation-duration: calc(2s * @Random) !important;
+        animation-duration: calc(1.5s * @Random) !important;
         animation-delay: calc(@RandomDelay * 1s) !important;
         animation-timing-function: extract(@TimingFunctions, @RandIndex) !important;
     }

@@ -76,39 +76,39 @@ const progress = computed(() => {
 </script>
 
 <template>
-    <n-card :title="props.title">
+    <NCard :title="props.title">
         <template #header-extra>
-            <n-time :time="props.date" type="date" />
+            <NTime :time="props.date" type="date" />
         </template>
         <div v-if="isTodayBirthday">
             <slot name="onbirthday"></slot>
         </div>
         <slot name="description"></slot>
         <br />
-        <n-countdown :render="renderCountdown" :duration="diffTime" active />
-        <n-card hoverable>
-            <n-space :align="'stretch'" :justify="'space-between'">
-                <n-statistic :label="$t('components.BirthdayCountdown.yearlabel')" tabular-nums>
-                    <n-number-animation
+        <NCountdown :render="renderCountdown" :duration="diffTime" active />
+        <NCard hoverable>
+            <NSpace :align="'stretch'" :justify="'space-between'">
+                <NStatistic label="现在已经" tabular-nums>
+                    <NNumberAnimation
                         :duration="6000"
                         :from="0"
                         :to="today.getFullYear() - props.date.getFullYear()"
                     />
-                    <template #suffix>
-                        {{ $t('components.BirthdayCountdown.yearold') }}
-                    </template>
-                </n-statistic>
+                    <template #suffix> 岁 </template>
+                </NStatistic>
                 <slot name="bar-extra"></slot>
-            </n-space>
+            </NSpace>
             <template #action>
-                <n-progress
+                <NProgress
                     :title="props.progressTooltip"
                     processing
                     :height="14"
                     :percentage="progress"
+                    border-radius="12px 12px 0 0"
+                    fill-border-radius="12px 0 12px 12px"
                 />
             </template>
-        </n-card>
+        </NCard>
         <slot name="extra"></slot>
-    </n-card>
+    </NCard>
 </template>

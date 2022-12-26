@@ -1,5 +1,12 @@
 <route lang="yaml">
 name: fuze-videos
+meta:
+    menu:
+        for: jokes
+        key: fuze-videos
+        icon: video
+        parent:
+            key: fuze
 </route>
 
 <script setup lang="ts">
@@ -25,27 +32,27 @@ const videoAchiever = (e: Event) => {
 </script>
 
 <template>
-    <n-h1>{{ $t('layouts.JokesLayout.fuze-videos') }}</n-h1>
-    <n-anchor affix>
-        <n-anchor-link
+    <NH1>{{ $texta.get(['menus', 'jokes', 'fuze-videos']) }}</NH1>
+    <NAnchor affix>
+        <NAnchorLink
             v-for="video in videos"
             v-anchor="`#_${video.name}`"
-            :title="$t(`views.jokes.fuze.videos.items.${video.name}`)"
+            :title="$texta.get(['views', 'jokes', 'fuze', 'videos', 'items', video.name])"
         />
-    </n-anchor>
+    </NAnchor>
     <br />
-    <n-space vertical>
-        <n-thing v-for="video in videos" :key="video.name" :id="`_${video.name}`">
+    <NSpace vertical>
+        <NThing v-for="video in videos" :key="video.name" :id="`_${video.name}`">
             <template #header>
-                <n-ellipsis line-clamp="3">
-                    {{ $t(`views.jokes.fuze.videos.items.${video.name}`) }}
-                </n-ellipsis>
+                <NEllipsis line-clamp="3">
+                    {{ $texta.get(['views', 'jokes', 'fuze', 'videos', 'items', video.name]) }}
+                </NEllipsis>
             </template>
             <video
                 @play="e => videoAchiever(e)"
                 controls
                 :key="video.name"
-                :title="$t(`views.jokes.fuze.videos.items.${video.name}`)"
+                :title="$texta.get(['views', 'jokes', 'fuze', 'videos', 'items', video.name])"
             >
                 <source :src="video.path" />
                 <track
@@ -53,11 +60,11 @@ const videoAchiever = (e: Event) => {
                     :src="subtitles.find(v => v.name === video.name)?.path"
                     default
                 />
-                彳亍不支持是吧
+                {{ $texta.get(['views', 'jokes', 'videos-alt']) }}
             </video>
-        </n-thing>
-    </n-space>
-    <n-back-top />
+        </NThing>
+    </NSpace>
+    <NBackTop />
 </template>
 
 <style scoped>

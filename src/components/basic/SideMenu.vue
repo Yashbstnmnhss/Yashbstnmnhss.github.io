@@ -2,9 +2,8 @@
 import { NMenu } from 'naive-ui'
 import type { MenuOption } from 'naive-ui/lib'
 import { useMain } from '../../store'
-import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
-import { renderLink, renderIcon } from '../../lib/utils/render'
+import { useTexta, valueToString, renderLink, renderIcon } from '../../lib'
 import { watchEffect, watch, ref, onMounted } from 'vue'
 
 const props = defineProps<{
@@ -14,7 +13,7 @@ const props = defineProps<{
 }>()
 
 const store = useMain()
-const { t, te } = useI18n()
+const texta = useTexta()
 const route = useRoute()
 
 const current = ref<string>()
@@ -36,21 +35,27 @@ watch(
     }
 )
 
-const valueUpdate = (k: any) => {
-    current.value = k
-}
+const valueUpdate = (k: any) => (current.value = k)
 
 const renderMenuLabel = (option: MenuOption) => {
-    var translate = `layouts.${props.layout}.${option.key}`
+    var path = (key: string) => ['menus', props.layout, key]
+    var keyPath = path(valueToString(option.key))
+    var labelPath = path(valueToString(option.label))
 
     if (!option.link) {
         if (option.label) return option.label as any
-        return t(translate)
+        return texta.get(keyPath, option)
     }
 
-    if (!te(translate)) return renderLink(option.link, (option.label as any) ?? option.key)()
+    if (!texta.has(keyPath))
+        return renderLink(
+            option.link,
+            typeof option.label === 'string' && texta.has(labelPath)
+                ? texta.get(labelPath, option)
+                : (option.label as any) ?? option.key
+        )()
 
-    var label = t(translate)
+    var label = texta.get(keyPath, option)
 
     if ('link' in option) return renderLink(option.link, label)()
 
@@ -62,13 +67,20 @@ const renderMenuIcon = (option: MenuOption) => {
 </script>
 
 <template>
-    <n-menu
+    <NMenu
         :value="current"
         :options="menuOptions"
         :collapsed="collapsed"
+        :collapsed-width="0"
         accordion
         @update:value="k => valueUpdate(k)"
         :render-icon="renderMenuIcon"
         :render-label="renderMenuLabel"
     />
 </template>
+
+<style scoped>
+* {
+    user-select: none;
+}
+</style>

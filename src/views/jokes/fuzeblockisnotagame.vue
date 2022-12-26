@@ -1,7 +1,12 @@
 <route lang="yaml">
 name: fuzeblockisnotagame
 meta:
-    keepAlive: true
+    keepAlive: false
+    menu:
+        for: jokes
+        key: fuzeblockisnotagame
+        icon: squareFull
+        group: header
 </route>
 
 <script setup lang="ts">
@@ -10,71 +15,60 @@ import {
     NButton,
     NSpace,
     useMessage,
-    NInputGroup,
-    NInputNumber,
-    NSelect,
     NH1,
     NBackTop,
     NStatistic,
     NAvatar,
     NThing,
-    NScrollbar,
-    NDivider,
 } from 'naive-ui'
-import { ref } from 'vue'
 import FuMusicBox from '../../components/models/FuMusicBox.vue'
 import { useAchiever } from '../../lib/functions/achievements'
 import BirthdayCountdown from '../../components/models/BirthdayCountDown.vue'
 
 const achiever = useAchiever()
-
 const message = useMessage()
 const fuzeBirthday = new Date(2007, 6 - 1, 16)
 </script>
 
 <template>
-    <n-h1>{{ $t('layouts.JokesLayout.fuzeblockisnotagame') }}</n-h1>
-    <n-space
+    <NH1>{{ $texta.get(['menus', 'jokes', 'fuzeblockisnotagame']) }}</NH1>
+    <NSpace
         :justify="'space-around'"
         vertical
         style="padding: 10px"
         @contextmenu="(e: any) => e.preventDefault()"
     >
-        <birthday-countdown
+        <BirthdayCountdown
             target="FUZE"
             :date="fuzeBirthday"
             progress-tooltip="距离下次生日进度"
-            title="FUZE的生日"
+            title="FU生日"
         >
             <template #onbirthday>
-                <n-button
+                <NButton
                     type="info"
                     round
                     ghost
                     @click="
-                        () => {
-                            message.success($t('views.fuzeblockisnotagame.itsfuzesbd'))
+                        message.success('亻寸氵睾的生日 伟大的诞辰') &&
                             achiever.achieve('happy_birthday_fuze')
-                        }
                     "
                 >
-                    {{ $t('views.fuzeblockisnotagame.itsfuzesbd') }}!!!
-                </n-button>
+                    今天是亻寸氵睾的生日!!!
+                </NButton>
                 <br />
-                <strong>{{ $t('views.fuzeblockisnotagame.wentiJbBirthday') }}</strong>
+                <strong>这也是温迪和FUZE鸡巴的生日 温迪与FUZE鸡巴也生日快乐!</strong>
                 <br />
-                <n-button
+                <NButton
                     type="primary"
                     ghost
                     @click="
-                        () => {
-                            message.success($t('views.fuzeblockisnotagame.hbdfuze'))
+                        message.success('祝~你~生日~呀~快乐~') &&
                             achiever.achieve('happy_birthday_fuze')
-                        }
                     "
                 >
-                    {{ $t('views.fuzeblockisnotagame.hbdfuze') }}
-                </n-button>
+                    亻寸氵睾生日快乐!
+                </NButton>
                 <br />
                 🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂
                 <br />
@@ -93,32 +87,36 @@ const fuzeBirthday = new Date(2007, 6 - 1, 16)
                     <div class="fireworks"></div>
                 </div>
             </template>
-            <template #description> 离下次FUZE的生日,还有 </template>
+            <template #description> 离下次亻寸氵睾的生日,还有 </template>
             <template #bar-extra>
-                <n-statistic label="其实这一天也是">
-                    <n-thing>
+                <NStatistic label="其实这一天也是">
+                    <NThing>
                         <template #avatar>
-                            <n-avatar
+                            <NAvatar
                                 round
                                 src="https://uploadstatic.mihoyo.com/ys-obc/2021/06/10/75276545/10a9e992bf121129710d5d34703ebc7a_3094624363673748747.png"
                             />
                         </template>
-                        <template #header>温蒂的生日</template>
+                        <template #header>温迪的生日</template>
                         <template #description><small>「浪子的真情。」</small></template>
-                    </n-thing>
-                </n-statistic>
+                    </NThing>
+                </NStatistic>
             </template>
-        </birthday-countdown>
+        </BirthdayCountdown>
 
-        <n-card title="FU音盒" hoverable>
+        <NCard title="FU音盒" hoverable>
             <FuMusicBox />
-        </n-card>
+        </NCard>
 
-        <n-card title="FU运算" hoverable>
-            <NSpace vertical> </NSpace>
-        </n-card>
-    </n-space>
-    <n-back-top />
+        <NCard title="FUUF" hoverable>
+            <NSpace vertical>
+                丂口尺尺丫, 丅廾丨丂 彳凵冂匚丅丨口冂 丨丂 丂丅丨厶厶 山口尺片丨冂巳 冂口山,
+                (亼匚丅凵亼厶厶丫 丨 刀口冂丅 片冂口山 山廾亼丅 彳凵冂匚丅丨口冂 山丨厶厶 尸凵丅
+                丅廾巨尺巨)
+            </NSpace>
+        </NCard>
+    </NSpace>
+    <NBackTop />
 </template>
 
 <style lang="less" scoped>

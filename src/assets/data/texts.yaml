@@ -1,40 +1,5 @@
-basic:
-    langID:
-        zhCN: 中文
-        enUS: 英文
-        ruRU: 俄文
-        jaJP: 日文
-    themes:
-        dark: 暗黑
-        light: 明亮
-    langAndTheme: 语言&主题
-    links: 链接
-components:
-    ConfigSelector:
-        lang: 语言
-        theme: 主题
-    OtherLinks:
-        mainSite: 主站
-        fasterSite: 加速站
-    ACSBar:
-        number: '项目编号:'
-        level: 等级{0}
-        class-category: '收容等级:'
-        class-secondary-category: '次要等级:'
-        disrupt-category: '扰动等级:'
-        risk-category: '风险等级:'
-    BirthdayCountdown:
-        yearold: 岁
-        yearlabel: 现在已经
-    TimeTable:
-        time: 时间
-        content: 内容
-layouts:
-    MainLayout:
-        update: 更新日志
-        back-jokes: 重回阴间
-        grammar: 语法
-    JokesLayout:
+menus:
+    jokes:
         document: 《Crafuzey》
         fuze: 亻寸氵睾
         fuze-sayings: 名言金句
@@ -44,6 +9,7 @@ layouts:
         fuze-images: 帅!帅!帅!
         fuze-videos: 珍贵录像
         gcl: 柯莱与格拉迪斯
+        gcl-videos: 无法续更的视频
         gcl-books: 骇世大作
         gcl-books-depression: 抑郁症
         gcl-books-indonesian: 家乡话
@@ -59,45 +25,23 @@ layouts:
         nan: 个口
         nan-medias: 个口媒体
         joke-home: 主页
-        lastdaysofeurope: THE NEW ORDER
-        sayings: 沉浸版名言金句
         props: 杂项
         fuzeblockisnotagame: 付块非游
-        back-main: 额外
 views:
-    fuzeblockisnotagame:
-        question:
-            content: 图中的男人在干什么?
-            title: 简单的问题
-            options:
-                a: 呆着
-                b: 傻乎乎呆呆张嘴
-                c: 呐喊
-                d: 彷徨
-                aa: 只是这样吗?
-                ba: 听起来像是馒头的行为)
-                ca: >-
-                    哼哼啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
-        hbdfuze: FUZE 生日快乐!
-        itsfuzesbd: 今天是FUZE的生日
-        fuzeisthebestlanguage: FUZE是最好的语言!
-        fuzesbd: FUZE的生日
-        fuzebdformat: 距离下一次FUZE的生日,还有
-        wentiJbBirthday: 这也是温蒂和FUZEJB的生日 温蒂与FUZEJB也生日快乐!
     jokes:
         images-alt: 加载! 加载!! 加载!!! 不择手段地加载!
+        videos-alt: 彳亍不支持是吧
         fuze:
             videos:
                 items:
                     '110': 付泽咱们现在看哪儿呢
                     fuzeonlineclasspure: FUZE网课沉浸享受版
-                    gcfrombilibilinoscare: 就是把创价学会放在这里
-                    gcscare: 不可视九本 (有高能)
                     tuan: 扶 抟 哦 扶
                     AOA: ∠AOA'
                     grandmother: 姥姥
                     verifyco2: Eh元素检验CO₂
                     tu: 稚嫩的国际友好手势
+                    lzh: 帝国首领被追哩
             sounds:
                 items:
                     fuzedemamawenwen: Fuze的妈妈问问? 看能买得起吗?
@@ -108,52 +52,43 @@ views:
                     pointpointpoint: 实际上点点点点点点点
                     whyklee: 喜新厌旧
                     yiqi: 可莉伤心
-            images:
-                tip: 👍👍👍帅帅帅(′д｀ )…彡…彡
-            sayings:
-                readerNotFound: 114514问号问号 怎么undefined了
-                readerNotSupported: Sorry, your browser does not support this feature. 恭喜恭喜 那个不支持的设备说的就是你
-                readButton: 听听*仅部分设备支持*的语音
-                wrongFrom: 摘自《圣馒经》第二章第三节
-                lazyMakeBr: 懒得做换行了, 看着有点眼瞎, 凑活凑活吧
         gcl:
-            images:
-                tip: 😀(*^_^*)😂🤣印尼照片
-            books:
-                depression:
-                    pane1: 原版发病
-                    part: 第{0}章
+            videos:
+                items:
+                    abstract: 抽象
         zang:
             sounds:
                 items:
                     good: 我真服了你了
                     handsome: 大帅哥
                     jian: 稻妻的贱²
+                    CABADBCADB: 夺命倒计时
+                    cantbigreach: 大不到
+                    chemistry: 啊!?
+                    shong: 艾斯红
             videos:
                 items:
-                    ugly: 丑小鸭
+                    ugly: 多晦殆中殆
                     dead: 风魔龙之死
                     lkzx: 校花
                     idiot: 双晦亡中亡
+                    ridepig: 骑猪入城
+                    rich: 成分复杂
         nan:
             sounds:
                 items:
-                    dizhicollege: 墬彘dark雪
+                    dizhicollege: 墬彘达雪
                     licongzhi: 来一个拍一个
                     pairenshijian: 全员拍人
                     jinhua: 璃月拍人事件了啦
                     shishaokang: 忙碌的拾枣人
-        lastdaysofeurope:
-            post-success: POST成功 refresh!
-            post-title: 添加
-            post-button: POST出去
 achievements:
+    useless_bored:
+        title: 挣扎
+        description: All Gone就只能So Long
     sayings_inmind:
         title: 名言金句
         description: 名言金句
-    tonight_is_the_best:
-        title: 今夜は最高
-        description: kongbawa
     gotta_go_man:
         title: 你很无聊吗?
         description: <<无聊的时候做什么>>🤔
@@ -177,10 +112,10 @@ achievements:
         description: 🎂🎂🎂
     number_from_4D:
         title: 不可能发生了??
-        description: 别告诉我这只是个bug
+        description: 别告诉我这只是个漏洞
     wait_where_are_you_now:
         title: 您在哪???
-        description: 没准..只是个bug吧
+        description: 没准..只是个漏洞吧
     already_late_for_fuze_birthday:
         title: (悲)
         description: 错过重要的日子😭
@@ -188,14 +123,11 @@ achievements:
         title: |
             没尊严就不配生气 ------<<人生>>
         description: 我艹彳亍
-    nothing_interesting_here:
-        title: 啥都没有
-        description: 只是个changelog\(￣︶￣*\))
     STOP_PLS:
         title: 停下来!
         description: 别这样先生(*/ω＼*)
     HE_IS_TOO_STUPID:
-        title: define fuze is too stupid
+        title: 又下定义是吧
         description: 啊对对对
     oh_114514:
         title: 这个可以有!
@@ -205,7 +137,7 @@ achievements:
         description: 蛤 只是点着玩的
     WOW_EYES_DIED:
         title: 蹦迪时间o((>ω< ))o
-        description: 俺的眼睛👀!
+        description: 我的眼睛👀!
     haha_you_found_me:
         title: 找到我喽!
         description: 这次该你藏了
@@ -216,7 +148,7 @@ achievements:
         title: 是时候宣传了!
         description: 你今天悟了吗?
     dont_forget_other_fuzes:
-        title: Fuze Will Save The World
+        title: 亻寸氵睾拯救世界
         description: 大师! 大师..!
     ohh_will_fix_this_route_error_later:
         title: 嗯哼? 错误?

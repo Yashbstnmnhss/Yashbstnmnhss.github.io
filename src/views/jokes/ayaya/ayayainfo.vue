@@ -1,9 +1,14 @@
 <route lang="yaml">
-name: ayaya
+name: ayaya-info
+meta:
+    menu:
+        for: jokes
+        key: ayaya-info
+        label: ayaya
+        icon: person
 </route>
 
 <script lang="ts" setup>
-import Spoiler from '../../components/models/Spoiler.vue'
 import Cat from '@/assets/images/jokes/ayaya/cat.jpg'
 import Water from '@/assets/images/jokes/ayaya/water.jpg'
 import Night from '@/assets/images/jokes/ayaya/night.jpg'
@@ -15,7 +20,7 @@ import { NH1, NBlockquote, NSpace, NCard, NImage, NScrollbar } from 'naive-ui'
 </script>
 
 <template>
-    <NH1>{{ $t('layouts.JokesLayout.ayaya') }}</NH1>
+    <NH1>{{ $texta.get(['menus', 'jokes', 'ayaya']) }}</NH1>
     <NBlockquote>越过长城 走向世界</NBlockquote>
     <NSpace vertical>
         <NCard title="文件一 突然的演讲">
@@ -25,9 +30,9 @@ import { NH1, NBlockquote, NSpace, NCard, NImage, NScrollbar } from 'naive-ui'
             are judging u
             <template #footer>
                 绫绫
-                <Spoiler>ayaya</Spoiler>
+                <spoiler>ayaya</spoiler>
                 正在发表振奋人心的演讲
-                <Spoiler>(迫真)</Spoiler>
+                <spoiler>(迫真)</spoiler>
                 ,视频有些崩坏
             </template>
         </NCard>
@@ -40,26 +45,29 @@ import { NH1, NBlockquote, NSpace, NCard, NImage, NScrollbar } from 'naive-ui'
             </template>
         </NCard>
         <NCard title="文件三一 菲律宾的生活">
-            <NSpace align="stretch">
-                <div>
-                    <NImage
-                        object-fit="cover"
-                        class="jokes-images"
-                        :src="Water"
-                        title="glasses of water"
-                        alt="glasses of water"
-                    />
-                </div>
-                <div>
-                    <NImage
-                        object-fit="cover"
-                        class="jokes-images"
-                        :src="Night"
-                        title="菲律宾之夜"
-                        alt="菲律宾之夜"
-                    />
-                </div>
-            </NSpace>
+            <NScrollbar x-scrollable>
+                <NSpace align="stretch">
+                    <div>
+                        <NImage
+                            object-fit="cover"
+                            class="jokes-images"
+                            :src="Water"
+                            :show-toolbar="false"
+                            title="glasses of water"
+                            alt="glasses of water"
+                        />
+                    </div>
+                    <div>
+                        <NImage
+                            object-fit="cover"
+                            class="jokes-images"
+                            :src="Night"
+                            :show-toolbar="false"
+                            title="菲律宾之夜"
+                            alt="菲律宾之夜"
+                        />
+                    </div> </NSpace
+            ></NScrollbar>
             <template #footer>[图一]每天一杯水(1/1) [图二]美丽的夜景</template>
         </NCard>
         <NCard title="文件三二 菲律宾的生活">
@@ -67,13 +75,14 @@ import { NH1, NBlockquote, NSpace, NCard, NImage, NScrollbar } from 'naive-ui'
                 <NImage
                     object-fit="cover"
                     :src="Cat"
+                    :show-toolbar="false"
                     title="the quality you trust, now made e"
                     alt="the quality you trust, now made e"
                 />
             </NScrollbar>
             <template #footer>
                 日炎
-                <Spoiler>rhianne</Spoiler>
+                <spoiler>rhianne</spoiler>
                 (凯亚单推人)的小猫, 生日快乐! 小猫!
             </template>
         </NCard>
@@ -119,7 +128,14 @@ import { NH1, NBlockquote, NSpace, NCard, NImage, NScrollbar } from 'naive-ui'
             <br />
             <mark>"你們so mean😭"</mark>
             <br />
-            <NImage object-fit="cover" width="250" :src="Nani" title="nani" alt="nani" />
+            <NImage
+                object-fit="cover"
+                :show-toolbar="false"
+                width="250"
+                :src="Nani"
+                title="nani"
+                alt="nani"
+            />
             <br />
             1.Chinglish 中英混用
             <br />
@@ -144,7 +160,9 @@ import { NH1, NBlockquote, NSpace, NCard, NImage, NScrollbar } from 'naive-ui'
             MINI WORLD!! (母牛世界!!!) <br />
             (果然是个幼稚的小孩乐子) <br />
             <br />
-            <audio :src="Turkish" controls />
+            <NScrollbar x-scrollable>
+                <audio :src="Turkish" controls />
+            </NScrollbar>
             乐子的火鸡语空谷传响 <br />
             火鸡国人最喜欢吃馍夹肉了
         </NCard>

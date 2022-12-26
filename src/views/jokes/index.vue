@@ -1,5 +1,12 @@
 <route lang="yaml">
 name: joke-home
+meta:
+    menu:
+        for: jokes
+        key: joke-home
+        icon: home
+        group: header
+        order: -1
 </route>
 
 <script setup lang="ts">
@@ -9,6 +16,8 @@ import P5C from '../../components/models/P5.vue'
 import P5 from 'p5'
 import { NBlockquote, NSpace, NImage, NButton, useMessage, NCard, NDivider, NCode } from 'naive-ui'
 import { RouterLink } from 'vue-router'
+import { ref } from 'vue'
+import { random } from '../../lib/utils'
 
 import FuzeImage from '@/assets/images/jokes/fuze/fuzeshout.png'
 import FUZE1 from '@/assets/images/jokes/fuze/monster.png'
@@ -16,10 +25,8 @@ import FUZE2 from '@/assets/images/jokes/fuze/onTheBus.jpg'
 import FUZE3 from '@/assets/images/jokes/fuze/fuzeShout.png'
 import FUZE4 from '@/assets/images/jokes/fuze/fuzeshoutsmall.jpg'
 
-import { random } from '../../lib/utils'
-
+const showFuzeShout = ref(true)
 const achiever = useAchiever()
-const showFuzeShout = $$<boolean>(true)
 const message = useMessage()
 
 const sketch = (p: P5) => {
@@ -208,8 +215,8 @@ const sketch5 = (p: P5) => {
 </script>
 
 <template>
-    <n-space vertical justify="center">
-        <n-card hoverable>
+    <NSpace vertical justify="center">
+        <NCard hoverable>
             <ACSBar
                 @dblclick="achiever.achieve('SCP')"
                 :level="'3'"
@@ -220,12 +227,12 @@ const sketch5 = (p: P5) => {
             >
                 <template #project-number>277353</template>
             </ACSBar>
-        </n-card>
-        <n-card title="描述" hoverable>
+        </NCard>
+        <NCard title="描述" hoverable>
             乐联是由乐子成员组成的联盟
             <br />
             乐子旗帜整体为褪色的淡蓝色, 显目的"😂"与
-            <router-link to="/jokes/fuzeinfo">F U Z E</router-link>
+            <RouterLink to="/jokes/fuze/fuzeinfo">F U Z E</RouterLink>
             的"F"
             <em>
                 "一个由乐子组成的
@@ -241,12 +248,12 @@ const sketch5 = (p: P5) => {
             <strong>乐子</strong>
             联盟
             <br />
-            <strong>The Union Of Laughing-Stocks (UL)</strong>
+            <strong>丅廾巨 凵几丨口几 口彳 厶亼凵巳廾丨几巳弓丅口匚片弓 (凵厶)</strong>
             <br />
             共有5名
             <mark>常任成员</mark>
             (包括
-            <router-link to="/jokes/fuzeinfo">FUZE</router-link>
+            <RouterLink to="/jokes/fuze/fuzeinfo">FUZE</RouterLink>
             ), {{ random(4000, 10086) }}多名普通成员组成
             <br />
             (事实上 普通成员成员数量的变化
@@ -256,13 +263,13 @@ const sketch5 = (p: P5) => {
             )
             <br />
             现任主席 (乐子委员会总书记):
-            <router-link to="/jokes/fuzeinfo">FUZE</router-link>
+            <RouterLink to="/jokes/fuze/fuzeinfo">FUZE</RouterLink>
 
-            <n-blockquote>
+            <NBlockquote>
                 联盟条约规定:
                 <br />
                 联盟中成员如果受到任何疯子或疯子组织的攻击, 其他成员必须一一切方式尽可能的给予援助
-            </n-blockquote>
+            </NBlockquote>
 
             <s>
                 这也就是
@@ -278,7 +285,7 @@ const sketch5 = (p: P5) => {
             也加强了各成员的乐子创造力
             <br />
             虽事与愿违 但客观来看其积极性不可轻易抹除
-            <n-divider />
+            <NDivider />
             乐联的成立时间(抑或叫做被我正式发现认可的时间)较晚, 并且存在时间短暂, 后期便空有其名
             <br />
             再到后期(其实刚过了几天都没有), 乐联多数成员宣布联盟岌岌可危, 甚至有人声称将要解体
@@ -293,7 +300,7 @@ const sketch5 = (p: P5) => {
             <mark>"针对屑存在感而联合起来"</mark>
             <br />
             然而, 819事件在持续不到两天的情况下就杳无音讯, 似乎标志着此次改组完全就是回光返照
-            <n-divider />
+            <NDivider />
             整个联盟昙花一现, 存在时间甚至以天为单位计量都需要小数点
             <br />
             然而, 其所带来的影响不可忽视, 像是这篇文章所记载的一样
@@ -301,7 +308,7 @@ const sketch5 = (p: P5) => {
             现在的乐联更多指代的是
             <strong>这些事与人变成集合的系列名</strong>
             并不是那个短i命"联盟"
-            <n-divider />
+            <NDivider />
             而至于继续保留并使用这个联盟的名字, 绝不是纯粹的嘲讽嘲笑, 就像反复说到的一样:
             <br />
             <mark>
@@ -320,17 +327,17 @@ const sketch5 = (p: P5) => {
             现在绝大多数(至少我能知道的) 都可以在这里放着了
             <br />
             乐联现在不构成任何威胁 反倒是很多乐子事情的标题
-            <n-divider />
+            <NDivider />
             后记:
             <br />
             乐联的成员很多都失联了 但这里还是会有很多记录的
-        </n-card>
-        <n-card title="特殊收容措施" hoverable>
+        </NCard>
+        <NCard title="特殊收容措施" hoverable>
             <s>收容啥呀 笑就完事了😂</s>
             <br />
-            <strong>切记, 一定要远离 疯子主义 联盟</strong>
-            <n-divider />
-            277353在以每天46386亻的速度递减(约等于五万),主要体现在中国大陆一年一度的
+            <strong>切记一定要远离疯子主义联盟</strong>
+            <NDivider />
+            277353在以每天46386人的速度递减(约等于五万),主要体现在中国大陆一年一度的
             <strong>
                 <ruby>
                     初中学业考试和高中阶段学校招生考试
@@ -354,36 +361,36 @@ const sketch5 = (p: P5) => {
             风形的? U形的? V形的? 棒形的? 丁形的? 十形的? 一形的? 馒头形的?
             <br />
             怎么让它逃不走??? 快说啊
-        </n-card>
-        <n-card title="原理" hoverable>
-            <n-space vertical>
+        </NCard>
+        <NCard title="原理" hoverable>
+            <NSpace vertical>
                 <P5C :sketch="sketch" />
                 <span>
                     如图 F1,F2做
                     <code>sin</code>
                     缩放运动, 其表达式为
                     <br />
-                    <n-blockquote>
-                        <n-code
+                    <NBlockquote>
+                        <NCode
                             language="typescript"
                             trim
                             word-wrap
-                            :code="`setup: \n  diameter = height - 10 \n  angle = 0 \nupdate: \n  F1.width, F1.height = (10 + (sin(angle) * diameter) / 4 + diameter / 4) \n  F2.width, F2.height = (10 + (sin(angle + π / 2) * diameter) / 4 + diameter / 4) \n  angle += 0.02
+                            :code="`setup: \n  刀丨亼从巨丅巨尺 = height - 10 \n  亼几巳厶巨 = 0 \nupdate: \n  F1.width, F1.height = (10 + (sin(亼几巳厶巨) * 刀丨亼从巨丅巨尺) / 4 + diameter / 4) \n  F2.width, F2.height = (10 + (sin(亼几巳厶巨 + π / 2) * 刀丨亼从巨丅巨尺) / 4 + 刀丨亼从巨丅巨尺 / 4) \n  亼几巳厶巨 += 0.02
                             `"
                         />
-                    </n-blockquote>
-                    可见, diameter为波高, angle自0恒递增0.02; F1取angle的
+                    </NBlockquote>
+                    可见, '刀丨亼从巨丅巨尺'为波高, '亼几巳厶巨'自0恒递增0.02; F1取'亼几巳厶巨'的
                     <code>sin</code>
-                    值, F2取angle与二分之一π之和的
+                    值, F2取'亼几巳厶巨'与二分之一π之和的
                     <code>sin</code>
                     值
                     <br />
-                    <n-blockquote>
+                    <NBlockquote>
                         <code>sin</code>
                         (x + π / 2) =
                         <code>cos</code>
                         (x)
-                    </n-blockquote>
+                    </NBlockquote>
                     <br />
                     <code>sin</code>
                     ,
@@ -397,20 +404,20 @@ const sketch5 = (p: P5) => {
                 <P5C :sketch="sketch2" />
                 <span>
                     如图2, 蓝色为F2部分函数, 绿色为F1部分函数
-                    <n-divider />
+                    <NDivider />
                     F3为
                     <strong>一维柏林噪声</strong>
                     运动
                     <br />
-                    <n-blockquote>
-                        <n-code
+                    <NBlockquote>
+                        <NCode
                             language="typescript"
                             trim
                             word-wrap
                             :code="`setup: \n  xoff = 0.0 \n  xinc = 0.01 \nupdate: \n  F3.x = noise(xoff) * width \n  xoff += xinc
                             `"
                         />
-                    </n-blockquote>
+                    </NBlockquote>
                     基于xoff得到一个噪声值, 并根据视图宽度缩放(* width), 且xoff恒增加xinc(0.01)
                 </span>
                 <P5C :sketch="sketch3" />
@@ -421,15 +428,15 @@ const sketch5 = (p: P5) => {
                 </span>
                 <span>综上, 此两条表达式为主要原理</span>
                 <P5C :sketch="sketch4" />
-                <n-divider />
+                <NDivider />
                 <P5C :sketch="sketch5" />
                 <span>
                     <h3>f(x) = ((x * 9301 + 49297) % 233280) / 233280</h3>
                 </span>
-            </n-space>
-        </n-card>
+            </NSpace>
+        </NCard>
 
-        <n-card
+        <NCard
             title="并不简单的问题"
             hoverable
             closable
@@ -437,41 +444,39 @@ const sketch5 = (p: P5) => {
             @close="showFuzeShout = false"
         >
             <template #cover>
-                <n-image :src="FuzeImage" />
+                <NImage :src="FuzeImage" />
             </template>
             一个男人 但他失踪了 至少联系不上了
             <template #action>
-                <n-button
-                    @click="message.warning($t('views.fuzeblockisnotagame.question.options.aa'))"
+                <NButton @click="message.warning('只是这样吗?')"> 闲置 </NButton>
+                <NButton @click="message.success('听起来像是馒头的行为)')">
+                    傻乎乎呆呆张嘴
+                </NButton>
+                <NButton
+                    @click="
+                        message.error(
+                            '哼哼啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊'
+                        )
+                    "
                 >
-                    {{ $t('views.fuzeblockisnotagame.question.options.a') }}
-                </n-button>
-                <n-button
-                    @click="message.success($t('views.fuzeblockisnotagame.question.options.ba'))"
-                >
-                    {{ $t('views.fuzeblockisnotagame.question.options.b') }}
-                </n-button>
-                <n-button
-                    @click="message.error($t('views.fuzeblockisnotagame.question.options.ca'))"
-                >
-                    <strong>{{ $t('views.fuzeblockisnotagame.question.options.c') }}</strong>
-                </n-button>
-                <n-button
+                    <strong>呐喊</strong>
+                </NButton>
+                <NButton
                     @click="
                         () => {
-                            message.loading('THE NEW ORDER ， LAST DAYS OF EUROPE')
+                            message.loading('THE NEW ORDER , LAST DAYS OF EUROPE')
                             achiever.achieve('last_days_of_europe')
                         }
                     "
                 >
-                    <s>{{ $t('views.fuzeblockisnotagame.question.options.d') }}</s>
-                </n-button>
+                    <s>彷徨</s>
+                </NButton>
             </template>
             <template #footer>
                 <small>他到底去哪了?</small>
             </template>
-        </n-card>
-    </n-space>
+        </NCard>
+    </NSpace>
 </template>
 
 <style lang="less" scoped>

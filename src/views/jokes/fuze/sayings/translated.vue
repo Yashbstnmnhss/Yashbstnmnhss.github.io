@@ -1,5 +1,15 @@
 <route lang="yaml">
 name: fuze-sayings-translated
+meta:
+    menu:
+        for: jokes
+        key: fuze-sayings-translated
+        icon: bookmark
+        parent:
+            key: fuze-sayings
+            icon: book
+            parent:
+                key: fuze
 </route>
 
 <script setup lang="ts">
@@ -10,11 +20,11 @@ const achiever = useAchiever()
 </script>
 
 <template>
-    <n-h1>{{ $t('layouts.JokesLayout.fuze-sayings-translated') }}</n-h1>
-    <s>{{ $t('views.jokes.fuze.sayings.lazyMakeBr') }}</s>
-    <n-tabs animated size="large" pane-class="tab-pane-style">
-        <n-tab-pane name="1">
-            <n-blockquote @copy="achiever.achieve('let_more_people_know_this')">
+    <NH1>{{ $texta.get(['menus', 'jokes', 'fuze-sayings-translated']) }}</NH1>
+    <s>懒得做换行了 看着有点眼瞎 凑活凑活吧</s>
+    <NTabs animated size="large" pane-class="tab-pane-style">
+        <NTabPane name="1">
+            <NBlockquote @copy="achiever.achieve('let_more_people_know_this')">
                 不要在网上收集评论，不幸的是过去。 我看到你在责备我，这是正确的
                 事实上，人们到达那里并不容易。 你有没有想过什么是暴力？ 人们为什么聚集
                 比赛结束后会有胜利。 碰撞是不可避免的。同样的事情也适用于同学和家人。
@@ -24,7 +34,7 @@ const achiever = useAchiever()
                 从那以后我就一直担心这个问题。但我无法得到完整的答案。 我想听听。
                 这是一个小问题，但它是一个很好的问题。人们会明白这真正意味着什么。
                 在我看来，运动是一种表达情绪的方式。这是结束它的唯一方法。
-                12-3，但我赢不了。真相对我不利 我不知道要说什么 自会议以来，战斗一直没有停止。
+                12-3,但我赢不了。真相对我不利 我不知道要说什么 自会议以来，战斗一直没有停止。
                 我相信邪恶、打击、失望和结局都会带来幸福。
                 为什么会遇到这个人？我想是的。我的答案是爱。 在人心中，这叫做智慧。所以不要责怪人
                 你经历的越多，你的情绪就越不堪重负。 帮助人们避免因错误而导致的未来痛苦。
@@ -39,10 +49,10 @@ const achiever = useAchiever()
                 我不能强求，但我想考虑一下。 我的存在意味着什么？人与人之间是什么关系？
                 我可以纠正我的第一个错误吗？我可以申请身份证吗？ 我想是的。 明白了
                 【财经网】查看KK移动终端的最新消息。 让我们谈谈另一个黑暗的故事。
-            </n-blockquote>
-        </n-tab-pane>
-        <n-tab-pane name="2">
-            <n-blockquote @copy="achiever.achieve('let_more_people_know_this')">
+            </NBlockquote>
+        </NTabPane>
+        <NTabPane name="2">
+            <NBlockquote @copy="achiever.achieve('let_more_people_know_this')">
                 不要让消极的想法控制你，因为希望会让你伤心。 我可以洗你的脸
                 但是信任像我这样的人并不容易。 非常有趣 人们为什么要收藏？ 开会后经常会出现问题
                 因为你与朋友的关系正在迅速下降——你对他人的爱。 见人很正常 但没有自我解释我无法继续
@@ -63,10 +73,10 @@ const achiever = useAchiever()
                 或者思考。这不是这样做的方法 我不能改变它，但我必须思考 我的理由是什么，为什么？
                 我可以修复损坏吗？ 我是认真的 我知道 【奇玩】使用本集最后一个QQ钱包的力量
                 我们在谈论黑色，黑色
-            </n-blockquote>
-        </n-tab-pane>
-        <n-tab-pane name="3">
-            <n-blockquote @copy="achiever.achieve('let_more_people_know_this')">
+            </NBlockquote>
+        </NTabPane>
+        <NTabPane name="3">
+            <NBlockquote @copy="achiever.achieve('let_more_people_know_this')">
                 不要让消极的想法压倒你，因为希望会让你沮丧 我会洗你的脸颊
                 但要相信像我这样的人并不容易。 有什么好玩的 人们为什么要聚集？ 开会后经常会出现问题
                 因为你与朋友的关系——你对他人的爱——突然破裂了。 一般来说，会见人是常事
@@ -88,8 +98,9 @@ const achiever = useAchiever()
                 或者考虑一下。它不是那样工作的 我不能强迫它，但我必须考虑它
                 我存在的原因是什么，这是什么原因？ 我可以修复损坏吗？ 我是认真的 我知道
                 【开范】在这个新版块使用最新版QQ世界 我们在谈论黑人，黑人
-            </n-blockquote>
-        </n-tab-pane> </n-tabs
-    ><br />
+            </NBlockquote>
+        </NTabPane>
+    </NTabs>
+    <br />
     为什么会衍生出着三版呢? 问问谷歌生草机吧(现在大陆无法正常访问了[悲])
 </template>

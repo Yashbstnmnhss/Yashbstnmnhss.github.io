@@ -1,5 +1,12 @@
 <route lang="yaml">
 name: gcl-images
+meta:
+    menu:
+        for: jokes
+        key: gcl-images
+        icon: image
+        parent:
+            key: gcl
 </route>
 
 <script setup lang="ts">
@@ -20,22 +27,22 @@ const onClick = () => {
 </script>
 
 <template>
-    <n-h1>{{ $t('layouts.JokesLayout.gcl-images') }}</n-h1>
-    {{ $t('views.jokes.gcl.images.tip') }}
-    <n-image-group>
-        <n-space>
-            <n-image
+    <NH1>{{ $texta.get(['menus', 'jokes', 'gcl-images']) }}</NH1>
+    <p>😀(*^_^*)😂🤣印尼照片</p>
+    <NImageGroup>
+        <NSpace>
+            <NImage
                 v-for="image in images"
                 @dblclick="onClick()"
                 :src="image.path"
                 :key="image.name"
                 :title="image.name"
                 class="jokes-images"
-                :alt="$t('views.jokes.images-alt')"
+                :alt="$texta.get(['views', 'jokes', 'images-alt'])"
                 object-fit="cover"
                 width="350"
             />
-        </n-space>
-    </n-image-group>
-    <n-back-top />
+        </NSpace>
+    </NImageGroup>
+    <NBackTop />
 </template>

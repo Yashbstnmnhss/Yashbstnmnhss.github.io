@@ -2,6 +2,21 @@ export type Time = [number, number, number]
 export type TimeScope = [Time, Time]
 export type Timetable = [TimeScope, string][]
 
+export type PropertyPath = _.PropertyPath
+export type PropertyTemplateObject = object
+export type TextaGetter = {
+    (params?: PropertyTemplateObject): string
+    (key: PropertyPath): TextaGetter
+}
+
+export type TextaInst = {
+    get(key: PropertyPath, params?: PropertyTemplateObject): string
+    has(key: PropertyPath): boolean
+}
+
+export type HeadElement<T extends any[]> = T extends [infer X, ...infer _] ? X : never
+export type TailElement<T extends any[]> = T extends [infer _, ...infer X] ? X : never
+
 export type ACSLevel = '1' | '2' | '3' | '4' | '5' | '6'
 export type ACSClass = ACSCommonClass | ACSSecondaryClass
 export type ACSCommonClass =

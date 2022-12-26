@@ -1,5 +1,30 @@
 import axios from 'axios'
-import { Time, TimeScope } from '../types'
+import _ from 'lodash'
+import type { Time, TimeScope } from '../types'
+
+export const groupBy = _.groupBy
+export const orderBy = _.orderBy
+export const forInObject = _.forIn
+export const pairsToObject = _.fromPairs
+export const objectToPairs = _.toPairs
+export const forEach = _.forEach
+export const strtemplate = _.template
+export const isArray = _.isArray
+export const isArrayLike = _.isArrayLike
+export const isUndefined = _.isUndefined
+export const funconce = _.once
+export const funcwrap = _.wrap
+export const getPropertyIn = _.get
+export const hasPropertyIn = _.hasIn
+export const valueToString = _.toString
+export const mapValues = _.mapValues
+export const assignUndefined = _.defaults
+
+export function join(array: any[], sep: any) {
+    return array
+        .map((el, i) => (i < array.length - 1 ? [el, sep] : [el]))
+        .reduce((a, b) => a.concat(b))
+}
 
 export function isMobile() {
     return /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)
@@ -15,24 +40,20 @@ export async function checkWebsite(link: string) {
     }
 }
 
-export function random(...n: number[]) {
-    if (n.length == 1) return Math.floor(Math.random() * n[0] + 1)
-    else if (n.length == 2) return Math.floor(Math.random() * (n[1] - n[0] + 1)) + n[0]
-    return 114514
+export function random(...nums: number[]) {
+    return nums.length === 2 ? _.random(nums[0], nums[1]) : _.random(nums[0])
 }
 
 export function randomRepeat(item: string, min = 1, max = 10) {
-    var res = ''
-    for (var i = 0; i < random(min, max); i++) res += item
-    return res
+    return _.repeat(item, random(min, max))
 }
 
-export function choice(target: any[]) {
-    return target[random(0, target.length)]
+export function choice<T>(target: T[]) {
+    return _.sample(target)!
 }
 
 export class Counter {
-    private count: number = 0
+    value: number = 0
     private stopped: boolean = false
     private listener: [number, () => void][] = []
 
@@ -40,35 +61,26 @@ export class Counter {
         this.reset()
     }
 
-    public get(): number {
-        return this.count
-    }
-    public set(num: number): void {
-        this.count = num
-    }
-
     public get isStopped(): boolean {
         return this.stopped
     }
 
-    /**value++ */
     public inc(): void {
         if (!this.stopped) {
-            this.count++
+            this.value++
             this.listener.forEach(item => {
-                if (this.count === item[0]) {
+                if (this.value === item[0]) {
                     item[1]()
                 }
             })
         }
     }
 
-    /**value-- */
     public dec(): void {
         if (!this.stopped) {
-            this.count--
+            this.value--
             this.listener.forEach(item => {
-                if (this.count === item[0]) {
+                if (this.value === item[0]) {
                     item[1]()
                 }
             })
@@ -76,12 +88,12 @@ export class Counter {
     }
 
     public reset(): void {
-        this.count = 0
+        this.value = 0
         this.stopped = false
     }
 
     public when(num: number, callback: () => void): void {
-        if (this.count === num) {
+        if (this.value === num) {
             callback()
         } else {
             this.listener.push([num, callback])

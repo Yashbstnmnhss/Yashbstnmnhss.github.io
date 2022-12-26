@@ -26,7 +26,7 @@ const nowEvent = () => {
 </script>
 
 <template>
-    <n-table>
+    <NTable>
         <thead>
             <tr>
                 <th colspan="2" style="text-align: center; word-wrap: break-word">
@@ -44,8 +44,8 @@ const nowEvent = () => {
                 </th>
             </tr>
             <tr>
-                <th>{{ $t('components.TimeTable.time') }}</th>
-                <th>{{ $t('components.TimeTable.content') }}</th>
+                <th>时间</th>
+                <th>事件</th>
             </tr>
         </thead>
         <tbody>
@@ -53,7 +53,7 @@ const nowEvent = () => {
                 <td>{{ formatScope(scope) }}</td>
                 <td>
                     {{ event }}
-                    <n-progress
+                    <NProgress
                         v-if="isTimeInRange(nowTime(), scope)"
                         :percentage="100"
                         :show-indicator="false"
@@ -62,5 +62,5 @@ const nowEvent = () => {
                 </td>
             </tr>
         </tbody>
-    </n-table>
+    </NTable>
 </template>

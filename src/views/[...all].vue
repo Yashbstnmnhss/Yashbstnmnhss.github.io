@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NWatermark, NResult } from 'naive-ui'
 import { ref } from 'vue'
-import { useAchiever } from '../lib/models/achievements'
+import { useAchiever } from './portal'
 
 const achiever = useAchiever()
 const url = ref('')
@@ -13,7 +13,7 @@ const onPlay = () => {
 </script>
 
 <template>
-    <n-watermark
+    <NWatermark
         content="NOT FOUND"
         fullscreen
         cross
@@ -25,7 +25,7 @@ const onPlay = () => {
         :y-offset="60"
         :rotate="-15"
     />
-    <n-result
+    <NResult
         :style="'background:url(' + url + ') center center / cover no-repeat;'"
         class="page-margin"
         status="404"
@@ -34,7 +34,7 @@ const onPlay = () => {
         size="huge"
     >
         <template #footer>?</template>
-    </n-result>
+    </NResult>
     <audio
         class="player-center"
         title="6999"

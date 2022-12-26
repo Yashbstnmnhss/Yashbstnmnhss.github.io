@@ -1,5 +1,5 @@
 $branch = "gh-pages"
-npm run build
+yarn run build
 cd ../dist
 git add .
 git checkout $branch

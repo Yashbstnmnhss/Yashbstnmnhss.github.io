@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { provide, h, onMounted } from 'vue'
 import { useMain } from '../../store'
-import { useI18n } from 'vue-i18n'
 import { useNotification } from 'naive-ui'
-import { achievements, achieverKey } from '../../lib/functions/achievements'
+import { achievements, ACHIEVER_KEY } from '../../lib/functions/achievements'
 import { Achievement, AchieverInst } from '../../lib/types'
-import { Logger } from '../../lib/utils'
+import { useTexta } from '../../lib'
+import { Logger, random } from '../../lib/utils'
 
 const store = useMain()
-const { t } = useI18n()
+const texta = useTexta()
 const toast = useNotification()
 
 var hadAchievementKeys: string[] = []
@@ -18,16 +18,12 @@ onMounted(() => {
 })
 
 const methods: AchieverInst = {
-    isAchieved: (key: string) => {
-        return hadAchievementKeys.includes(key)
-    },
+    isAchieved: (key: string) => hadAchievementKeys.includes(key),
     isRequirementsMet: (item: Achievement) => {
         if (item.requirements) {
             if (item.requirements.length > 0) {
-                if (item.requirements.every(methods.isAchieved)) {
-                    return true
-                }
-                Logger.log('[Achiever]', 'requirements not met', item.title, item.requirements)
+                if (item.requirements.every(methods.isAchieved)) return true
+                Logger.log('[Achiever]', 'Requirements not met', item.title, item.requirements)
                 return false
             }
             return true
@@ -44,7 +40,7 @@ const methods: AchieverInst = {
     ) => {
         const achievement = achievements[key]
         if (!achievement) {
-            Logger.error('[Achiever]', 'achievement not found', key)
+            Logger.error('[Achiever]', 'Achievement not found', key)
             return
         }
 
@@ -53,25 +49,21 @@ const methods: AchieverInst = {
                 methods.achieve(achievement.next)
                 return
             }
-            Logger.log('[Achiever]', 'already achieved', key)
+            Logger.log('[Achiever]', 'Already achieved', key)
             return
         }
 
-        if (!methods.isRequirementsMet(achievement)) {
-            return
-        }
+        if (!methods.isRequirementsMet(achievement)) return
 
-        if (!options.ignoreProbability) {
-            if (Math.random() > (achievement.probability ?? 1)) {
-                Logger.log('[Achiever]', 'probability not met', key, achievement.probability)
+        if (!options.ignoreProbability)
+            if (random(0, 1) > (achievement.probability ?? 1)) {
+                Logger.log('[Achiever]', 'Probability not met', key, achievement.probability)
                 return
             }
-        }
 
-        Logger.log('[Achiever]', 'achieve', key)
+        Logger.log('[Achiever]', 'Achieved', key)
 
         if (options.save) {
-            Logger.debug(typeof hadAchievementKeys)
             hadAchievementKeys.push(key)
             store.achievements = hadAchievementKeys
         }
@@ -79,11 +71,9 @@ const methods: AchieverInst = {
     },
     showToast: (item: Achievement) => {
         toast.create({
-            title: t(item.title ? `achievements.${item.title}` : 'achievements.unknownTitle'),
-            description: t(
-                item.description
-                    ? `achievements.${item.description}`
-                    : 'achievements.unknownDescription'
+            title: texta.get(`achievements.${item.title ? item.title : 'unknownTitle'}`),
+            description: texta.get(
+                `achievements.${item.description ? item.description : 'unknownDescription'}`
             ),
             meta: item.type === 'fantastic' ? 'wow~ ⊙o⊙' : '',
             duration: item.duration ?? 5000,
@@ -98,14 +88,14 @@ const methods: AchieverInst = {
                                       color: '#00ff00',
                                   },
                               },
-                              'FANTASTIC'
+                              '特特特'
                           )
                     : undefined,
         })
     },
 }
 
-provide(achieverKey, methods)
+provide(ACHIEVER_KEY, methods)
 </script>
 
 <template>

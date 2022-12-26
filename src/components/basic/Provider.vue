@@ -38,23 +38,23 @@ onMounted(() => {
 
 watch(
     () => store.language,
-    l => languageUpdate(l)
+    lang => languageUpdate(lang)
 )
 watch(
     () => store.theme,
-    t => themeUpdate(t)
+    theme => themeUpdate(theme)
 )
 
-const languageUpdate = (v: Languages) => {
-    var l = getLocales(v)
-    locale.value = l.locale
-    dateLocale.value = l.dateLocale
+const languageUpdate = (val: Languages) => {
+    var lang = getLocales(val)
+    locale.value = lang.locale
+    dateLocale.value = lang.dateLocale
 }
-const themeUpdate = (v: Themes) => (theme.value = getTheme(v))
+const themeUpdate = (val: Themes) => (theme.value = getTheme(val))
 </script>
 
 <template>
-    <n-config-provider
+    <NConfigProvider
         :theme="theme"
         :locale="locale"
         :date-locale="dateLocale"
@@ -62,17 +62,17 @@ const themeUpdate = (v: Themes) => (theme.value = getTheme(v))
         :theme-overrides="overrides"
         class="full"
     >
-        <n-global-style />
-        <n-loading-bar-provider>
-            <n-message-provider>
-                <n-notification-provider :placement="'bottom-right'">
-                    <n-dialog-provider>
+        <NGlobalStyle />
+        <NLoadingBarProvider>
+            <NMessageProvider>
+                <NNotificationProvider :placement="'bottom-right'">
+                    <NDialogProvider>
                         <Achiever>
                             <slot />
                         </Achiever>
-                    </n-dialog-provider>
-                </n-notification-provider>
-            </n-message-provider>
-        </n-loading-bar-provider>
-    </n-config-provider>
+                    </NDialogProvider>
+                </NNotificationProvider>
+            </NMessageProvider>
+        </NLoadingBarProvider>
+    </NConfigProvider>
 </template>

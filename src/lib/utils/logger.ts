@@ -1,3 +1,5 @@
+import { BSTNMNHSS, VERSION } from '../constants'
+
 export class Logger {
     public static enable = true
 
@@ -33,14 +35,14 @@ export class Logger {
 
     private static format(str: any[]): any[] {
         const bstnmnhss = [
-            '%c[Bstnmnhss Logger]',
+            `%c[${BSTNMNHSS} Logger]`,
             'background: rgba(0, 0, 255, .5); color: rgba(255, 255, 255, .85);',
         ]
         return [...bstnmnhss, ...str]
     }
 
     static readonly LOGO = [
-        '%cBstnmnhss 3.0',
+        `%c${BSTNMNHSS} ${VERSION}`,
         `
         font-size: 100px;
         color: rgba(36, 204, 255, 0.75);

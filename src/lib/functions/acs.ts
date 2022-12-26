@@ -91,20 +91,20 @@ export const Risk2Color: Record<ACSRisk, string> = {
 }
 
 export const Level2Extra: Record<ACSLevel, string> = {
-    1: 'Unrestricted', //'UR',
-    2: 'Restricted', //'RS',
-    3: 'Confidential', //'CF',
-    4: 'SC', //'Secret',
-    5: 'TS', //'Top Secret',
-    6: 'CTS', //'Cosmic Top Secret',
+    1: '凵冂尺巨丂丅尺丨匚丅巨刀', //'UR',
+    2: '尺巨丂丅尺丨匚丅巨刀', //'RS',
+    3: '匚口冂彳丨刀巨冂丅丨亼厶', //'CF',
+    4: '丂巨匚尺巨丅', //'Secret',
+    5: '丅口尸 丂巨匚尺巨丅', //'Top Secret',
+    6: '匚口丂从丨匚 丅口尸 丂巨匚尺巨丅', //'Cosmic Top Secret',
 }
 
 export const Class2Text: Record<ACSClass, string> = {
-    Safe: 'Safe',
-    Euclid: 'Euclid',
-    Keter: 'Keter',
-    Neutralized: 'Neutralized',
-    Thaumiel: 'Thaumiel',
+    Safe: '丂亼彳巨',
+    Euclid: '巨凵匚厶丨刀',
+    Keter: '片巨丅巨尺',
+    Neutralized: '冂巨凵丅尺亼厶丨乙巨刀',
+    Thaumiel: '丅廾亼凵从丨巨厶',
     Apollyon: 'Apollyon',
     Archon: 'Archon',
     Tiamat: 'Tiamat',
@@ -117,9 +117,9 @@ export const Class2Text: Record<ACSClass, string> = {
 }
 
 export const Disruption2Text: Record<ACSDisruption, string> = {
-    Dark: 'Dark',
-    Vlam: 'Vlam',
-    Keneq: 'Keneq',
+    Dark: '刀亼尺片',
+    Vlam: '匕厶亼从',
+    Keneq: '片巨冂巨曱',
     Ekhi: 'Ekhi',
     Amida: 'Amida',
 }
@@ -132,10 +132,10 @@ export const Disruption2Extra: Record<ACSDisruption, string> = {
 }
 
 export const Risk2Text: Record<ACSRisk, string> = {
-    Notice: 'Notice',
-    Caution: 'Caution',
-    Warning: 'Warning',
-    Danger: 'Danger',
+    Notice: '冂口丅丨匚巨',
+    Caution: '匚亼凵丅丨口冂',
+    Warning: '山亼尺冂丨冂巳',
+    Danger: '刀亼冂巳巨尺',
     Critical: 'Critical',
 }
 export const Risk2Extra: Record<ACSRisk, string> = {

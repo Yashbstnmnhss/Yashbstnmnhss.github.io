@@ -1,5 +1,12 @@
 <route lang="yaml">
 name: fuze-images
+meta:
+    menu:
+        for: jokes
+        key: fuze-images
+        icon: image
+        parent:
+            key: fuze
 </route>
 
 <script setup lang="ts">
@@ -18,22 +25,22 @@ const onClick = () => {
 </script>
 
 <template>
-    <n-h1>{{ $t('layouts.JokesLayout.fuze-images') }}</n-h1>
-    {{ $t('views.jokes.fuze.images.tip') }}
-    <n-image-group>
-        <n-space>
-            <n-image
+    <NH1>{{ $texta.get(['menus', 'jokes', 'fuze-images']) }}</NH1>
+    <p>👍👍👍帅帅帅(′д｀ )…彡…彡</p>
+    <NImageGroup>
+        <NSpace>
+            <NImage
                 v-for="image in images"
                 @dbclick="onClick()"
                 :src="image.path"
                 :key="image.name"
                 :title="image.name"
                 class="jokes-images"
-                :alt="$t('views.jokes.images-alt')"
+                :alt="$texta.get(['views', 'jokes', 'images-alt'])"
                 object-fit="cover"
                 width="350"
             />
-        </n-space>
-    </n-image-group>
-    <n-back-top />
+        </NSpace>
+    </NImageGroup>
+    <NBackTop />
 </template>
