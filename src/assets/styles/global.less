@@ -30,3 +30,40 @@ spoiler {
     padding-right: 4px;
     box-sizing: border-box;
 }
+
+@keyframes FadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes StretchIn {
+    from {
+        max-width: 0;
+    }
+    to {
+        max-width: initial;
+    }
+}
+
+a:-webkit-any-link {
+    color: var(--n-color-target);
+    opacity: 0.85;
+}
+
+colview {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 2vw;
+}
+rowview {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    row-gap: 2vw;
+}

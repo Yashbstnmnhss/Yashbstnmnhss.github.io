@@ -30,6 +30,7 @@ import {
     EllipsisHorizontal,
     InformationOutline,
 } from '@vicons/ionicons5'
+import Logo from '@/assets/images/logo.svg'
 import { onMounted } from 'vue'
 import { getGroupInMenu } from '../route/menu'
 import { checkWebsite, useAchiever, useTexta, Themes, valueToString } from './portal'
@@ -51,13 +52,13 @@ const websites: [string, string][] = [
 let theme = $ref<typeof store.theme>(),
     dropdown = $ref<MO[]>(
         (getGroupInMenu('jokes', 'default')!.children ?? []).map(
-            (v: MO) =>
+            (val: MO) =>
                 ({
                     label:
-                        v.label && texta.has(['menus', 'jokes', valueToString(v.label)])
-                            ? texta.get(['menus', 'jokes', valueToString(v.label)])
-                            : texta.get(['menus', 'jokes', valueToString(v.key)]),
-                    key: v.link || (v.children ?? [])[0]?.link || v.key,
+                        val.label && texta.has(['menus', 'jokes', valueToString(val.label)])
+                            ? texta.get(['menus', 'jokes', valueToString(val.label)])
+                            : texta.get(['menus', 'jokes', valueToString(val.key)]),
+                    key: val.link || (val.children ?? [])[0]?.link || val.key,
                 } as MO)
         )
     ),
@@ -102,13 +103,25 @@ const open = (url: string) => (window.location.href = url)
 <template>
     <NScrollbar>
         <div class="full wrapper">
-            <NElement>
+            <NSpace align="center" style="width: 100%">
+                <img
+                    class="zoomin"
+                    :src="Logo"
+                    style="
+                        max-width: 100%;
+                        height: 45vh;
+                        user-select: none;
+                        -webkit-user-drag: none;
+                    "
+                />
+                <!--
                 <NH1 prefix="bar" style="font-size: 5rem" class="zoomin">
                     <NText type="primary" class="title">
                         日丂丅冂从冂廾丂丂<span class="blinker">三</span></NText
                     >
                 </NH1>
-            </NElement>
+                -->
+            </NSpace>
             <NDivider />
             <NSpace :size="25">
                 <NSpace>

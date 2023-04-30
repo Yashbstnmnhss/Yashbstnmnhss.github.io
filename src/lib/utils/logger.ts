@@ -42,17 +42,14 @@ export class Logger {
     }
 
     static readonly LOGO = [
-        `%c${BSTNMNHSS} ${VERSION}`,
+        `%c${BSTNMNHSS} %c${VERSION}`,
         `
-        font-size: 100px;
-        color: rgba(36, 204, 255, 0.75);
-        /*background-image:
-            linear-gradient(182deg,rgb(3, 165, 238), rgb(252, 252, 253));
-        background-clip: text;
-            -webkit-background-clip: text;
-        -moz-background-clip: text;
-        -ms-background-clip: text;*/
-    `,
+            font-size: 12.5vw;
+            color: rgba(36, 204, 255, 0.75);
+        `,
+        `
+            font-size: 4vw;
+        `,
     ]
     public static logo() {
         console.info(...this.LOGO)

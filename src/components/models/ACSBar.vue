@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { NSpace } from 'naive-ui'
 import {
     Level2Color,
     Class2Color,
@@ -15,44 +14,12 @@ import {
     Disruption2Extra,
     Risk2Extra,
 } from '../../lib/functions/acs'
-import { ACSLevel, ACSClass, ACSSecondaryClass, ACSDisruption, ACSRisk } from '../../lib/types'
-import { onMounted, computed, watch, ref } from 'vue'
+import { computed, watch, ref } from 'vue'
 import { useMain } from '../../store'
 import { Themes } from '../../lib'
+import type { ACSLevel, ACSClass, ACSSecondaryClass, ACSDisruption, ACSRisk } from '../../lib/types'
 
 const store = useMain()
-
-const updateSvg = () => {
-    /* Class & Secondary Class */
-    var firstClass = document.getElementById('classIcon'),
-        secondClass = document.getElementById('secondIcon')
-    firstClass?.setAttribute('xlink:href', Class2Icon[props.category])
-    if (props.secondaryCategory)
-        secondClass?.setAttribute('xlink:href', Class2Icon[props.secondaryCategory])
-    /* Disruption */
-    var disText = document.getElementById('disruptText')
-    var disrupt = document.getElementById('disruptIcon')
-    disText!.innerHTML = Disruption2Extra[props.disruption]
-    disrupt?.setAttribute('xlink:href', Disruption2Icon[props.disruption])
-    /* Risk */
-    var risText = document.getElementById('riskText')
-    var risk = document.getElementById('riskIcon')
-    risText!.innerHTML = Risk2Extra[props.risk]
-    risk?.setAttribute('xlink:href', Risk2Icon[props.risk])
-    /* Diamond */
-    var cls = document.getElementById('diamondClassIcon'),
-        dis = document.getElementById('diamondDisruptIcon'),
-        ris = document.getElementById('diamondRiskIcon'),
-        sec = document.getElementById('diamondSecondaryIcon')
-    cls?.setAttribute('xlink:href', Class2Icon[props.category])
-    dis?.setAttribute('xlink:href', Disruption2Icon[props.disruption])
-    ris?.setAttribute('xlink:href', Risk2Icon[props.risk])
-    if (props.secondaryCategory)
-        sec?.setAttribute('xlink:href', Class2Icon[props.secondaryCategory])
-}
-onMounted(() => {
-    updateSvg()
-})
 const props = defineProps<{
     level: ACSLevel
     category: ACSClass
@@ -60,9 +27,6 @@ const props = defineProps<{
     disruption: ACSDisruption
     risk: ACSRisk
 }>()
-watch([props.category, props.disruption, props.risk, props.secondaryCategory], () => {
-    updateSvg()
-})
 
 const levelColor = computed(() => Level2Color[props.level]),
     classColor = computed(() => Class2Color[props.category]),
@@ -73,358 +37,85 @@ const levelColor = computed(() => Level2Color[props.level]),
     colorOpacity = ref(store.theme === Themes.dark ? 0.8 : 0.3)
 watch(
     () => store.theme,
-    t => (colorOpacity.value = t === Themes.dark ? 0.8 : 0.3)
+    val => (colorOpacity.value = val === Themes.dark ? 0.8 : 0.3)
 )
 </script>
 
 <template>
-    <div class="acs-container">
-        <div class="number">
-            <span class="text"> 项目编号: </span>
-            <span class="num">
+    <div class="acs-bar">
+        <div class="acs-item">
+            <span>
+                <strong>项目编号：</strong>
                 <slot name="project-number"></slot>
             </span>
         </div>
-        <div class="bar">
-            <div class="animamted-bar" v-for="i in Number(props.level)" :key="i" />
+        <div class="acs-clear">
+            <strong>
+                <span>许可等级</span>
+                <span style="white-space: pre-wrap"> </span>
+                {{ props.level }}：
+            </strong>
+            <div class="level-text">{{ Level2Extra[props.level] }}</div>
         </div>
-        <div class="level">
-            <span class="lvl"> 等级{{ props.level }} </span>
-            <span class="clearance">
-                {{ Level2Extra[props.level] }}
-            </span>
-        </div>
-        <div class="divider">
-            <div></div>
-        </div>
-        <div class="class">
-            <div class="container">
-                <NSpace align="center" justify="space-between" style="width: 100%; height: 100%">
-                    <div class="contain-class">
-                        <div class="class-category">收容等级:</div>
-                        <div class="class-text">
-                            {{ Class2Text[props.category] }}
-                        </div>
-                        <div v-if="props.secondaryCategory" class="class-secondary-category">
-                            次要等级:
-                        </div>
-                        <div v-if="props.secondaryCategory" class="class-secondary-text">
-                            {{ Class2Text[props.secondaryCategory] }}
-                        </div>
-                    </div>
+        <div class="acs-contain-container">
+            <div class="acs-contain">
+                <div class="acs-text">
+                    <span>
+                        <strong>
+                            <span> 收容等级： </span>
+                        </strong>
+                    </span>
+                    <span>{{ Class2Text[props.category] }}</span>
+                </div>
+                <div class="acs-icon">
                     <div
-                        :class="`class-icon acs-icon icon-image ${
-                            props.secondaryCategory ? '' : ''
-                        }`"
-                        style="max-height: 90%; width: 200px"
-                    >
-                        <svg
-                            version="1.1"
-                            id="Layer_1"
-                            xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                            x="0px"
-                            y="0px"
-                            viewBox="0 0 160 100"
-                            style="enable-background: new 0 0 160 100"
-                            xml:space="preserve"
-                        >
-                            <path
-                                style="visibility: var(--secondary-visible)"
-                                d="M110.1,100.1h-60c-27.6,0-50-22.4-50-50v0c0-27.6,22.4-50,50-50h60c27.6,0,50,22.4,50,50v0
-	C160.1,77.7,137.7,100.1,110.1,100.1z"
-                            />
-                            <circle
-                                style="fill: white; visibility: var(--secondary-visible)"
-                                cx="48"
-                                cy="50"
-                                r="35%"
-                            />
-
-                            <image
-                                x="1"
-                                y="0"
-                                width="6rem"
-                                height="6rem"
-                                id="secondIcon"
-                                xlink:href=""
-                            />
-                            <circle
-                                cx="112.5"
-                                style="
-                                    stroke: black;
-                                    stroke-width: 4;
-                                    stroke-miterlimit: 10;
-                                    fill: rgb(var(--class-color));
-                                    visibility: var(--secondary-visible);
-                                "
-                                cy="50"
-                                r="35%"
-                            />
-                            <circle
-                                cx="112"
-                                style="fill: rgb(var(--class-color))"
-                                cy="50"
-                                r="35%"
-                            />
-                            <image
-                                x="65"
-                                y="0"
-                                width="6rem"
-                                height="6rem"
-                                id="classIcon"
-                                xlink:href=""
-                            />
-                        </svg>
-                    </div>
-                </NSpace>
+                        class="acs-icon-img animation-fade"
+                        :style="{
+                            backgroundImage: `url('${Class2Icon[props.category]}')`,
+                            backgroundColor: 'rgba(var(--class-color), var(--color-opacity))',
+                        }"
+                    ></div>
+                </div>
             </div>
         </div>
-        <div class="disrupt">
-            <div class="container">
-                <NSpace :align="'center'" justify="space-between" style="width: 100%; height: 100%">
-                    <div class="contain-disrupt">
-                        <span class="disrupt-text">
-                            <span class="disrupt-category"> 扰动等级:&ThickSpace; </span>
-
-                            <span class="disrupt-normal-text">
-                                {{ Disruption2Text[props.disruption] }}
-                            </span>
-                        </span>
-                    </div>
-                    <div class="disrupt-icon acs-icon acs-small-icon icon-image">
-                        <svg
-                            version="1.1"
-                            id="Layer_1"
-                            xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                            x="0px"
-                            y="0px"
-                            viewBox="0 0 160 100"
-                            style="enable-background: new 0 0 160 100"
-                            xml:space="preserve"
-                        >
-                            <path
-                                d="M110.1,100.1h-60c-27.6,0-50-22.4-50-50v0c0-27.6,22.4-50,50-50h60c27.6,0,50,22.4,50,50v0
-	C160.1,77.7,137.7,100.1,110.1,100.1z"
-                            />
-                            <text
-                                class="fade-text"
-                                id="disruptText"
-                                style="font-size: 35px; fill: white"
-                                x="20"
-                                y="62.5"
-                            >
-                                2
-                            </text>
-                            <circle
-                                cx="112.5"
-                                style="fill: rgb(var(--disrupt-color))"
-                                cy="50"
-                                r="33%"
-                            />
-                            <image
-                                x="65"
-                                y="0"
-                                width="6rem"
-                                height="6rem"
-                                id="disruptIcon"
-                                xlink:href=""
-                            />
-                        </svg>
-                    </div>
-                </NSpace>
+        <div class="acs-disrupt">
+            <div class="acs-text">
+                <strong>扰动等级：</strong>
+                <span class="disruption-class">
+                    {{ Disruption2Extra[props.disruption] }}/{{ Disruption2Text[props.disruption] }}
+                </span>
+            </div>
+            <div class="acs-icon acs-small-icon">
+                <div
+                    class="acs-icon-img animation-fade"
+                    :style="{
+                        backgroundImage: `url('${Disruption2Icon[props.disruption]}')`,
+                        backgroundColor: 'rgba(var(--disrupt-color), var(--color-opacity))',
+                    }"
+                ></div>
             </div>
         </div>
-        <div class="risk">
-            <div class="container">
-                <NSpace :align="'center'" justify="space-between" style="width: 100%; height: 100%">
-                    <div class="contain-risk">
-                        <span class="risk-text">
-                            <span class="risk-category"> 风险等级:&ThickSpace; </span>
-
-                            <span class="risk-normal-text">{{ Risk2Text[props.risk] }}</span>
-                        </span>
-                    </div>
-                    <div class="risk-icon acs-icon acs-small-icon icon-image">
-                        <!--<span class="extra-text">{{ Risk2Extra[props.risk] }}</span>-->
-                        <svg
-                            version="1.1"
-                            id="Layer_1"
-                            xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                            x="0px"
-                            y="0px"
-                            viewBox="0 0 160 100"
-                            style="enable-background: new 0 0 160 100"
-                            xml:space="preserve"
-                        >
-                            <path
-                                d="M110.1,100.1h-60c-27.6,0-50-22.4-50-50v0c0-27.6,22.4-50,50-50h60c27.6,0,50,22.4,50,50v0
-	C160.1,77.7,137.7,100.1,110.1,100.1z"
-                            />
-                            <text
-                                class="fade-text"
-                                id="riskText"
-                                style="font-size: 35px; fill: white"
-                                x="20"
-                                y="62.5"
-                            >
-                                2
-                            </text>
-                            <circle
-                                cx="112.5"
-                                style="fill: rgb(var(--risk-color))"
-                                cy="50"
-                                r="33%"
-                            />
-                            <image
-                                x="65"
-                                y="0"
-                                width="6rem"
-                                height="6rem"
-                                id="riskIcon"
-                                xlink:href=""
-                            />
-                        </svg>
-                    </div>
-                </NSpace>
+        <div class="acs-risk">
+            <div class="acs-text">
+                <strong>风险等级：</strong>
+                <span class="disruption-class">
+                    {{ Risk2Extra[props.risk] }}/{{ Risk2Text[props.risk] }}
+                </span>
             </div>
-        </div>
-        <div class="diamond">
-            <div
-                onclick="window.open(`http://scp-wiki-cn.wikidot.com/anomaly-classification-system-guide`)"
-                class="container"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    version="1.2"
-                    baseProfile="tiny"
-                    id="diamondSvg"
-                    x="0px"
-                    y="0px"
-                    class="slide-rotate-diamond"
-                    viewBox="0 0 160 160"
-                    xml:space="preserve"
-                >
-                    <path
-                        fill="#010101"
-                        style="fill: var(--n-title-text-color)"
-                        d="M136.1,133.3l23.9-23.9V51.2l-24-24l19.1-19.1l4.9,4.9l0-12.9l-12.9,0l4.9,4.9L133,24.2l-24-24H51l-24,24 L8,5.2l4.9-4.9L0,0.2l0,12.9l4.9-4.9L24,27.3l-24,24v58.2l23.9,23.9l-19,19L0,147.3l0,12.9l12.9,0L8,155.3l19-19l23.9,23.9h58.4 l23.9-23.9l19,19l-4.9,4.9l12.9,0l0-12.9l-4.9,4.9L136.1,133.3z M155.7,53v54.6l-22.6,22.6l-50-50L133,30.3L155.7,53z M52.8,4.5 h54.4l22.7,22.7L80,77.2L30.1,27.3L52.8,4.5z M4.3,107.6V53L27,30.3L77,80.2l-50,50L4.3,107.6z M107.4,155.9H52.6L30,133.3l50-50 l50,50L107.4,155.9z"
-                    />
-                    <polygon
-                        class="fade-background-color"
-                        style="fill: rgba(var(--bar-color), 0.35)"
-                        points="80,77.2 30.1,27.3 52.8,4.5 107.2,4.5 129.9,27.2 "
-                    />
-                    <polygon
-                        class="fade-background-color"
-                        style="fill: rgb(var(--disrupt-color), 0.35)"
-                        points="77,80.2 27.1,130.1 4.3,107.4 4.3,53 27,30.4 "
-                    />
-                    <polygon
-                        class="fade-background-color"
-                        style="fill: rgb(var(--risk-color), 0.35)"
-                        points="83,80.2 132.9,30.4 155.8,53 155.8,107.4 133,130.1 "
-                    />
-                    <polygon
-                        class="fade-background-color"
-                        style="fill: rgb(var(--secondary-color), 0.35)"
-                        points="80,83.2 129.9,133.1 107.2,155.9 52.8,155.9 30.1,133.2 "
-                    />
-                    <circle
-                        style="
-                            stroke: #000000;
-                            stroke-width: 4;
-                            stroke-miterlimit: 10;
-                            fill: rgba(var(--class-color), 1);
-                        "
-                        cx="80"
-                        cy="35"
-                        r="15%"
-                    />
-                    <image
-                        id="diamondClassIcon"
-                        class="fade-icon"
-                        style="overflow: visible"
-                        width="33%"
-                        height="33%"
-                        x="53.5"
-                        y="8"
-                        xlink:href=""
-                    ></image>
-                    <circle
-                        style="
-                            stroke: #000000;
-                            stroke-width: 4;
-                            stroke-miterlimit: 10;
-                            fill: rgba(var(--disrupt-color), 1);
-                        "
-                        cx="35"
-                        cy="80"
-                        r="15%"
-                    />
-                    <image
-                        id="diamondDisruptIcon"
-                        style="overflow: visible"
-                        class="fade-icon"
-                        width="33%"
-                        height="33%"
-                        x="9"
-                        y="53"
-                        xlink:href=""
-                    ></image>
-                    <circle
-                        style="
-                            stroke: #000000;
-                            stroke-width: 4;
-                            stroke-miterlimit: 10;
-                            fill: rgba(var(--risk-color), 1);
-                        "
-                        cx="125"
-                        cy="80"
-                        r="15%"
-                    />
-                    <image
-                        id="diamondRiskIcon"
-                        class="fade-icon"
-                        style="overflow: visible"
-                        width="33%"
-                        height="33%"
-                        x="98.5"
-                        y="53"
-                        xlink:href=""
-                    ></image>
-                    <circle
-                        style="
-                            visibility: var(--secondary-visible);
-                            stroke: #000000;
-                            stroke-width: 4;
-                            stroke-miterlimit: 10;
-                            fill: rgba(var(--secondary-color), 1);
-                        "
-                        cx="80"
-                        cy="125"
-                        r="15%"
-                    />
-                    <image
-                        id="diamondSecondaryIcon"
-                        class="fade-icon"
-                        style="overflow: visible"
-                        width="33%"
-                        height="33%"
-                        x="53.5"
-                        y="98"
-                        xlink:href=""
-                    ></image>
-                </svg>
+            <div class="acs-icon acs-small-icon animation-fade">
+                <div
+                    class="acs-icon-img"
+                    :style="{
+                        backgroundImage: `url('${Risk2Icon[props.risk]}')`,
+                        backgroundColor: 'rgba(var(--risk-color), var(--color-opacity))',
+                    }"
+                ></div>
             </div>
         </div>
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="less">
 * {
     --bar-color: v-bind(levelColor);
     --class-color: v-bind(classColor);
@@ -434,5 +125,252 @@ watch(
     --secondary-visible: v-bind(secondaryVisible);
     --color-opacity: v-bind(colorOpacity);
 }
+
+.acs-bar {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-areas:
+        'item    item    clear'
+        'contain disrupt disrupt'
+        'contain risk    risk';
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 53% 1fr 1fr;
+    width: 100%;
+    background-color: transparent;
+    position: relative;
+    text-transform: capitalize;
+    overflow: hidden;
+    font-weight: 800;
+
+    @media (max-width: 1000px) {
+        grid-template-areas:
+            'item    item    item    item    item    item    clear   clear   clear   clear   clear   clear'
+            'contain contain contain contain contain contain contain contain contain contain contain contain'
+            'disrupt disrupt disrupt disrupt disrupt disrupt risk    risk    risk    risk    risk    risk';
+        grid-template-columns: repeat(12, calc(100% / 12));
+        gap: 0;
+        line-height: 1.1;
+    }
+
+    * {
+        box-sizing: border-box;
+        user-select: none;
+    }
+
+    strong {
+        font-weight: 400;
+    }
+
+    div {
+        display: flex;
+    }
+
+    > .acs-item {
+        grid-area: item;
+        font-size: 1.75em;
+        align-items: flex-end;
+        -webkit-box-align: end;
+        padding: 0 0 0.15rem 0;
+        border-bottom: 0.125rem solid;
+
+        @media (max-width: 1000px) {
+            border: none;
+            padding: 0;
+            align-items: center;
+        }
+
+        > span {
+            padding-left: 0.75rem;
+
+            @media (max-width: 1000px) {
+                padding-left: 0;
+            }
+        }
+    }
+
+    > .acs-clear {
+        grid-area: clear;
+        box-shadow: inset 0.25rem 0 0 0 rgb(var(--bar-color));
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        flex-direction: row;
+        flex-wrap: wrap;
+        font-size: 1rem;
+        line-height: 1;
+        border-left: 0.125rem solid;
+        border-bottom: 0.125rem solid;
+        -webkit-box-align: end;
+        align-items: flex-end;
+        padding: 0.15rem;
+        padding-left: 0.5em;
+
+        @media (max-width: 1000px) {
+            border: none;
+            box-shadow: none;
+            border-bottom: 0.25rem solid rgb(var(--bar-color));
+            padding-left: 0.25em;
+            padding-bottom: 0.25em;
+        }
+
+        > * {
+            width: 100%;
+        }
+
+        > .level-text {
+            position: relative;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 1;
+        }
+    }
+
+    > .acs-contain-container {
+        grid-area: contain;
+        font-size: 1.25em;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        flex-direction: row;
+        -webkit-box-align: start;
+        align-items: flex-start;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        border-right: 0.125rem solid;
+
+        @media (max-width: 1000px) {
+            border: none;
+        }
+
+        > .acs-contain {
+            box-shadow: inset 0.5rem 0 0 0 rgb(var(--class-color));
+            padding: 0.25rem 0.25rem 0.25rem 0.75em;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            @media (max-width: 1000px) {
+                width: 100%;
+                padding: 0.25rem;
+                border-bottom: 0.25rem solid rgb(var(--class-color));
+                box-shadow: none;
+            }
+
+            > .acs-text {
+                flex-wrap: wrap;
+                -webkit-box-align: center;
+                align-items: center;
+                line-height: 1;
+            }
+        }
+    }
+
+    > .acs-disrupt {
+        grid-area: disrupt;
+        box-shadow: inset 0.25rem 0 0 0 rgb(var(--disrupt-color));
+        padding: 0.25rem;
+        padding-left: 0.75em;
+        -webkit-box-align: center;
+        align-items: center;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        @media (max-width: 1000px) {
+            box-shadow: none;
+            border-bottom: 0.25rem solid rgb(var(--disrupt-color));
+        }
+
+        > .acs-text {
+            display: flex;
+
+            @media (max-width: 500px) {
+                flex-direction: column;
+                justify-items: flex-start;
+                align-items: flex-start;
+            }
+        }
+    }
+
+    > .acs-risk {
+        grid-area: risk;
+        box-shadow: inset 0.25rem 0 0 0 rgb(var(--risk-color));
+        padding: 0.25rem;
+        padding-left: 0.75em;
+        -webkit-box-align: center;
+        align-items: center;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        @media (max-width: 1000px) {
+            box-shadow: none;
+            border-bottom: 0.25rem solid rgb(var(--risk-color));
+        }
+
+        > .acs-text {
+            display: flex;
+
+            @media (max-width: 500px) {
+                flex-direction: column;
+                justify-items: flex-start;
+                align-items: flex-start;
+            }
+        }
+    }
+
+    .acs-icon {
+        display: flex;
+        height: 3.5rem;
+        width: 3.5rem;
+        -webkit-box-pack: center;
+        align-self: center;
+        justify-self: center;
+        margin-left: 0.25rem;
+        margin-right: 0.5rem;
+
+        > .acs-icon-img {
+            align-self: center;
+            justify-self: center;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+    }
+    .acs-small-icon {
+        height: 1.5rem;
+        width: 1.5rem;
+        min-height: 1.5rem;
+        min-width: 1.5rem;
+
+        > .acs-icon-img {
+            @media (max-width: 1000px) {
+                height: 0;
+                width: 0;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            min-height: 0;
+            min-width: 0;
+            height: 0;
+            width: 0;
+        }
+    }
+}
+
+.animation-fade {
+    animation-name: FadeIn;
+    animation-duration: 0.5s;
+    animation-delay: 0.25s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    animation-play-state: running;
+    animation-iteration-count: 1;
+}
 </style>
-<style lang="less" src="../../assets/styles/acs.less" scoped></style>

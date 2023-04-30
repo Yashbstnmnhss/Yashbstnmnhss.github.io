@@ -1,6 +1,4 @@
 import router from './'
-import type { MenuOption as MO } from 'naive-ui/lib'
-import type { RouteRecordNormalized as RouteInfo } from 'vue-router'
 import {
     assignUndefined,
     Icons,
@@ -12,15 +10,18 @@ import {
     groupBy,
     orderBy,
 } from '../lib'
-import { Menu } from './meta'
+import type { MenuOption as MO } from 'naive-ui/lib'
+import type { RouteRecordNormalized as RouteInfo } from 'vue-router'
+import type { Menu } from './meta'
 
 const groups: Record<string, string[]> = {
-    jokes: ['header', 'default', 'footer'],
+    jokes: ['header', 'default', 'footer', 'props'],
 }
 const template: Record<string, Record<string, MO | false>> = {
     jokes: {
         header: false,
         footer: false,
+        props: false,
         default: {
             label: '口 日 丿 巨 匚 丅',
         },
@@ -33,9 +34,9 @@ const DEFAULT_GROUP = 'default'
 
 export function getOrMakeMenus(key: string) {
     if (key in caches) return caches[key]
-    makeMenusCache(router.getRoutes().filter(route => route.meta.menu?.for === key))
+    makeMenusCache(router.getRoutes().filter(({ meta: { menu } }) => menu?.for === key))
     if (key in caches) return caches[key]
-    Logger.error('[Route]', '[Menu]', 'Unknown Menu', { key })
+    Logger.error('[Route]', '[Menu]', 'Unknown menu', { key })
     return undefined
 }
 export function getGroupInMenu(key: string, group: string) {
@@ -52,27 +53,27 @@ function makeMenusCache(routes: RouteInfo[] = router.getRoutes()) {
     for (var key in result) caches[key] = result[key]
 }
 
-function filtering(route: RouteInfo) {
-    return !isUndefined(route.components) && !isUndefined(route.meta.menu) && route.meta.menu.for
+function filtering({ components, meta: { menu } }: RouteInfo) {
+    return !isUndefined(components) && !isUndefined(menu) && menu.for
 }
 
 function makeMenus(target: RouteInfo[] = router.getRoutes()) {
     const routes = target.filter(filtering)
     const resultGrouped: Record<string, MO[]> = {}
-    objectToPairs(groupBy(routes, r => r.meta.menu!.for)).forEach(routes => {
+    objectToPairs(groupBy(routes, ({ meta: { menu } }) => menu!.for)).forEach(routes => {
         var [_for, items] = routes
         const dict: Record<string, MO[]> = pairsToObject<MO[]>(
             (_for in groups && groups[_for].length > 0 ? groups[_for] : [DEFAULT_GROUP]).map(
                 val => [val, []]
             )
         )
-        items = orderBy(items, item => item.meta.menu!.order ?? 0)
+        items = orderBy(items, ({ meta: { menu } }) => menu!.order ?? 0)
         const menus: [MO, Menu][] = []
         for (var i = 0; i < items.length; i++) {
             const item = items[i]
             var info = item.meta.menu!
             var self = makeMenu(info, item.path)
-            var findSelf = menus.findIndex(val => val[0].key === self.key)
+            var findSelf = menus.findIndex(([{ key }, _]) => key === self.key)
             if (findSelf >= 0) {
                 menus[findSelf] = {
                     ...menus[findSelf],
@@ -89,7 +90,7 @@ function makeMenus(target: RouteInfo[] = router.getRoutes()) {
                         ...parentMenu,
                     }
                     var parent = makeMenu(info, '')
-                    var parentIndex = menus.findIndex(v => v[0].key === parent.key)
+                    var parentIndex = menus.findIndex(([{ key }, _]) => key === parent.key)
                     if (parentIndex < 0) menus.push([parent, info])
                     else menus[parentIndex][0] = assignUndefined(menus[parentIndex][0], parent)
 
@@ -97,12 +98,11 @@ function makeMenus(target: RouteInfo[] = router.getRoutes()) {
                 }
             }
         }
-        objectToPairs(groupBy(menus, r => r[1].group ?? DEFAULT_GROUP)).forEach(item => {
+        objectToPairs(groupBy(menus, ([_, { group }]) => group ?? DEFAULT_GROUP)).forEach(item => {
             var [group, tuples] = item
             const results: MO[] = []
             for (var i = 0; i < tuples.length; i++) {
-                var tuple = tuples[i],
-                    [menu, info] = tuple
+                var [menu, info] = tuples[i]
                 if (info.parent) {
                     function dealParent(self: MO, parentMenu: Menu['parent']) {
                         if (!parentMenu) return
@@ -114,20 +114,20 @@ function makeMenus(target: RouteInfo[] = router.getRoutes()) {
                         ;(parent[0].children ?? (parent[0].children = [])).push(self)
 
                         function findParent(where: MO[], key: string): number {
-                            var result = where.findIndex(val => val.key === key)
+                            var result = where.findIndex(({ key: wkey }) => wkey === key)
                             return result >= 0
                                 ? result
                                 : findParent(
                                       where
-                                          .filter(val => val.children && val.children.length > 0)
-                                          .flatMap(val => val.children!),
+                                          .filter(({ children }) => children && children.length > 0)
+                                          .flatMap(({ children }) => children!),
                                       key
                                   )
                         }
                     }
                     dealParent(menu, info.parent)
                 } else {
-                    var findMenu = results.findIndex(val => val.key === menu.key)
+                    var findMenu = results.findIndex(({ key }) => key === menu.key)
                     if (findMenu < 0) results.push(menu)
                     else
                         results[findMenu] = {
@@ -137,7 +137,7 @@ function makeMenus(target: RouteInfo[] = router.getRoutes()) {
                 }
             }
             dict[group in dict ? group : DEFAULT_GROUP].push(
-                ...orderBy(results, item => item.order ?? 0)
+                ...orderBy(results, ({ order }) => order ?? 0)
             )
         })
         resultGrouped[_for] = join(

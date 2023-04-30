@@ -5,7 +5,11 @@ meta:
         for: jokes
         key: ayaya-info
         label: ayaya
-        icon: person
+        icon: people
+        order: -5
+        parent:
+            key: ayaya
+            icon: person
 </route>
 
 <script lang="ts" setup>

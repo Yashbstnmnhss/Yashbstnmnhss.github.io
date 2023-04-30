@@ -1,3 +1,15 @@
+export type LogicEnvironment = Record<string, any>
+export type LogicObject = Record<string, any>
+export type LogicFunction = (env: LogicEnvironment) => boolean
+export type LogicOperator = (val: any) => LogicFunction
+export type Triggers = Trigger | Trigger[]
+export type Trigger = {
+    trigger: string
+    conditions?: LogicObject
+}
+
+export type Callback<T = any, R = void> = (param: T) => R
+
 export type Time = [number, number, number]
 export type TimeScope = [Time, Time]
 export type Timetable = [TimeScope, string][]
@@ -38,7 +50,18 @@ export type ACSSecondaryClass =
 export type ACSDisruption = 'Dark' | 'Vlam' | 'Keneq' | 'Ekhi' | 'Amida'
 export type ACSRisk = 'Notice' | 'Caution' | 'Warning' | 'Danger' | 'Critical'
 
+export type SayingsAuthors = Record<string, Sayings>
+export type Sayings = Record<string, Saying>
+export type Saying = {
+    title?: string
+    text: string
+    translation?: string
+    tags?: string[]
+    author?: string
+}
+
 export type Achievement = Partial<{
+    key: string
     title: string
     description: string
     type: AchievementType
@@ -47,6 +70,7 @@ export type Achievement = Partial<{
     requirements: string[]
     next: string
     probability: number
+    criteria: Triggers
 }>
 export type AchievementType = 'normal' | 'fantastic'
 export type Achievements = Record<string, Achievement>

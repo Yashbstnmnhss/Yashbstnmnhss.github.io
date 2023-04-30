@@ -137,15 +137,15 @@ const sketch = (p: P5) => {
             <spoiler>*btw</spoiler>
         </template>
         <NAlert type="error">
-            FUZE他失联了 很久很久 我们不知道他怎么了他去哪里了以及他为什么走
+            亻寸氵睾他失联了 很久很久 我们不知道他咋了还有他哪儿去了以及他为什么走
             临走前只说了三两句话<small>(见文件1-5)</small>
             <br />
             他刚走的差不多一两周 他的原神和QQ都是一直离线状态 而过了这之后他就突然天天在线了 QQ也是
             <br />
-            我以为他已经回来了 但诡异的是无论我给他发什么他都不啃一声
-            他唯一一次说话是我们给他打了个语音通话 他回了个"?" 此后便无动静了
+            我以为他已经回来了 但诡异的是无论我发什么他都不吭一声
+            他唯一一次说话是我们给他打了个语音通话 他回复了"?" 此后便无响应了
             <br />
-            没准他遇到了啥事 让他彻彻底底地改变了 亦或是啥别的客观因素导致的
+            没准他遇到了啥事 让他彻彻底底地改变了 亦或啥别的客观因素导致
         </NAlert>
         <br />
         114514岁, 是带哲学家, 曾在
@@ -344,13 +344,14 @@ const sketch = (p: P5) => {
                 <i><small>[2022/07/16 16:25]</small></i>
             </NBlockquote>
             EOF
+            <spoiler>若你是故意走的 那就滚吧 我们不是柯莱卢基托</spoiler>
         </NCard>
         <br />
         <template #footer>
             <NButton @click="router.push('/jokes/fuzeblockisnotagame')">
-                <mark>FUZE block</mark>
-                <strong>is not</strong>
-                <s>a game!</s>
+                <mark>付块</mark>
+                <strong>非</strong>
+                <s>游!</s>
             </NButton>
         </template>
     </NThing>
@@ -368,7 +369,7 @@ const sketch = (p: P5) => {
             allowfullscreen="false"
             allowpaymentrequest
             referrerpolicy="origin"
-            @error="e => e.preventDefault()"
+            @error="et => et.preventDefault()"
         ></iframe>
     </NCard>
     <NDivider />

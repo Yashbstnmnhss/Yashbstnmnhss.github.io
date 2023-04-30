@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NTable, NProgress } from 'naive-ui'
-import { Timetable, TimeScope, Time } from '../../lib/types'
 import { isTimeInRange } from '../../lib/utils'
+import type { Timetable, TimeScope, Time } from '../../lib/types'
 
 const props = defineProps<{
     content: Timetable

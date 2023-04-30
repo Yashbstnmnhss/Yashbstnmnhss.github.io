@@ -46,6 +46,10 @@ import {
     BoatOutline as BoatIcon,
     CloudOfflineOutline as CloudOfflineIcon,
     AlertSharp as AlertIcon,
+    PeopleOutline as PeopleIcon,
+    FileTrayOutline as FileIcon,
+    DocumentTextOutline as DocumentTextIcon,
+    SettingsOutline as SettingsIcon,
 } from '@vicons/ionicons5'
 
 export const Icons: Record<string, Component> = {
@@ -69,4 +73,8 @@ export const Icons: Record<string, Component> = {
     boat: BoatIcon,
     cloudOffline: CloudOfflineIcon,
     alert: AlertIcon,
+    people: PeopleIcon,
+    file: FileIcon,
+    docText: DocumentTextIcon,
+    settings: SettingsIcon,
 }

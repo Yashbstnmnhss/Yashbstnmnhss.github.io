@@ -10,15 +10,26 @@ meta:
 </route>
 
 <script setup lang="ts">
-import ACSBar from '../../components/models/ACSBar.vue'
-import { useAchiever } from '../../lib/functions/achievements'
 import P5C from '../../components/models/P5.vue'
+import ACSBar from '../../components/models/ACSBar.vue'
 import P5 from 'p5'
-import { NBlockquote, NSpace, NImage, NButton, useMessage, NCard, NDivider, NCode } from 'naive-ui'
+import {
+    NBlockquote,
+    NElement,
+    NSpace,
+    NImage,
+    NButton,
+    useMessage,
+    NCard,
+    NDivider,
+    NCode,
+    NAlert,
+} from 'naive-ui'
 import { RouterLink } from 'vue-router'
-import { ref } from 'vue'
-import { random } from '../../lib/utils'
+import { random, useAchiever } from '../portal'
+import { ref, onMounted } from 'vue'
 
+import Handwrite from '@/assets/images/textures/handwrite.jpg'
 import FuzeImage from '@/assets/images/jokes/fuze/fuzeshout.png'
 import FUZE1 from '@/assets/images/jokes/fuze/monster.png'
 import FUZE2 from '@/assets/images/jokes/fuze/onTheBus.jpg'
@@ -96,7 +107,7 @@ const sketch2 = (p: P5) => {
     }
 
     p.draw = () => {
-        p.background(255)
+        p.background(0)
         p.noFill()
         p.strokeWeight(2)
 
@@ -135,7 +146,7 @@ const sketch3 = (p: P5) => {
     }
 
     p.draw = () => {
-        p.background(255)
+        p.background(0)
         p.noFill()
         p.strokeWeight(2)
 
@@ -158,12 +169,12 @@ const sketch4 = (p: P5) => {
         f4 = p.loadImage(FUZE4)
     }
     p.draw = () => {
-        p.background(255)
+        p.background(0)
 
-        p.fill(0)
+        p.fill(255)
         p.textSize(26)
-        p.text('y = sin(x)', 0, 50)
-        p.text('y = sin(x + π / 2)', 0, 100)
+        p.text('y = sin(x)', 5, 50)
+        p.text('y = sin(x + π / 2)', 5, 100)
 
         a += 0.04
         s = p.cos(a) * 2
@@ -200,7 +211,7 @@ const sketch5 = (p: P5) => {
     }
 
     p.draw = () => {
-        p.background(255)
+        p.background(0)
         p.noFill()
         p.strokeWeight(2)
 
@@ -212,11 +223,86 @@ const sketch5 = (p: P5) => {
         p.text('线性同余生成器', 1, midproduct(1) + yoffset + 15)
     }
 }
+
+var card: HTMLElement = ref(undefined as any)
+const moveCard = (event: MouseEvent) => {
+    const cumulativeOffset = (element: HTMLElement) => {
+        var top = 0,
+            left = 0
+        do {
+            top += element.offsetTop || 0
+            left += element.offsetLeft || 0
+            element = element.offsetParent as HTMLElement
+        } while (element)
+
+        return {
+            top: top,
+            left: left,
+        }
+    }
+    const x = ((event.pageX - cumulativeOffset(card).left - 350 / 2) * -1) / 100
+    const y = ((event.pageY - cumulativeOffset(card).top - 350 / 2) * -1) / 100
+    const matrix = [
+        [1, 0, 0, -x * 0.00005],
+        [0, 1, 0, -y * 0.00005],
+        [0, 0, 1, 1],
+        [0, 0, 0, 1],
+    ]
+    card.style.transform = `matrix3d(${matrix})`
+}
+onMounted(() => (card = document.getElementById('card')!))
 </script>
 
 <template>
     <NSpace vertical justify="center">
+        <NElement @mousemove="moveCard" @mouseleave="() => (card.style.transform = '')">
+            <NSpace align="center" justify="center">
+                <img
+                    id="card"
+                    title="亲手签名 珍宝"
+                    :src="Handwrite"
+                    class="handwrite"
+                    draggable="false"
+                    @contextmenu="void"
+                />
+            </NSpace>
+        </NElement>
+        <NAlert type="error"> 疯骗奸狡付泽一定要被制裁 任何馒头终将绳之以法 </NAlert>
         <NCard hoverable>
+            <div class="grid">
+                <div class="header">
+                    <div class="project">
+                        <div class="prefix"></div>
+                        <div class="number"></div>
+                    </div>
+                    <div class="bars"></div>
+                    <div class="clearance">
+                        <div class="level"></div>
+                        <div class="text"></div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="category">
+                        <div class="primary">
+                            <div class="prefix"></div>
+                            <div class="text"></div>
+                        </div>
+                        <div class="secondary">
+                            <div class="prefix"></div>
+                            <div class="text"></div>
+                        </div>
+                    </div>
+                    <div class="disrupt">
+                        <div class="prefix"></div>
+                        <div class="text"></div>
+                    </div>
+                    <div class="danger">
+                        <div class="prefix"></div>
+                        <div class="text"></div>
+                    </div>
+                    <div class="diamond"></div>
+                </div>
+            </div>
             <ACSBar
                 @dblclick="achiever.achieve('SCP')"
                 :level="'3'"
@@ -364,75 +450,87 @@ const sketch5 = (p: P5) => {
         </NCard>
         <NCard title="原理" hoverable>
             <NSpace vertical>
-                <P5C :sketch="sketch" />
-                <span>
-                    如图 F1,F2做
-                    <code>sin</code>
-                    缩放运动, 其表达式为
-                    <br />
-                    <NBlockquote>
-                        <NCode
-                            language="typescript"
-                            trim
-                            word-wrap
-                            :code="`setup: \n  刀丨亼从巨丅巨尺 = height - 10 \n  亼几巳厶巨 = 0 \nupdate: \n  F1.width, F1.height = (10 + (sin(亼几巳厶巨) * 刀丨亼从巨丅巨尺) / 4 + diameter / 4) \n  F2.width, F2.height = (10 + (sin(亼几巳厶巨 + π / 2) * 刀丨亼从巨丅巨尺) / 4 + 刀丨亼从巨丅巨尺 / 4) \n  亼几巳厶巨 += 0.02
-                            `"
-                        />
-                    </NBlockquote>
-                    可见, '刀丨亼从巨丅巨尺'为波高, '亼几巳厶巨'自0恒递增0.02; F1取'亼几巳厶巨'的
-                    <code>sin</code>
-                    值, F2取'亼几巳厶巨'与二分之一π之和的
-                    <code>sin</code>
-                    值
-                    <br />
-                    <NBlockquote>
+                <colview>
+                    <P5C style="width: auto" :sketch="sketch" />
+                    <span>
+                        如图 F1,F2做
                         <code>sin</code>
-                        (x + π / 2) =
-                        <code>cos</code>
-                        (x)
-                    </NBlockquote>
-                    <br />
-                    <code>sin</code>
-                    ,
-                    <code>sin(x + π / 2)</code>
-                    (也就是
-                    <code>cos</code>
-                    ) 函数可以
-                    <strong>平滑地</strong>
-                    缩放大小
-                </span>
-                <P5C :sketch="sketch2" />
-                <span>
-                    如图2, 蓝色为F2部分函数, 绿色为F1部分函数
-                    <NDivider />
-                    F3为
-                    <strong>一维柏林噪声</strong>
-                    运动
-                    <br />
-                    <NBlockquote>
-                        <NCode
-                            language="typescript"
-                            trim
-                            word-wrap
-                            :code="`setup: \n  xoff = 0.0 \n  xinc = 0.01 \nupdate: \n  F3.x = noise(xoff) * width \n  xoff += xinc
+                        缩放运动, 其表达式为
+                        <br />
+                        <NBlockquote>
+                            <NCode
+                                language="typescript"
+                                trim
+                                word-wrap
+                                :code="`setup: \n  刀丨亼从巨丅巨尺 = height - 10 \n  亼几巳厶巨 = 0 \nupdate: \n  F1.width, F1.height = (10 + (sin(亼几巳厶巨) * 刀丨亼从巨丅巨尺) / 4 + diameter / 4) \n  F2.width, F2.height = (10 + (sin(亼几巳厶巨 + π / 2) * 刀丨亼从巨丅巨尺) / 4 + 刀丨亼从巨丅巨尺 / 4) \n  亼几巳厶巨 += 0.02
                             `"
-                        />
-                    </NBlockquote>
-                    基于xoff得到一个噪声值, 并根据视图宽度缩放(* width), 且xoff恒增加xinc(0.01)
-                </span>
-                <P5C :sketch="sketch3" />
-                <span>
-                    如图, 为
-                    <code>noise</code>
-                    的函数图像, 缩放15倍
-                </span>
-                <span>综上, 此两条表达式为主要原理</span>
-                <P5C :sketch="sketch4" />
+                            />
+                        </NBlockquote>
+                        可见, '刀丨亼从巨丅巨尺'为波高, '亼几巳厶巨'自0恒递增0.02;
+                        F1取'亼几巳厶巨'的
+                        <code>sin</code>
+                        值, F2取'亼几巳厶巨'与二分之一π之和的
+                        <code>sin</code>
+                        值
+                        <br />
+                        <NBlockquote>
+                            <code>sin</code>
+                            (x + π / 2) =
+                            <code>cos</code>
+                            (x)
+                        </NBlockquote>
+                        <br />
+                        <code>sin</code>
+                        ,
+                        <code>sin(x + π / 2)</code>
+                        (也就是
+                        <code>cos</code>
+                        ) 函数可以
+                        <strong>平滑地</strong>
+                        缩放大小
+                    </span>
+                </colview>
+                <colview>
+                    <rowview>
+                        <P5C style="width: auto; max-width: 100%" :sketch="sketch2" />
+                        <P5C style="width: auto; max-width: 100%" :sketch="sketch3" />
+                    </rowview>
+
+                    <span>
+                        如图, 蓝色为F2部分函数, 绿色为F1部分函数
+                        <NDivider />
+                        F3为
+                        <strong>一维柏林噪声</strong>
+                        运动
+                        <br />
+                        <NBlockquote>
+                            <NCode
+                                language="typescript"
+                                trim
+                                word-wrap
+                                :code="`setup: \n  xoff = 0.0 \n  xinc = 0.01 \nupdate: \n  F3.x = noise(xoff) * width \n  xoff += xinc
+                            `"
+                            />
+                        </NBlockquote>
+                        基于xoff得到一个噪声值, 并根据视图宽度缩放(* width), 且xoff恒增加xinc(0.01)
+                    </span>
+                </colview>
+                <colview>
+                    <P5C style="width: auto" :sketch="sketch4" />
+
+                    <span>
+                        如图, 为
+                        <code>noise</code>
+                        的函数图像, 缩放15倍<br />综上, 此两条表达式为主要原理
+                    </span>
+                </colview>
                 <NDivider />
-                <P5C :sketch="sketch5" />
-                <span>
-                    <h3>f(x) = ((x * 9301 + 49297) % 233280) / 233280</h3>
-                </span>
+                <colview>
+                    <P5C style="width: auto" :sketch="sketch5" />
+                    <span>
+                        <h3>f(x) = ((x * 9301 + 49297) % 233280) / 233280</h3>
+                    </span>
+                </colview>
             </NSpace>
         </NCard>
 
@@ -483,5 +581,16 @@ const sketch5 = (p: P5) => {
 .hover-hide:hover {
     opacity: 0;
     display: none;
+}
+
+.handwrite {
+    width: 100%;
+    min-height: 50vh;
+    overflow: hidden;
+    border-radius: 5px;
+    user-select: none;
+    -webkit-user-drag: none;
+    box-shadow: -20px 30px 116px 0 var(--text-color-3);
+    transition: transform 0.15s ease-out;
 }
 </style>

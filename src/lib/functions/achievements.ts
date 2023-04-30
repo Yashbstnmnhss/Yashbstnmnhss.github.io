@@ -1,14 +1,32 @@
-import data from '@/assets/data/achievements.yaml'
-import { Logger } from '../utils/logger'
-import { assignUndefined, mapValues, createInjectionKey, valueToString } from '../utils'
+import { datafiles } from '../assets'
+import {
+    Logger,
+    assignUndefined,
+    mapValues,
+    createInjectionKey,
+    registerEventTrigger,
+    achievementEvents,
+    isUndefined,
+} from '..'
 import { inject } from 'vue'
-import { AchieverInst, Achievement, Achievements } from '../types'
+import type { AchieverInst, Achievement, Achievements } from '../types'
 
-export const achievements = getAchievements()
-export function getAchievements(): Achievements {
-    var achievements: Achievements = {}
+const data: Achievements = datafiles.dataAchievements
+var achievements: Achievements
+
+export function getAchievements() {
+    ensureAchievements()
+    return achievements
+}
+
+function ensureAchievements() {
+    if (!achievements || Object.keys(achievements).length <= 0) achievements = loadAchievements()
+}
+
+function loadAchievements(): Achievements {
     const defaults = (key: string): Achievement =>
         <Achievement>{
+            key,
             title: `${key}.title`,
             description: `${key}.description`,
             type: 'normal',
@@ -18,16 +36,33 @@ export function getAchievements(): Achievements {
             next: '',
             probability: 1,
         }
-    console.log(data)
-    achievements = mapValues(data, (val, key) =>
-        assignUndefined((val || {}) as Achievement, defaults(key))
-    )
-    console.log(achievements)
-    Logger.log('[Achievement]', 'Loaded', 'total', Object.keys(achievements).length)
-    return achievements
+    var results: Achievements = mapValues(data, (val, key) => {
+        var result = assignUndefined((val || {}) as Achievement, defaults(key))
+        registerAchievementTrigger(result)
+        return result
+    })
+    Logger.log('[Achievement]', 'Loaded', 'total', Object.keys(results).length)
+    return results
 }
-export function getAchievement(key: string): Achievement {
-    return achievements[key]
+
+function registerAchievementTrigger(achievement: Achievement) {
+    if (isUndefined(achievement.criteria)) return
+    registerEventTrigger(
+        achievementEvents,
+        achievement.criteria,
+        _ => useAchiever().achieve(achievement.key ?? ''),
+        _ =>
+            Logger.warn('[Achievement]', 'Trigger failed', {
+                key: achievement.key,
+                arg: _,
+                trigger: achievement.criteria,
+            })
+    )
+}
+
+export function getAchievement(key: string): Achievement | undefined {
+    ensureAchievements()
+    return key in achievements ? achievements[key] : undefined
 }
 
 export function useAchiever(): AchieverInst {
@@ -38,4 +73,5 @@ export function useAchiever(): AchieverInst {
     }
     return achiever
 }
+
 export const ACHIEVER_KEY = createInjectionKey<AchieverInst>('achiever')

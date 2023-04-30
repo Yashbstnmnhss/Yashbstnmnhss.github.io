@@ -22,7 +22,7 @@ import SSK3 from '@/assets/images/jokes/nan/ssk3.jpg'
 import SHUO from '@/assets/images/jokes/nan/shuo.png'
 import Shout from '@/assets/images/jokes/nan/shout.png'
 import Car from '@/assets/videos/jokes/nan/jiang.mp4'
-import { NH1, NSpace, NCard, NImage, NScrollbar } from 'naive-ui'
+import { NH1, NSpace, NCard, NImage, NScrollbar, NAlert } from 'naive-ui'
 import Chatter from '../../../components/models/ChatHistory.vue'
 
 const jiang = [
@@ -93,9 +93,9 @@ const hacker = [
 </script>
 
 <template>
-    <NH1>{{ $texta.get(['menus', 'jokes', 'nan']) }}</NH1>
-    <NSpace vertical>
-        <svg width="100" height="100" viewBox="0 0 100 100">
+    <colview>
+        <NH1>{{ $texta.get(['menus', 'jokes', 'nan']) }}</NH1>
+        <svg style="align-content: end" width="100" height="100" viewBox="0 0 100 100">
             <text
                 x="35"
                 y="30"
@@ -136,8 +136,17 @@ const hacker = [
                 ♂
             </text>
         </svg>
+    </colview>
+    <NSpace vertical>
         <NCard title="文件一 网课时边开车边耶耶耶的屑" hoverable>
-            <Chatter :msgs="jiang" />
+            <colview>
+                <Chatter :msgs="jiang" />
+                <span style="height: auto; align-self: baseline">
+                    <NAlert title="专家点评" :show-icon="false" type="info">
+                        白海林:"就没遇见像你们这种班的!没尊严了!"(粉笔RIP)
+                    </NAlert>
+                </span>
+            </colview>
         </NCard>
         <NCard
             title="文件二 黑客牌扫描仪"
@@ -146,8 +155,8 @@ const hacker = [
         >
             <Chatter :msgs="hacker" />
             <br />
-            黑客呀! 我都黑不进去 <br />
-            遇到凡事不要慌 先摘眼镜扫描扫描 <br />
+            黑客呀! 我都黑不进去 (指简简单单在屏幕搜索栏打字) <br />
+            凡事都要 先摘眼镜扫描扫描 <br />
             发个试卷→摘镜扫描 系个鞋带→摘镜扫描 认个熟人→摘镜扫描
         </NCard>
         <NCard
@@ -155,16 +164,20 @@ const hacker = [
             :style="`background-image: url(${Ye}); background-position: right center; background-repeat: no-repeat; background-size: contain;`"
             hoverable
         >
-            <h1 class="sdl">斯大林</h1>
-            <h1 class="lsf">罗斯福</h1>
-            <h1 class="qjr">丘吉尔</h1>
-            二战德国跟中国是
-            <span style="border-bottom: 1px dashed var(--n-text-color)">同盟</span>
-            <span style="border-right: 1px dashed var(--n-text-color)">国</span>
-            <br />
-            吊打他们仨 -_-y
-            <br />
-            我艹你们{{ `亻${random(2, 10)}` }}妈
+            <colview>
+                <h1 class="sdl">斯大林</h1>
+                <h1 class="lsf">罗斯福</h1>
+                <h1 class="qjr">丘吉尔</h1>
+            </colview>
+            <div>
+                二战德国跟中国是
+                <span style="border-bottom: 1px dashed var(--n-text-color)">同盟</span>
+                <span style="border-right: 1px dashed var(--n-text-color)">国</span>
+                <br />
+                吊打他们仨 -_-y
+                <br />
+                我艹你们{{ `亻${random(2, 10)}` }}妈
+            </div>
         </NCard>
         <NCard
             title="文件四 拾枣"
@@ -195,29 +208,46 @@ const hacker = [
             </NSpace>
         </NCard>
         <NCard title="文件五 熊咆龙吟殷岩泉">
-            <NScrollbar x-scrollable>
-                <NImage :show-toolbar="false" object-fill="cover" :src="Shout" />
-            </NScrollbar>
-            <br />
-            钟(离)好帅啊~ <br />
-            ------正打歪着珊瑚宫心海的聪智
+            <colview>
+                <NScrollbar style="width: auto" x-scrollable>
+                    <NImage :show-toolbar="false" object-fill="cover" :src="Shout" />
+                </NScrollbar>
+                <span style="align-self: flex-end">
+                    <ruby>李<rt>lí</rt></ruby>
+                    聪 智 <br />
+                    钟(离)好帅啊~ <br />
+                    ------正打歪着珊瑚宫心海的聪智
+                </span>
+            </colview>
         </NCard>
         <NCard title="文件六 圣阳世纪电视包装袋">
-            <NScrollbar x-scrollable>
-                <NImage :show-toolbar="false" object-fill="cover" :src="SHUO" />
-            </NScrollbar>
-            <br />
-            "单刃短柄匕首掏出你的心肝五脏!" <br />
-            语文考试中,硕哥举起了手:"老师,'亵渎'的'渎'怎么写?" 老师抬头一言不发地看着他 <br />
-            还是考试,硕哥桌上有很多橡皮屑:"老师我这有点儿橡皮屑" <br />
-            又是考试,硕哥的好同学用异物扔硕哥:"老师我举报有人<strong>投掷</strong>我!"委屈地告状
-            <br />
-            硕哥的好同学们与硕哥打闹:"你们这俩鸟人 该死的! 放开我! 该死的" <br />
-            明媚的早上,硕哥一人拿着自己的繁体字化学笔记,直接坐在楼门口的水泥台上:"什么繁体字我又不是廣東人",本上还贴心地写了提醒备忘录
-            <br />
-            "我们俩班是联班!" <br />
+            <colview>
+                <NScrollbar style="width: auto" x-scrollable>
+                    <NImage :show-toolbar="false" object-fill="cover" :src="SHUO" />
+                </NScrollbar>
+                <span>
+                    <NAlert title="名言金句" :show-icon="false" type="warning">
+                        - "投放危险物质爆炸罪!" <br />
+                        - "长大去圣阳世纪电视宣传包装袋!" <br />
+                        - "单刃短柄匕首掏出你的心肝五脏!"
+                    </NAlert>
+                    <br />
+                    语文考试中硕哥举起了手:"老师,'亵渎'的'渎'怎么写?" 老师抬头一言不发地看着他
+                    <br />
+                    还是考试,硕哥桌上有很多橡皮屑:"老师我这有点儿橡皮屑" <br />
+                    又是考试,硕哥的好同学用异物扔硕哥:"老师我举报有人<strong>投掷</strong>我!"委屈地告状
+                    <br />
+                    硕哥的好同学们与硕哥打闹:"你们这俩鸟人 该死的! 放开我! 该死的" <br />
+                    明媚的早上,硕哥一人拿着自己的繁体字化学笔记专注学习<br />直接坐在楼门口的水泥台上:"什么繁体字我又不是<strong>廣東</strong>人"
+                    <br />
+                    本上还贴心地写了下课提醒的备忘录
+                    <br />
+                    "我们俩班是联班!"(硕哥卖力地搬着凳子) <br />
+                    <mark>硕!</mark>
 
-            ------很狠圣阳世纪员工硕哥
+                    ------很狠圣阳世纪员工硕哥
+                </span>
+            </colview>
         </NCard>
     </NSpace>
 </template>

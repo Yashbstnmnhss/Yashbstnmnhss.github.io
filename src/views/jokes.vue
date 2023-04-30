@@ -5,6 +5,7 @@ import { getOrMakeMenus as getMenu } from '../route/menu'
 import { useMain } from '../store'
 import { onMounted, watch } from 'vue'
 import SideMenu from '../components/basic/SideMenu.vue'
+import Logo from '@/assets/images/logo.svg'
 
 const store = useMain()
 let collapsed = $ref<boolean>()
@@ -23,42 +24,11 @@ watch(
     <NLayout style="height: 100%">
         <NLayoutHeader style="height: 64px" bordered>
             <NSpace>
-                <svg style="max-width: 100%" height="64px" viewBox="0 0 500 64">
-                    <circle
-                        id="iconWrap"
-                        cx="30"
-                        cy="30"
-                        r="15"
-                        style="stroke: var(--n-text-color); stroke-width: 3px; fill: transparent"
-                    />
-                    <text
-                        id="iconText"
-                        x="20"
-                        y="36"
-                        style="
-                            font-size: 20px;
-                            fill: rgb(36, 204, 255);
-                            user-select: none;
-                            cursor: pointer;
-                        "
-                        onclick="window.location.href='/'"
-                    >
-                        樂
-                    </text>
-                    <text
-                        x="55"
-                        y="40"
-                        style="
-                            font-size: 25px;
-                            fill: var(--n-text-color);
-                            user-select: none;
-                            cursor: pointer;
-                        "
-                        onclick="window.location.href='/'"
-                    >
-                        日丂丅冂从冂廾丂丂三
-                    </text>
-                </svg>
+                <img
+                    @click="$router.push('/')"
+                    :src="Logo"
+                    style="max-width: 100%; height: 45px; margin-left: 12px; margin-top: 12px"
+                />
             </NSpace>
         </NLayoutHeader>
         <NLayout position="absolute" style="top: 64px" has-sider>

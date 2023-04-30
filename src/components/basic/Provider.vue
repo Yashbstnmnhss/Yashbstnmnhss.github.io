@@ -7,6 +7,8 @@ import {
     NMessageProvider,
     NLoadingBarProvider,
     NGlobalStyle,
+    zhCN,
+    dateZhCN,
 } from 'naive-ui'
 import { useMain } from '../../store'
 import { getLocales, getTheme } from '../../lib/utils'
@@ -56,8 +58,8 @@ const themeUpdate = (val: Themes) => (theme.value = getTheme(val))
 <template>
     <NConfigProvider
         :theme="theme"
-        :locale="locale"
-        :date-locale="dateLocale"
+        :locale="zhCN"
+        :date-locale="dateZhCN"
         :hljs="hljs"
         :theme-overrides="overrides"
         class="full"

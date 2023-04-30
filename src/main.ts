@@ -7,7 +7,6 @@ import router from './route'
 import pinia from './store/pinia'
 
 import './assets/styles/global.less'
-import './assets/styles/markdown.less'
 import 'highlight.js/styles/tokyo-night-dark.css'
 
 const app = createApp(App)

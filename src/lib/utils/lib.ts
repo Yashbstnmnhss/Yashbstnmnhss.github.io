@@ -2,10 +2,10 @@ import { zhCN, dateZhCN, darkTheme, lightTheme } from 'naive-ui'
 import { Languages, Themes } from '../constants'
 
 export const locales = {
-    [Languages.zhCN]: zhCN,
+    [Languages.zhHans]: zhCN,
 }
 export const dateLocales = {
-    [Languages.zhCN]: dateZhCN,
+    [Languages.zhHans]: dateZhCN,
 }
 
 export function getLocales(lang: Languages) {

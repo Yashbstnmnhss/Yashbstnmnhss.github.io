@@ -46,6 +46,11 @@ const isTodayBirthday =
     today.getMonth() === nextBirthday.getMonth() &&
     today.getDate() === nextBirthday.getDate()
 
+const isTodayBeforeBirthday = () => {
+    const today = new Date()
+    return today.getMonth() <= nextBirthday.getMonth() && today.getDate() < nextBirthday.getDate()
+}
+
 const diffTime = computed(() => {
     const diff = nextBirthday.getTime() - today.getTime()
     return diff > 0 ? diff : 0
@@ -92,7 +97,11 @@ const progress = computed(() => {
                     <NNumberAnimation
                         :duration="6000"
                         :from="0"
-                        :to="today.getFullYear() - props.date.getFullYear()"
+                        :to="
+                            today.getFullYear() -
+                            props.date.getFullYear() -
+                            (isTodayBeforeBirthday() ? 1 : 0)
+                        "
                     />
                     <template #suffix> 岁 </template>
                 </NStatistic>

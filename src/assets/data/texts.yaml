@@ -1,10 +1,10 @@
 menus:
     jokes:
-        document: 《Crafuzey》
+        # document: 《Crafuzey》
         fuze: 亻寸氵睾
-        fuze-sayings: 名言金句
-        fuze-sayings-original: 伪版
-        fuze-sayings-translated: 真·版
+        fuze-sayings: 相遇论
+        fuze-sayings-original: 狭义版
+        fuze-sayings-translated: 广义版
         fuze-sounds: 余音缭绕
         fuze-images: 帅!帅!帅!
         fuze-videos: 珍贵录像
@@ -18,6 +18,7 @@ menus:
         gcl-books-back: 往返自然
         gcl-images: 笑!笑!笑!
         ayaya: 联合国
+        rhianne: 日炎隐私论
         zang: 神女与神拳
         zang-images: 神女
         zang-sounds: 小太阳的呐喊
@@ -26,11 +27,16 @@ menus:
         nan-medias: 个口媒体
         joke-home: 主页
         props: 杂项
+        kazuha: 冷吟闲醉
+        documents: 档案馆
         fuzeblockisnotagame: 付块非游
 views:
     jokes:
         images-alt: 加载! 加载!! 加载!!! 不择手段地加载!
         videos-alt: 彳亍不支持是吧
+        saying-panel:
+            original-text: 原文
+            translated-text: 译文
         fuze:
             videos:
                 items:
@@ -156,3 +162,27 @@ achievements:
     WTF_WHY_SO_MANY_ERROES:
         title: 呃.呃.哦. 错误.
         description: 躺平了
+sayings:
+    fuze:
+        _author: 付泽
+        widemean-meet: 狭义相遇论
+        widemean-meet-1: 广义相遇论
+        widemean-meet-2: 广义相遇论(变种一)
+        widemean-meet-3: 广义相遇论(变种二)
+    clea:
+        _author: 柯莱
+        yandere-c1: 你又哭了
+        yandere-c2: 我恨他
+        yandere-c3: 只要你
+        yandere-c4: 你厌倦我了吗?
+        fat: 我妈说我胖(印尼语)
+        fat-english: 我妈说我胖(英语)
+        uptoyou: UP TO YOU
+        love-story: 工地爱情故事
+        chat-history: 轰炸篇聊天记录
+    gladys:
+        _author: 格莱迪丝
+        explain: 解释抑郁
+        overwhelmed: 家人们破防了
+        sheep: 🐏
+        new-friend: 新朋友

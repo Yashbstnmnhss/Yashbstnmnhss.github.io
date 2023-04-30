@@ -1,9 +1,14 @@
 sayings_inmind: #
 tonight_is_the_best: #
 gotta_go_man:
+    type: fantastic
 useless_bored:
     icon: boat
 SCP: #
+    criteria:
+        trigger: clickLink
+        conditions:
+            in: ['scp', { $: 'link' }]
     probability: 0.8
 last_days_of_europe: #
 hasi_hasi_hasi:
@@ -12,12 +17,18 @@ i_like_femboy_rather_than_this: #
     probability: 0.45
 surely_another_useless: #
 happy_birthday_fuze: #
+    criteria:
+        trigger: fuzeBirthday
 number_from_4D: #
     next: wait_where_are_you_now
 wait_where_are_you_now: #
 already_late_for_fuze_birthday: #
 cant_get_mad_who_havent_dignity: #
 nothing_interesting_here: #
+    criteria:
+        trigger: pushRoute
+        conditions:
+            ==: [{ $: to }, '/jokes/props']
 STOP_PLS:
 HE_IS_TOO_STUPID:
     requirements:
@@ -28,6 +39,11 @@ oh_114514:
 you_know_so_many_languages: #
     next: gotta_go_man
 WOW_EYES_DIED: #
+    criteria:
+        trigger: changeTheme
+        conditions:
+            '>=': [{ $: 'count' }, 10]
+    next: gotta_go_man
 haha_you_found_me:
 nearer_my_master: #
     type: fantastic

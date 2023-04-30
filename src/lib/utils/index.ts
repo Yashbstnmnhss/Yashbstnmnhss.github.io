@@ -2,28 +2,45 @@ import axios from 'axios'
 import _ from 'lodash'
 import type { Time, TimeScope } from '../types'
 
-export const groupBy = _.groupBy
-export const orderBy = _.orderBy
-export const forInObject = _.forIn
-export const pairsToObject = _.fromPairs
-export const objectToPairs = _.toPairs
-export const forEach = _.forEach
-export const strtemplate = _.template
-export const isArray = _.isArray
-export const isArrayLike = _.isArrayLike
-export const isUndefined = _.isUndefined
-export const funconce = _.once
-export const funcwrap = _.wrap
-export const getPropertyIn = _.get
-export const hasPropertyIn = _.hasIn
-export const valueToString = _.toString
-export const mapValues = _.mapValues
-export const assignUndefined = _.defaults
+export {
+    uniqWith as uniqueArrayWith,
+    uniq as uniqueArray,
+    includes as isInArray,
+    throttle,
+    omit as omitObject,
+    groupBy,
+    orderBy,
+    forIn as forInObject,
+    fromPairs as pairsToObject,
+    toPairs as objectToPairs,
+    forEach,
+    template as strtemplate,
+    isObject,
+    isArray,
+    isString,
+    isNumber,
+    isUndefined,
+    once as funconce,
+    wrap as funcwarp,
+    get as getPropertyIn,
+    hasIn as hasPropertyIn,
+    toString as valueToString,
+    mapValues,
+    defaults as assignUndefined,
+} from 'lodash'
 
 export function join(array: any[], sep: any) {
     return array
         .map((el, i) => (i < array.length - 1 ? [el, sep] : [el]))
         .reduce((a, b) => a.concat(b))
+}
+
+export function getUID(length: number = 9, radix = 10) {
+    const chars = Array.from('0123456789QWERTYUIOPLKJHGFDSAMZNXBCVqazwsxmlpokijnbhucdevgfyrt魈付泽')
+    const uid = []
+    radix ||= chars.length
+    for (var i = 0; i < length; i++) uid[i] = chars[0 | (Math.random() * radix)]
+    return uid.join('')
 }
 
 export function isMobile() {

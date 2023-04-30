@@ -2,10 +2,8 @@
 import { provide, h, onMounted } from 'vue'
 import { useMain } from '../../store'
 import { useNotification } from 'naive-ui'
-import { achievements, ACHIEVER_KEY } from '../../lib/functions/achievements'
-import { Achievement, AchieverInst } from '../../lib/types'
-import { useTexta } from '../../lib'
-import { Logger, random } from '../../lib/utils'
+import { useTexta, Logger, random, getAchievements, ACHIEVER_KEY } from '../../lib'
+import type { Achievement, Achievements, AchieverInst } from '../../lib/types'
 
 const store = useMain()
 const texta = useTexta()
@@ -14,6 +12,7 @@ const toast = useNotification()
 var hadAchievementKeys: string[] = []
 
 onMounted(() => {
+    getAchievements()
     hadAchievementKeys = store.achievements
 })
 
@@ -38,7 +37,7 @@ const methods: AchieverInst = {
             ignoreProbability: false,
         }
     ) => {
-        const achievement = achievements[key]
+        const achievement = getAchievements()[key]
         if (!achievement) {
             Logger.error('[Achiever]', 'Achievement not found', key)
             return

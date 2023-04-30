@@ -1,4 +1,4 @@
-import { ACSLevel, ACSClass, ACSDisruption, ACSRisk } from '../types'
+import type { ACSLevel, ACSClass, ACSDisruption, ACSRisk } from '../types'
 
 /**
  * http://scp-wiki-cn.wikidot.com/anomaly-classification-system-guide
@@ -62,7 +62,7 @@ export const Class2Color: Record<ACSClass, string> = {
     Euclid: '255, 211, 0',
     Keter: '196, 2, 51',
     Neutralized: '224, 224, 225',
-    Thaumiel: '252, 252, 252',
+    Thaumiel: '225, 225, 225',
     Apollyon: '252, 252, 252',
     Archon: '252, 252, 252',
     Tiamat: '252, 252, 252',
@@ -91,18 +91,18 @@ export const Risk2Color: Record<ACSRisk, string> = {
 }
 
 export const Level2Extra: Record<ACSLevel, string> = {
-    1: '凵冂尺巨丂丅尺丨匚丅巨刀', //'UR',
-    2: '尺巨丂丅尺丨匚丅巨刀', //'RS',
-    3: '匚口冂彳丨刀巨冂丅丨亼厶', //'CF',
+    1: 'UR', //'UR',
+    2: 'RS', //'RS',
+    3: '机要', //'CF',
     4: '丂巨匚尺巨丅', //'Secret',
     5: '丅口尸 丂巨匚尺巨丅', //'Top Secret',
     6: '匚口丂从丨匚 丅口尸 丂巨匚尺巨丅', //'Cosmic Top Secret',
 }
 
 export const Class2Text: Record<ACSClass, string> = {
-    Safe: '丂亼彳巨',
-    Euclid: '巨凵匚厶丨刀',
-    Keter: '片巨丅巨尺',
+    Safe: '安全',
+    Euclid: '欧几里得',
+    Keter: 'Keter',
     Neutralized: '冂巨凵丅尺亼厶丨乙巨刀',
     Thaumiel: '丅廾亼凵从丨巨厶',
     Apollyon: 'Apollyon',
@@ -117,8 +117,8 @@ export const Class2Text: Record<ACSClass, string> = {
 }
 
 export const Disruption2Text: Record<ACSDisruption, string> = {
-    Dark: '刀亼尺片',
-    Vlam: '匕厶亼从',
+    Dark: 'Dark',
+    Vlam: 'Vlam',
     Keneq: '片巨冂巨曱',
     Ekhi: 'Ekhi',
     Amida: 'Amida',
@@ -132,10 +132,10 @@ export const Disruption2Extra: Record<ACSDisruption, string> = {
 }
 
 export const Risk2Text: Record<ACSRisk, string> = {
-    Notice: '冂口丅丨匚巨',
-    Caution: '匚亼凵丅丨口冂',
-    Warning: '山亼尺冂丨冂巳',
-    Danger: '刀亼冂巳巨尺',
+    Notice: '注意',
+    Caution: '需谨慎',
+    Warning: '警告',
+    Danger: '危险',
     Critical: 'Critical',
 }
 export const Risk2Extra: Record<ACSRisk, string> = {
