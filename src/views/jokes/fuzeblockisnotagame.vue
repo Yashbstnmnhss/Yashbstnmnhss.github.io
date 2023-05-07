@@ -107,14 +107,6 @@ const fuzeBirthday = new Date(2007, 6 - 1, 16)
         <NCard title="FU音盒" hoverable>
             <FuMusicBox />
         </NCard>
-
-        <NCard title="FUUF" hoverable>
-            <NSpace vertical>
-                丂口尺尺丫, 丅廾丨丂 彳凵冂匚丅丨口冂 丨丂 丂丅丨厶厶 山口尺片丨冂巳 冂口山,
-                (亼匚丅凵亼厶厶丫 丨 刀口冂丅 片冂口山 山廾亼丅 彳凵冂匚丅丨口冂 山丨厶厶 尸凵丅
-                丅廾巨尺巨)
-            </NSpace>
-        </NCard>
     </NSpace>
     <NBackTop />
 </template>

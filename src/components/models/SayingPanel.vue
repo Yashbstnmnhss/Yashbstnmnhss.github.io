@@ -46,6 +46,6 @@ watch(
 
 <style lang="less" scoped>
 .keep-space {
-    white-space: pre;
+    white-space: pre-wrap;
 }
 </style>

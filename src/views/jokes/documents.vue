@@ -11,7 +11,7 @@ meta:
 
 <script setup lang="ts">
 import { h, ref } from 'vue'
-import type { DataTableColumns } from 'naive-ui'
+import { DataTableColumns, NScrollbar } from 'naive-ui'
 import { NH1, NDataTable, NTag, NButton, NModal, NInput, NInputGroup, useMessage } from 'naive-ui'
 import { getAllSayings } from '../../lib/functions/sayings'
 import { useTexta } from '../../lib/functions/texta'
@@ -52,51 +52,12 @@ const createColumns = (): DataTableColumns<RowData> => [
                 { default: () => texta.get(['sayings', row.author, row.title]) || row.title }
             )
         },
+        resizable: true,
+        minWidth: 50,
     },
+
     {
-        title: '作者',
-        key: 'author',
-        render(row) {
-            return h(
-                'span',
-                {},
-                { default: () => texta.get(['sayings', row.author, '_author']) || row.author }
-            )
-        },
-        filterOptions: Object.keys(getAllSayings()).map(val => ({
-            label: texta.get(['sayings', val, '_author']) || val,
-            value: val,
-        })),
-        filter(option, row) {
-            return row.author === option
-        },
-    },
-    {
-        title: '标签',
-        key: 'tags',
-        render(row) {
-            const tags = row.tags.map(tagKey => {
-                return h(
-                    NTag,
-                    {
-                        style: {
-                            marginRight: '6px',
-                        },
-                        type: 'info',
-                        bordered: false,
-                    },
-                    {
-                        default: () => tagKey,
-                    }
-                )
-            })
-            return tags
-        },
-    },
-    {
-        title() {
-            return `共收录: ${data.length}`
-        },
+        title: '',
         key: 'actions',
         render(row) {
             return [
@@ -108,8 +69,22 @@ const createColumns = (): DataTableColumns<RowData> => [
                         size: 'small',
                         onClick: () => {
                             try {
-                                navigator.clipboard.writeText(row.text)
-                                message.success('复制成功')
+                                if (navigator.clipboard && navigator.clipboard.writeText) {
+                                    navigator.clipboard
+                                        .writeText(row.text)
+                                        .then(_ => message.success('复制成功'))
+                                        .catch(_ => message.error('复制失败'))
+                                } else {
+                                    const input = document.createElement('input')
+                                    input.readOnly = true
+                                    input.value = row.text
+                                    input.className = ''
+                                    document.body.appendChild(input)
+                                    input.select()
+                                    document.execCommand('copy')
+                                    document.body.removeChild(input)
+                                    message.success('复制成功')
+                                }
                             } catch {
                                 message.error('复制失败')
                             }
@@ -137,6 +112,61 @@ const createColumns = (): DataTableColumns<RowData> => [
             ]
         },
     },
+    {
+        title: '作者',
+        key: 'author',
+        render(row) {
+            return h(
+                'span',
+                {},
+                { default: () => texta.get(['sayings', row.author, '_author']) || row.author }
+            )
+        },
+        filterOptions: Object.keys(getAllSayings()).map(val => ({
+            label: texta.get(['sayings', val, '_author']) || val,
+            value: val,
+        })),
+        filter(option, row) {
+            return row.author === option
+        },
+        resizable: true,
+    },
+    {
+        title: '标签',
+        key: 'tags',
+        render(row) {
+            const tags = row.tags.map(tagKey => {
+                return h(
+                    NTag,
+                    {
+                        style: {
+                            marginRight: '6px',
+                        },
+                        type: 'info',
+                        bordered: false,
+                    },
+                    {
+                        default: () => tagKey,
+                    }
+                )
+            })
+            return tags
+        },
+        ellipsis: {
+            tooltip: true,
+        },
+    },
+    {
+        title: '字数',
+        key: 'words',
+        align: 'right',
+        render(row) {
+            return row.text.length
+        },
+        sorter(a, b) {
+            return a.text.length - b.text.length
+        },
+    },
 ]
 
 const columns = createColumns()
@@ -144,7 +174,7 @@ const columns = createColumns()
 
 <template>
     <NH1>{{ $texta.get(['menus', 'jokes', 'documents']) }}</NH1>
-    <NDataTable :columns="columns" :data="data"></NDataTable>
+    <NDataTable size="small" :columns="columns" :data="data" />
     <NModal
         v-model:show="showModal"
         closable
@@ -158,6 +188,7 @@ const columns = createColumns()
         "
     >
         <SayingPanel
+            style="max-width: 100%"
             v-if="modalContent"
             :author="modalContent.author || ''"
             :target="modalContent.title || ''"

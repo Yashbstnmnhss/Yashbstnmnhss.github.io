@@ -33,7 +33,7 @@ import {
 import Logo from '@/assets/images/logo.svg'
 import { onMounted } from 'vue'
 import { getGroupInMenu } from '../route/menu'
-import { checkWebsite, useAchiever, useTexta, Themes, valueToString } from './portal'
+import { checkWebsite, useAchiever, useTexta, Themes, valueToString, VERSION } from './portal'
 
 const store = useMain(),
     router = useRouter(),
@@ -114,13 +114,6 @@ const open = (url: string) => (window.location.href = url)
                         -webkit-user-drag: none;
                     "
                 />
-                <!--
-                <NH1 prefix="bar" style="font-size: 5rem" class="zoomin">
-                    <NText type="primary" class="title">
-                        日丂丅冂从冂廾丂丂<span class="blinker">三</span></NText
-                    >
-                </NH1>
-                -->
             </NSpace>
             <NDivider />
             <NSpace :size="25">
@@ -180,6 +173,9 @@ const open = (url: string) => (window.location.href = url)
                         </b>
                     </NTooltip>
                 </NSpace>
+            </NSpace>
+            <NSpace justify="end" align="end" class="zoomin-small delay3">
+                <NText depth="3">{{ VERSION }}</NText>
             </NSpace>
         </div>
     </NScrollbar>

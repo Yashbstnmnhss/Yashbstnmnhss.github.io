@@ -9,6 +9,8 @@ import { watchEffect, watch, ref, onMounted } from 'vue'
 const props = defineProps<{
     collapsed?: boolean
     layout: string
+    indent: number
+    rootIndent: number
     getMenuOptions: () => MenuOption[]
 }>()
 
@@ -68,12 +70,13 @@ const renderMenuIcon = (option: MenuOption) => {
 
 <template>
     <NMenu
+        :indent="indent"
+        :root-indent="rootIndent"
         :value="current"
         :options="menuOptions"
         :collapsed="collapsed"
-        :collapsed-width="0"
         accordion
-        @update:value="k => valueUpdate(k)"
+        @update:value="val => valueUpdate(val)"
         :render-icon="renderMenuIcon"
         :render-label="renderMenuLabel"
     />

@@ -1,5 +1,5 @@
 export const BSTNMNHSS = 'Bstnmnhss'
-export const VERSION = '3.5.65-alpha'
+export const VERSION = '3.789.beta'
 export const API = 'https://bstnmnhss3-api.deta.dev'
 export const API_KEY = 'hTYGnS3L.bwaY4Sj6U3MhtHiUvwUmy1-GZUas4CEXq'
 
