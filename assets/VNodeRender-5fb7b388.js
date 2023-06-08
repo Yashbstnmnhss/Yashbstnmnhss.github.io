@@ -1,0 +1,1 @@
+import{d as t}from"./index-8198a965.js";const r=t({props:{content:{type:Function},params:{type:Array}},render(){var e;return(e=this.content)==null?void 0:e.call(this,...this.params??[])}});export{r as V};
