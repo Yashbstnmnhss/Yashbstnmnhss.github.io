@@ -22,7 +22,7 @@ import {
     NThing,
 } from 'naive-ui'
 import FuMusicBox from '../../components/models/FuMusicBox.vue'
-import { useAchiever } from '../../lib/functions/achievements'
+import { useAchiever, showNotification } from '../../lib/'
 import BirthdayCountdown from '../../components/models/BirthdayCountDown.vue'
 
 const achiever = useAchiever()
@@ -43,6 +43,15 @@ const fuzeBirthday = new Date(2007, 6 - 1, 16)
             :date="fuzeBirthday"
             progress-tooltip="距离下次生日进度"
             title="FU生日"
+            @onbirthday="
+                showNotification(`FUZE的生日!`, {
+                    tag: 'Bstnmnhss',
+                    body: `${new Date().toLocaleDateString()}已到来`,
+                    renotify: true,
+                    vibrate: [200, 100, 200],
+                    icon: 'https://uploadstatic.mihoyo.com/ys-obc/2021/06/10/75276545/10a9e992bf121129710d5d34703ebc7a_3094624363673748747.png',
+                })
+            "
         >
             <template #onbirthday>
                 <NButton
@@ -192,6 +201,44 @@ const fuzeBirthday = new Date(2007, 6 - 1, 16)
         opacity: 0;
         top: 200px;
         transform: scale(2.5);
+    }
+}
+
+.cube3d {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -50px 0 0 -50px;
+    transform-style: preserve-3d;
+    transform-origin: 2.5vh 2.5vh;
+    transform: rotateX(-33.5deg) rotateY(45deg);
+
+    div {
+        position: absolute;
+        display: block;
+        width: 5vh;
+        height: 5vh;
+        background: rgba(141, 214, 249, 1);
+        border: 1px solid #fff;
+    }
+    .top {
+        transform: rotateX(90deg) translateZ(50px);
+    }
+    .bottom {
+        transform: rotateX(-90deg) translateZ(50px);
+    }
+    .front {
+        transform: translateZ(50px);
+    }
+    .back {
+        transform: rotateX(-180deg) translateZ(50px);
+    }
+    .left {
+        transform: rotateY(-90deg) translateZ(50px);
+    }
+    .right {
+        transform: rotateY(90deg) translateZ(50px);
     }
 }
 </style>

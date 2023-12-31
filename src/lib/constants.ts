@@ -1,7 +1,8 @@
 export const BSTNMNHSS = 'Bstnmnhss'
-export const VERSION = '3.789.beta'
-export const API = 'https://bstnmnhss3-api.deta.dev'
-export const API_KEY = 'hTYGnS3L.bwaY4Sj6U3MhtHiUvwUmy1-GZUas4CEXq'
+export const VERSION = '3.9.999999'
+
+/** @deprecated API was deprecated */
+export const API = 'https://database.deta.sh/v1/c0z4r6ur_zR5ZH9Kuatmr7q4XqJn9kSGdx35Eo8s3/'
 
 /** @deprecated Using Texta instead of I18n, Languages enum were deprecated */
 export enum Languages {

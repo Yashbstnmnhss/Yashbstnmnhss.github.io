@@ -54,9 +54,26 @@ a:-webkit-any-link {
     opacity: 0.85;
 }
 
+leftimg {
+    float: left;
+    margin-right: 2vw;
+    clear: left;
+}
+
+rightimg {
+    float: right;
+    margin-left: 2vw;
+    clear: right;
+}
+
+*[_clearfix] {
+    clear: both;
+}
+
 colview {
     display: flex;
     flex-direction: row;
+    align-self: stretch;
     flex-wrap: wrap;
     column-gap: 2vw;
 }
@@ -64,6 +81,23 @@ rowview {
     max-width: 100%;
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
+    flex: 1 1 auto;
+    align-self: stretch;
     row-gap: 2vw;
+}
+
+*[_keepline] {
+    width: max-content;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 1s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }

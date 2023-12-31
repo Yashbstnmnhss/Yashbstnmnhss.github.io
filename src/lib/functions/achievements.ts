@@ -1,4 +1,4 @@
-import { datafiles } from '../assets'
+import datafiles from '../datafiles'
 import {
     Logger,
     assignUndefined,
@@ -11,7 +11,7 @@ import {
 import { inject } from 'vue'
 import type { AchieverInst, Achievement, Achievements } from '../types'
 
-const data: Achievements = datafiles.dataAchievements
+const data: Achievements = datafiles('achievements') ?? {}
 var achievements: Achievements
 
 export function getAchievements() {

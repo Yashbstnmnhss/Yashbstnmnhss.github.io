@@ -4,6 +4,7 @@ declare module 'vue-router' {
     interface RouteMeta {
         keepAlive?: boolean
         transition?: string
+        enable?: boolean
         menu?: Menu
     }
 }

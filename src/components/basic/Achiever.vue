@@ -3,7 +3,7 @@ import { provide, h, onMounted } from 'vue'
 import { useMain } from '../../store'
 import { useNotification } from 'naive-ui'
 import { useTexta, Logger, random, getAchievements, ACHIEVER_KEY } from '../../lib'
-import type { Achievement, Achievements, AchieverInst } from '../../lib/types'
+import type { Achievement, AchieverInst } from '../../lib/types'
 
 const store = useMain()
 const texta = useTexta()

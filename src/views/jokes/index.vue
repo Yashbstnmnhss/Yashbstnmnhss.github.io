@@ -17,7 +17,6 @@ import {
     NBlockquote,
     NElement,
     NSpace,
-    NImage,
     NButton,
     useMessage,
     NCard,
@@ -25,18 +24,16 @@ import {
     NCode,
     NAlert,
 } from 'naive-ui'
-import { RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router/auto'
 import { random, useAchiever } from '../portal'
 import { ref, onMounted } from 'vue'
 
 import Handwrite from '@/assets/images/textures/handwrite.jpg'
-import FuzeImage from '@/assets/images/jokes/fuze/fuzeshout.png'
 import FUZE1 from '@/assets/images/jokes/fuze/monster.png'
 import FUZE2 from '@/assets/images/jokes/fuze/onTheBus.jpg'
 import FUZE3 from '@/assets/images/jokes/fuze/fuzeShout.png'
 import FUZE4 from '@/assets/images/jokes/fuze/fuzeshoutsmall.jpg'
 
-const showFuzeShout = ref(true)
 const achiever = useAchiever()
 const message = useMessage()
 
@@ -269,40 +266,6 @@ onMounted(() => (card = document.getElementById('card')!))
         </NElement>
         <NAlert type="error"> 疯骗奸狡付泽一定要被制裁 任何馒头终将绳之以法 </NAlert>
         <NCard hoverable>
-            <div class="grid">
-                <div class="header">
-                    <div class="project">
-                        <div class="prefix"></div>
-                        <div class="number"></div>
-                    </div>
-                    <div class="bars"></div>
-                    <div class="clearance">
-                        <div class="level"></div>
-                        <div class="text"></div>
-                    </div>
-                </div>
-                <div class="body">
-                    <div class="category">
-                        <div class="primary">
-                            <div class="prefix"></div>
-                            <div class="text"></div>
-                        </div>
-                        <div class="secondary">
-                            <div class="prefix"></div>
-                            <div class="text"></div>
-                        </div>
-                    </div>
-                    <div class="disrupt">
-                        <div class="prefix"></div>
-                        <div class="text"></div>
-                    </div>
-                    <div class="danger">
-                        <div class="prefix"></div>
-                        <div class="text"></div>
-                    </div>
-                    <div class="diamond"></div>
-                </div>
-            </div>
             <ACSBar
                 @dblclick="achiever.achieve('SCP')"
                 :level="'3'"
@@ -534,16 +497,7 @@ onMounted(() => (card = document.getElementById('card')!))
             </NSpace>
         </NCard>
 
-        <NCard
-            title="并不简单的问题"
-            hoverable
-            closable
-            v-show="showFuzeShout"
-            @close="showFuzeShout = false"
-        >
-            <template #cover>
-                <NImage :src="FuzeImage" />
-            </template>
+        <NCard title="并不简单的问题" hoverable closable>
             一个男人 但他失踪了 至少联系不上了
             <template #action>
                 <NButton @click="message.warning('只是这样吗?')"> 闲置 </NButton>

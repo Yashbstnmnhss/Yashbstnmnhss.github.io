@@ -13,9 +13,12 @@ meta:
 </route>
 
 <script setup lang="ts">
+import VentiAvatar from '@/assets/images/branches/venti.png'
+import KokomiAvatar from '@/assets/images/jokes/nan/shout.png'
 import FuzeAvatar from '@/assets/images/jokes/fuze/avatar.jpg'
 import FuzeVideo from '@/assets/videos/jokes/fuze.mp4'
 import {
+    NText,
     NH1,
     NThing,
     NImage,
@@ -28,11 +31,13 @@ import {
     NDivider,
     NScrollbar,
 } from 'naive-ui'
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router/auto'
 import Timetable from '../../../components/models/Timetable.vue'
-
+import type { ChatMessage } from '../../portal'
 import P5C from '../../../components/models/P5.vue'
 import P5 from 'p5'
+import ChatHistory from '../../../components/models/ChatHistory.vue'
+import { h } from 'vue'
 
 const router = useRouter()
 
@@ -109,13 +114,66 @@ const sketch = (p: P5) => {
         p.text(`FUZE${year}年`, 15, 45)
     }
 }
+
+const fuze = (content: string): ChatMessage => ({
+    avatar: [VentiAvatar],
+    username: '亻寸氵睾',
+    content,
+})
+const kokomi = (content: string): ChatMessage => ({
+    avatar: [KokomiAvatar],
+    username: '珊瑚宫心海',
+    content,
+})
+const system = (content: string): ChatMessage => ({
+    type: 'system',
+    content: h(NText, { code: true }, { default: () => content }) as ReturnType<typeof h>,
+})
+/**
+ * 中国电信10:44
+会“81%
+<
+付泽
+1月1ZATT4.Uo
+好队友
+为了锻炼你随机应变的能力
+不惜让自己肚子疼
+j
+这是我们班主任
+?/
+离谱吧
+这操作挺骚
+奶奶的绝了
+1月12日下午17:14
+有王者多余的号吗
+没有
+颓废
++
+
+ */
+const lastMessages = [
+    fuze('好队友'),
+    fuze('为了锻炼你随机应变的能力'),
+    fuze('不惜让自己肚子疼'),
+    kokomi('这是我们班主任'),
+    kokomi('😅'),
+    fuze('?'),
+    kokomi('离谱吧'),
+    fuze('这操作挺骚'),
+    kokomi('👍'),
+    system('2023年 1月12日 下午17:14'),
+    fuze('有王者多余的号吗'),
+    kokomi('没有'),
+    fuze('[颓废]'),
+]
 </script>
 
 <template>
-    <NBadge value="失联" type="info">
+    <NBadge value="失联(已解明)" type="info">
         <NH1>{{ $texta.get(['menus', 'jokes', 'fuze']) }}</NH1>
     </NBadge>
-
+    <br />
+    <NAlert type="warning" title="此页面不再更新" /><br />
     <NThing>
         <template #avatar>
             <NImage width="100" :src="FuzeAvatar" />
@@ -136,16 +194,25 @@ const sketch = (p: P5) => {
             <u><strong>LONG LIVE FUZELAND!</strong></u>
             <spoiler>*btw</spoiler>
         </template>
-        <NAlert type="error">
-            亻寸氵睾他失联了 很久很久 我们不知道他咋了还有他哪儿去了以及他为什么走
-            临走前只说了三两句话<small>(见文件1-5)</small>
+        <NAlert type="error" :show-icon="false">
+            <s>
+                亻寸氵睾他失联了 很久很久 我们不知道他咋了还有他哪儿去了以及他为什么走
+                临走前只说了三两句话<small>(见文件1-5)</small>
+                <br />
+                他刚走的差不多一两周 他的原神和QQ都是一直离线状态 而过了这之后他就突然天天在线了
+                QQ也是
+                <br />
+                我以为他已经回来了 但诡异的是无论我发什么他都不吭一声
+                他唯一一次说话是我们给他打了个语音通话 他回复了"?" 此后便无响应了
+                <br />
+                没准他遇到了啥事 让他彻彻底底地改变了 亦或啥别的客观因素导致
+            </s>
             <br />
-            他刚走的差不多一两周 他的原神和QQ都是一直离线状态 而过了这之后他就突然天天在线了 QQ也是
-            <br />
-            我以为他已经回来了 但诡异的是无论我发什么他都不吭一声
-            他唯一一次说话是我们给他打了个语音通话 他回复了"?" 此后便无响应了
-            <br />
-            没准他遇到了啥事 让他彻彻底底地改变了 亦或啥别的客观因素导致
+            <mark>
+                已破案 根本无事发生 仅是旧计重施与我们断联 其寒假(2022-2023)仍与乐联保持联系
+                并且在原神充值完毕后弃坑 顶着温迪头像向乐联成员珊瑚宫心海索要王者荣耀账号
+                其农批本质复发 故情理之中 但平日无音讯 推测是上了烂学校(罪有应得)
+            </mark>
         </NAlert>
         <br />
         114514岁, 是带哲学家, 曾在
@@ -343,8 +410,13 @@ const sketch = (p: P5) => {
                 随机一天复活 <br />
                 <i><small>[2022/07/16 16:25]</small></i>
             </NBlockquote>
-            EOF
+            <s>EOF</s>
             <spoiler>若你是故意走的 那就滚吧 我们不是柯莱卢基托</spoiler>
+        </NCard>
+        <br />
+        <NCard title="文件六">
+            <ChatHistory :msgs="lastMessages" />
+            <strong>EOF</strong>
         </NCard>
         <br />
         <template #footer>

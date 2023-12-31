@@ -2,11 +2,12 @@ import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
 
 const markdownit = new MarkdownIt({
-    html: false,
+    html: true,
     xhtmlOut: false,
     breaks: true,
     linkify: true,
-    typographer: true,
+    typographer: false,
+
     highlight: (str: string, lang: string, _: string): string => {
         try {
             if (lang && hljs.getLanguage(lang)) return hljs.highlight(lang, str, true).value
@@ -199,4 +200,8 @@ markdownit.use(md => {
 
 export function renderMarkdown(markdown: string) {
     return markdownit.render(markdown, {})
+}
+
+export function tokenizeMarkdown(markdown: string) {
+    return markdownit.parse(markdown, {})
 }

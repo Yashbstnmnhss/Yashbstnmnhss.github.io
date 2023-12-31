@@ -19,6 +19,7 @@ import Sand from '@/assets/images/jokes/nan/sand.png'
 import SSK1 from '@/assets/images/jokes/nan/ssk1.png'
 import SSK2 from '@/assets/images/jokes/nan/ssk2.png'
 import SSK3 from '@/assets/images/jokes/nan/ssk3.jpg'
+import MWB from '@/assets/images/jokes/nan/mihoyo.jpg'
 import SHUO from '@/assets/images/jokes/nan/shuo.png'
 import Shout from '@/assets/images/jokes/nan/shout.png'
 import Car from '@/assets/videos/jokes/nan/jiang.mp4'
@@ -32,7 +33,7 @@ const jiang = [
         content: h('video', {
             src: Car,
             controls: true,
-            style: { maxWidth: '100%', height: '200px' },
+            style: { maxWidth: '100%', height: '25vh' },
         }),
     },
     { avatar: 'JIANG', username: '产权证', content: '耶耶耶' },
@@ -141,8 +142,9 @@ const hacker = [
         <NCard title="文件一 网课时边开车边耶耶耶的屑" hoverable>
             <colview>
                 <Chatter :msgs="jiang" />
+                <br />
                 <span style="height: auto; align-self: baseline">
-                    <NAlert title="专家点评" :show-icon="false" type="info">
+                    <NAlert title="专家点评" :bordered="false" :show-icon="false" type="info">
                         白海林:"就没遇见像你们这种班的!没尊严了!"(粉笔RIP)
                     </NAlert>
                 </span>
@@ -226,7 +228,7 @@ const hacker = [
                     <NImage :show-toolbar="false" object-fill="cover" :src="SHUO" />
                 </NScrollbar>
                 <span>
-                    <NAlert title="名言金句" :show-icon="false" type="warning">
+                    <NAlert title="名言金句" :bordered="false" :show-icon="false" type="warning">
                         - "投放危险物质爆炸罪!" <br />
                         - "长大去圣阳世纪电视宣传包装袋!" <br />
                         - "单刃短柄匕首掏出你的心肝五脏!"
@@ -247,6 +249,25 @@ const hacker = [
 
                     ------很狠圣阳世纪员工硕哥
                 </span>
+            </colview>
+        </NCard>
+        <NCard title="文件七 新入伍米卫兵中药材">
+            <h1>竖起大拇指 自信阴游人</h1>
+            <colview>
+                <Chatter
+                    :msgs="[
+                        {
+                            avatar: [
+                                'https://img-baofun.zhhainiao.com/pcwallpaper_ugc/live/49674c3955f6270acd88ccf6caabeaf1.mp4.jpg',
+                            ],
+                            username: '胡桃嗷',
+                            content: '不愧是我的嘴替，一语道破我心中所想，会说话还会起名字',
+                        },
+                    ]"
+                />
+                <NScrollbar style="width: auto" x-scrollable>
+                    <NImage object-fit="cover" :src="MWB" />
+                </NScrollbar>
             </colview>
         </NCard>
     </NSpace>
@@ -281,13 +302,13 @@ const hacker = [
 .hovernone {
     opacity: 1;
     transition: opacity ease-in-out 0.5s;
-    .hovernone:hover {
-        opacity: 0;
+    &:hover {
+        opacity: 0.5;
     }
 }
 .bgs {
     animation-name: Background-Slide;
-    animation-timing-function: ease-in-out;
+    animation-timing-function: linear;
     animation-fill-mode: both;
     animation-direction: alternate-reverse;
     animation-duration: 2s;
@@ -309,9 +330,11 @@ const hacker = [
 @keyframes Background-Slide {
     from {
         background-position: -200px 0;
+        background-size: 15%;
     }
     to {
         background-position: 200px 0;
+        background-size: 100%;
     }
 }
 </style>

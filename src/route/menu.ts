@@ -11,11 +11,11 @@ import {
     orderBy,
 } from '../lib'
 import type { MenuOption as MO } from 'naive-ui/lib'
-import type { RouteRecordNormalized as RouteInfo } from 'vue-router'
+import type { RouteRecordNormalized as RouteInfo } from 'vue-router/auto'
 import type { Menu } from './meta'
 
 const groups: Record<string, string[]> = {
-    jokes: ['header', 'default', 'footer', 'props'],
+    jokes: ['header', 'default', 'expand', 'footer', 'props'],
 }
 const template: Record<string, Record<string, MO | false>> = {
     jokes: {
@@ -23,7 +23,10 @@ const template: Record<string, Record<string, MO | false>> = {
         footer: false,
         props: false,
         default: {
-            label: '口 日 丿 巨 匚 丅',
+            label: '口 日 厂 巨 匚 丁',
+        },
+        expand: {
+            label: '巨 乂 尸 亼 冂 刀',
         },
     },
 }
@@ -53,8 +56,8 @@ function makeMenusCache(routes: RouteInfo[] = router.getRoutes()) {
     for (var key in result) caches[key] = result[key]
 }
 
-function filtering({ components, meta: { menu } }: RouteInfo) {
-    return !isUndefined(components) && !isUndefined(menu) && menu.for
+function filtering({ components, meta: { menu, enable } }: RouteInfo) {
+    return !isUndefined(components) && !isUndefined(menu) && enable !== false && menu.for
 }
 
 function makeMenus(target: RouteInfo[] = router.getRoutes()) {

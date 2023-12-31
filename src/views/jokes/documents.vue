@@ -11,16 +11,19 @@ meta:
 
 <script setup lang="ts">
 import { h, ref } from 'vue'
-import { DataTableColumns, NScrollbar } from 'naive-ui'
-import { NH1, NDataTable, NTag, NButton, NModal, NInput, NInputGroup, useMessage } from 'naive-ui'
+import { DataTableColumns, NBackTop } from 'naive-ui'
+import { NH1, NDataTable, NTag, NButton, NModal } from 'naive-ui'
 import { getAllSayings } from '../../lib/functions/sayings'
 import { useTexta } from '../../lib/functions/texta'
 import SayingPanel from '../../components/models/SayingPanel.vue'
 
-const texta = useTexta(),
-    message = useMessage()
+const texta = useTexta()
 const showModal = ref(false),
     modalContent = ref<RowData>()
+const showDialog = (data: RowData) => {
+    modalContent.value = data
+    showModal.value = true
+}
 
 type RowData = {
     title: string
@@ -28,19 +31,18 @@ type RowData = {
     text: string
     tags: string[]
 }
+const sayings = getAllSayings()
 
-const data: RowData[] = Object.values(getAllSayings())
-    .map(saying => {
-        return Object.values(saying).map(val => {
-            return {
-                title: val.title ?? '',
-                author: val.author ?? '',
-                tags: val.tags ?? [],
-                text: val.text,
-            }
-        })
+const data: RowData[] = Object.values(sayings).flatMap(saying => {
+    return Object.values(saying).map(val => {
+        return {
+            title: val.title ?? '',
+            author: val.author ?? '',
+            tags: val.tags ?? [],
+            text: val.text,
+        }
     })
-    .flat(1)
+})
 const createColumns = (): DataTableColumns<RowData> => [
     {
         title: '标题',
@@ -64,48 +66,10 @@ const createColumns = (): DataTableColumns<RowData> => [
                 h(
                     NButton,
                     {
-                        type: 'success',
-                        ghost: true,
-                        size: 'small',
-                        onClick: () => {
-                            try {
-                                if (navigator.clipboard && navigator.clipboard.writeText) {
-                                    navigator.clipboard
-                                        .writeText(row.text)
-                                        .then(_ => message.success('复制成功'))
-                                        .catch(_ => message.error('复制失败'))
-                                } else {
-                                    const input = document.createElement('input')
-                                    input.readOnly = true
-                                    input.value = row.text
-                                    input.className = ''
-                                    document.body.appendChild(input)
-                                    input.select()
-                                    document.execCommand('copy')
-                                    document.body.removeChild(input)
-                                    message.success('复制成功')
-                                }
-                            } catch {
-                                message.error('复制失败')
-                            }
-                        },
-
-                        style: {
-                            marginRight: '6px',
-                        },
-                    },
-                    { default: () => '复制' }
-                ),
-                h(
-                    NButton,
-                    {
                         type: 'info',
                         ghost: true,
                         size: 'small',
-                        onClick: () => {
-                            modalContent.value = row
-                            showModal.value = !showModal.value
-                        },
+                        onClick: () => showDialog(row),
                     },
                     { default: () => '查看' }
                 ),
@@ -174,6 +138,7 @@ const columns = createColumns()
 
 <template>
     <NH1>{{ $texta.get(['menus', 'jokes', 'documents']) }}</NH1>
+
     <NDataTable size="small" :columns="columns" :data="data" />
     <NModal
         v-model:show="showModal"
@@ -181,7 +146,7 @@ const columns = createColumns()
         :mask-closable="false"
         preset="card"
         :segmented="{ content: 'soft', footer: 'soft' }"
-        transform-origin="center"
+        transform-origin="mouse"
         :title="
             $texta.get(['sayings', modalContent?.author || '', modalContent?.title || '']) ||
             modalContent?.title
@@ -194,4 +159,5 @@ const columns = createColumns()
             :target="modalContent.title || ''"
         />
     </NModal>
+    <NBackTop />
 </template>

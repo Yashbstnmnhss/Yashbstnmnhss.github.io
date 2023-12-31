@@ -4,7 +4,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router/auto'
 import { useMain } from '../store'
 import {
     NButton,
@@ -31,7 +31,7 @@ import {
     InformationOutline,
 } from '@vicons/ionicons5'
 import Logo from '@/assets/images/logo.svg'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { getGroupInMenu } from '../route/menu'
 import { checkWebsite, useAchiever, useTexta, Themes, valueToString, VERSION } from './portal'
 
@@ -44,13 +44,14 @@ const store = useMain(),
 
 const check = async (link: string) => await checkWebsite(link)
 const websites: [string, string][] = [
-    ['主站', 'https://yashbstnmnhss.github.io'],
-    ['Netlify站', 'https://bstnmnhss.netlify.app'],
-    ['Vercel站', 'https://yashbstnmnhss.vercel.app'],
+    ['Github站', 'https://yashbstnmnhss.github.io'],
+    ['Netlify站', 'https://bstnmnhss3.netlify.app'],
+    ['Vercel站', 'https://bstnmnhss.vercel.app'],
+    ['Cloudflare站', 'https://yashbstnmnhss-github-io.pages.dev'],
 ]
 
-let theme = $ref<typeof store.theme>(),
-    dropdown = $ref<MO[]>(
+var theme = ref<typeof store.theme>(),
+    dropdown = ref<MO[]>(
         (getGroupInMenu('jokes', 'default')!.children ?? []).map(
             (val: MO) =>
                 ({
@@ -62,7 +63,7 @@ let theme = $ref<typeof store.theme>(),
                 } as MO)
         )
     ),
-    websitesAlive = $ref<[string, string, boolean | null][]>(websites.map(v => [v[0], v[1], null]))
+    websitesAlive = ref<[string, string, boolean | null][]>(websites.map(v => [v[0], v[1], null]))
 
 const getWebsitesAlive = async (): Promise<[string, string, boolean | null][]> => {
     var links = websites.map(v => check(v[1]))
@@ -71,8 +72,8 @@ const getWebsitesAlive = async (): Promise<[string, string, boolean | null][]> =
 }
 
 onMounted(() => {
-    theme = store.theme
-    getWebsitesAlive().then(v => (websitesAlive = v))
+    theme.value = store.theme
+    getWebsitesAlive().then(val => (websitesAlive.value = val))
 })
 
 const clickInfo = () => {
@@ -94,8 +95,10 @@ const clickInfo = () => {
         },
     })
 }
-const updateTheme = () => (store.theme = theme = theme === Themes.dark ? Themes.light : Themes.dark)
-const start = () => router.push('/jokes')
+const updateTheme = () =>
+    (store.theme = theme.value = theme.value === Themes.dark ? Themes.light : Themes.dark)
+const start = () => router.push(/*'/jokes'*/ '/agsl')
+start()
 const select = (key: string) => router.push(`${key}`)
 const open = (url: string) => (window.location.href = url)
 </script>
@@ -118,14 +121,15 @@ const open = (url: string) => (window.location.href = url)
             <NDivider />
             <NSpace :size="25">
                 <NSpace>
-                    <NDropdown @select="key => select(key)" scrollable :options="dropdown">
+                    <NDropdown scrollable
+                        ><!--:options="dropdown" @select="key => select(key)">-->
                         <NButton
                             type="primary"
                             size="large"
                             class="start-button zoomin-small delay1"
                             @click="start()"
                         >
-                            乐子?楽子?樂子!
+                            启动!
                         </NButton>
                     </NDropdown>
                     <NButtonGroup class="zoomin-small delay2">
@@ -178,6 +182,8 @@ const open = (url: string) => (window.location.href = url)
                 <NText depth="3">{{ VERSION }}</NText>
             </NSpace>
         </div>
+        <!--<div class="genshin">〇神〇神〇神〇神〇神〇神〇神〇神〇神〇神〇神〇神〇神〇神〇神〇神</div>
+    -->
     </NScrollbar>
 </template>
 
@@ -228,7 +234,7 @@ const open = (url: string) => (window.location.href = url)
     border-radius: 5px;
     transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s;
     &:hover {
-        border-radius: 12px;
+        border-radius: 8px;
     }
 }
 
@@ -334,6 +340,30 @@ each(@bs, {
     }
     to {
         left: calc(2 * var(--full-size));
+    }
+}
+
+.genshin {
+    overflow: hidden;
+    text-overflow: clip;
+    word-break: keep-all;
+    font-weight: bolder;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: -15;
+    opacity: .65;
+    animation-name: blur-text;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+    animation-duration: 2s;
+}
+
+@keyframes blur-text {
+    0% {
+        filter: blur(8px);
     }
 }
 </style>

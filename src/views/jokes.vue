@@ -3,7 +3,7 @@ import { NLayout, NLayoutHeader, NLayoutSider, NSpace } from 'naive-ui'
 import Viewer from '../components/basic/Viewer.vue'
 import { getOrMakeMenus as getMenu } from '../route/menu'
 import { useMain } from '../store'
-import { onMounted, onUnmounted, watch, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import SideMenu from '../components/basic/SideMenu.vue'
 import Logo from '@/assets/images/logo.svg'
 import { storeToRefs } from 'pinia'
@@ -19,17 +19,23 @@ let collapsed = store.sidebar,
     collapseMode = ref<'transform' | 'width'>('transform')
 
 const toggle = () => (collapsed.value = !collapsed.value)
-const match = window.matchMedia('(width < 500px)')
-const listener = ({ matches }: { matches: boolean }) => {
-    siderWidth.value = matches ? 150 : 240
-    menuIndent.value = menuRootIndent.value = matches ? 12 : 32
+const sizeListener = () => {
+    const defaultWidth = 240,
+        limit = 225,
+        right = 25,
+        minIndent = 22,
+        maxIndent = 32
+    const matches = window.innerWidth - defaultWidth < limit
+    siderWidth.value = matches ? window.innerWidth - right : defaultWidth
+    menuIndent.value = menuRootIndent.value = matches ? minIndent : maxIndent
 }
 
 onMounted(() => {
     collapsed.value = store.sidebar.value
-    match.addEventListener('change', listener)
+    window.addEventListener('resize', sizeListener)
+    sizeListener()
 })
-onUnmounted(() => match.removeEventListener('change', listener))
+onUnmounted(() => window.removeEventListener('resize', sizeListener))
 </script>
 
 <template>

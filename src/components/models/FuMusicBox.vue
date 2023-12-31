@@ -2,7 +2,8 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { NSpin, NButton, NSpace, NScrollbar, NRadioButton, NRadioGroup } from 'naive-ui'
 import { toImportInfo, pairsToObject } from '../../lib'
-import NOTE from '@/assets/images/textures/note_block.png'
+import NOTEBLOCK from '@/assets/images/textures/note_block.png'
+
 import * as Tone from 'tone'
 import { Sampler } from 'tone'
 
@@ -44,8 +45,34 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <NSpin class="music-box" :style="`background-image:url(${NOTE})`" :show="loading">
+    <NSpin class="music-box" :show="loading">
         <NSpace vertical :align="'center'" :justify="'center'">
+            <div id="cube" class="cube3d">
+                <div ref="cubeDiv">
+                    <span
+                        class="top music-box"
+                        :style="{ backgroundImage: `url(${NOTEBLOCK})`, '--i': 1 }"
+                    >
+                    </span>
+                    <span
+                        class="side music-box"
+                        :style="{ backgroundImage: `url(${NOTEBLOCK})`, '--i': 0 }"
+                    ></span>
+                    <span
+                        class="side music-box"
+                        :style="{ backgroundImage: `url(${NOTEBLOCK})`, '--i': 1 }"
+                    ></span>
+                    <span
+                        class="side music-box"
+                        :style="{ backgroundImage: `url(${NOTEBLOCK})`, '--i': 2 }"
+                    ></span>
+                    <span
+                        class="side music-box"
+                        :style="{ backgroundImage: `url(${NOTEBLOCK})`, '--i': 3 }"
+                    ></span>
+                </div>
+            </div>
+            <br />
             <NScrollbar x-scrollable v-for="i in [5, 4, 3]" :key="i">
                 <NButton
                     style="text-align: center"
@@ -78,10 +105,67 @@ onUnmounted(() => {
 
 <style lang="less" scoped>
 .music-box {
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-clip: border-box;
-    background-size: contain;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-clip: border-box !important;
+    background-size: contain !important;
+    image-rendering: pixelated !important;
+}
+
+@keyframes NoteAppear {
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes CubeRotation {
+    0% {
+        transform: rotateX(-30deg) rotateY(0deg);
+    }
+    100% {
+        transform: rotateX(-30deg) rotateY(360deg);
+    }
+}
+
+.cube3d {
     image-rendering: pixelated;
+    position: relative;
+    width: 25vh;
+    aspect-ratio: 1 / 1;
+    height: 25vh;
+    transform-style: preserve-3d;
+    animation: CubeRotation 10s linear infinite;
+    div {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        .note {
+            --i: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5vw;
+            height: 5vw;
+            transform: translateY(-10vh) translateX(7.5vh);
+            animation: NoteAppear 0.25s linear 1 forwards;
+        }
+        span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgb(36, 204, 255);
+        }
+        .side {
+            transform: rotateY(calc(90deg * var(--i))) translateZ(12.5vh);
+        }
+        .top {
+            transform: rotateX(calc(90deg * var(--i))) translateZ(12.5vh);
+        }
+    }
 }
 </style>

@@ -2,7 +2,7 @@
 import { NMenu } from 'naive-ui'
 import type { MenuOption } from 'naive-ui/lib'
 import { useMain } from '../../store'
-import { useRoute } from 'vue-router'
+import { useRoute } from 'vue-router/auto'
 import { useTexta, valueToString, renderLink, renderIcon } from '../../lib'
 import { watchEffect, watch, ref, onMounted } from 'vue'
 

@@ -3,10 +3,13 @@ import { defineComponent } from 'vue'
 export default defineComponent({
     props: {
         content: {
-            type: Object,
+            type: Function,
+        },
+        params: {
+            type: Array,
         },
     },
     render() {
-        return this.content
+        return this.content?.(...(this.params ?? []))
     },
 })

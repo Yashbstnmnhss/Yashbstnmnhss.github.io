@@ -8,9 +8,9 @@ import {
     hasPropertyIn,
 } from '../utils'
 import type { TextaInst } from '../types'
-import { datafiles } from '../assets'
+import datafiles from '../datafiles'
 
-const data = datafiles.dataTexta
+const data = datafiles('texts') ?? {}
 const key = createInjectionKey<TextaInst>('texta')
 
 export default createTexta(data)
@@ -20,9 +20,11 @@ export function createTexta(sources: object) {
         get: (key, params) => {
             if (instance.has(key)) {
                 var template = valueToString(getPropertyIn(sources, key))
-                return strtemplate(template, {
-                    interpolate: /{{([\s\S]+?)}}/g,
-                })(params)
+                return template.includes('{{') && template.includes('}}') && params
+                    ? strtemplate(template, {
+                          interpolate: /{{([\s\S]+?)}}/g,
+                      })(params)
+                    : template
             }
             Logger.error('[Texta]', 'Unknown key', key)
             return ''

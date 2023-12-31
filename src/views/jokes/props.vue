@@ -26,7 +26,10 @@ import {
     NTimeline,
     NTimelineItem,
     NH1,
+    NTag,
+    NCode,
     NH2,
+    NTable,
 } from 'naive-ui'
 import { onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
@@ -36,21 +39,21 @@ import {
     getAchievement,
     Icons,
     apiTypes,
-    DynamicsServices,
-    assignUndefined,
+    VERSION,
+    BSTNMNHSS,
+    getDatapacks,
+    tokenizeMarkdown,
 } from '../portal'
 
 const store = useMain(),
     storeRefs = storeToRefs(store),
     theme = storeRefs.theme,
-    sidebar = storeRefs.sidebar,
     achieved = storeRefs.achievements.value.map(val => getAchievement(val))
 
 const darkButtonType = ref('default'),
     lightButtonType = ref('default'),
     timelineAppendix = ref<apiTypes.TimelineItem[]>([])
 
-const changeSidebar = () => (sidebar.value = !sidebar.value)
 const changeTheme = (val: Themes) => {
     theme.value = val
     updateButtonType()
@@ -61,31 +64,29 @@ const updateButtonType = () => {
 }
 onMounted(() => {
     updateButtonType()
-    DynamicsServices.get<apiTypes.TimelineItem[]>('timeline')
-        .then(
-            val =>
-                (timelineAppendix.value = val
-                    .filter(val => val.title.length > 0 || val.text.length > 0)
-                    .map(val =>
-                        assignUndefined<apiTypes.TimelineItem, apiTypes.TimelineItem>(val, {
-                            title: '',
-                            text: '',
-                            dashed: false,
-                            time: '',
-                            type: 'default',
-                        })
-                    ))
-        )
-        .catch(_ => (timelineAppendix.value = []))
 })
 const nowYear = new Date().getFullYear()
+const mode = import.meta.env.MODE
+
+import { tokenize, parse, evaluate } from '../../lib/functions/kuo'
+
+evaluate(
+    parse(
+        tokenize(`
+(if false (: 
+    (define a (: (print TheAFunction)))
+    (a)
+))
+(print $a)
+`)
+    )
+)
 </script>
 
 <template>
     <NTabs type="line" animated>
         <NTabPane name="设置">
             <NSpace vertical>
-                <NText depth="3"> Bstnmnhss 3 · Vue技术支持 · 2022-{{ nowYear }}</NText>
                 <NCard title="主题" hoverable>
                     <NButton
                         @click="changeTheme(Themes.dark)"
@@ -106,6 +107,29 @@ const nowYear = new Date().getFullYear()
                         </NScrollbar>
                     </NButton>
                 </NCard>
+                <NCard title="数据包" hoverable>
+                    <NList hoverable bordered>
+                        <NListItem
+                            v-for="(item, index) in Object.keys(getDatapacks())"
+                            :key="index"
+                        >
+                            <NThing :title="item">
+                                <template #header-extra>
+                                    {{ index }}
+                                </template>
+                            </NThing>
+                        </NListItem>
+                    </NList>
+                </NCard>
+                <NSpace align="center" justify="center">
+                    <NText depth="3">
+                        {{ `${BSTNMNHSS}-${VERSION}` }} · Vue框架 · 2022-{{ nowYear }}</NText
+                    >
+
+                    <NTag :type="mode === 'production' ? 'primary' : 'warning'">
+                        {{ mode }}
+                    </NTag>
+                </NSpace>
             </NSpace>
         </NTabPane>
         <NTabPane name="成就">
@@ -122,7 +146,15 @@ const nowYear = new Date().getFullYear()
                             "
                         >
                             <template #header-extra>
-                                {{ item?.type || 'undefined' }}
+                                {{
+                                    $texta.get([
+                                        'views',
+                                        'jokes',
+                                        'props',
+                                        'achievements',
+                                        item?.type || 'undefined',
+                                    ])
+                                }}
                             </template>
                             <template #avatar>
                                 <NIcon
@@ -147,11 +179,90 @@ const nowYear = new Date().getFullYear()
                 </NList>
             </NScrollbar>
         </NTabPane>
+        <NTabPane name="指南">
+            <NH1>Kuo 括</NH1>
+            <NH2>基本要素</NH2>
+            <NTable>
+                <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>示例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>标识</td>
+                        <td>除井号、括号、引号、空白的所有字符</td>
+                    </tr>
+                    <tr>
+                        <td>数字</td>
+                        <td>-14.5 64e-5 .7159 0b1010 0xfff 0o777</td>
+                    </tr>
+                    <tr>
+                        <td>文字</td>
+                        <td>"双引号字符串" '单引号字符串 \n'</td>
+                    </tr>
+                    <tr>
+                        <td>逻辑</td>
+                        <td>true false</td>
+                    </tr>
+                    <tr>
+                        <td>列表</td>
+                        <td>[中括号包裹 以空格分隔项 ...]</td>
+                    </tr>
+                    <tr>
+                        <td>字典</td>
+                        <td>{ 键A 值A 键B 值B }</td>
+                    </tr>
+                    <tr>
+                        <td>空值</td>
+                        <td>null</td>
+                    </tr>
+                    <tr>
+                        <td>调用</td>
+                        <td>(函数名或可调用的值 参数...)</td>
+                    </tr>
+                </tbody>
+            </NTable>
+            <NH2>示例</NH2>
+            <NCode
+                language="kuo"
+                word-wrap
+                :code="`
+(set a 1) # 声明a=1
+(print $a) # $a是(get a)的语法糖 
+
+(define my-function (: [x] (+ x 1))) 
+'定义函数 define与set不同点是 define在全局作用域 而set在本地作用域'
+'(:) 函数是(lambda)的别名 第一个参数可为列表或不填 传入需要捕获的参数名称'
+'其余参数为函数体内容 默认返回最后一个表达式的结果'
+
+(my-function 2) # 可直接调用 无需$或(get) 返回3
+
+# 也可以使用(return value)函数在特定地方返回结果
+
+# 一个字典
+(set dict {
+    a 1
+    b 2
+    c   # 不填为null
+})
+(set $dict.c 2) # 现在dict.c=2
+
+# 同样该语法糖作用于列表 
+(set list [1 2])
+(set $list.0 0) # 列表:[0 2]
+
+# 支持动态名称
+(set name a)
+(get $dict.$name) # (get $dict.a) => 1
+`"
+            />
+        </NTabPane>
         <NTabPane name="后记">
-            <UpdateLog />
             <NH1>大 时 间 线</NH1>
             <div style="overflow: auto; padding: 12px">
-                <NTimeline horizontal>
+                <NTimeline>
                     <NTimelineItem
                         type="info"
                         line-type="dashed"
@@ -265,6 +376,7 @@ const nowYear = new Date().getFullYear()
                         content="凹冈嗖浪"
                         time="2022/12/13"
                     />
+                    <NTimelineItem type="info" title="大更新" content="很多" time="2023/5/7" />
                     <NTimelineItem
                         v-for="item in timelineAppendix"
                         :type="(item.type as any)"
@@ -275,15 +387,6 @@ const nowYear = new Date().getFullYear()
                     />
                 </NTimeline>
             </div>
-            <NH1> 荡然无存 后会无期 </NH1>
-            <NH2> 凹冈嗖浪</NH2>
-            丅廾巨尺巨 丨丂 冂口 从口尺巨 凵尸刀亼丅巨 冂口丅巨丂 日巨匚亼凵丂巨 丨 廾亼丅巨 丨丅
-            亼冂刀 冂口 口冂巨 匚亼尺巨 亼日口凵丅 丨丅 亼冂丫从口尺巨 丨丅 日巨匚亼从巨 亼
-            丫亼冂刀巨尺巨 日凵丅 丨 刀口冂丅 匚亼尺巨 丂丅丨厶厶 丅廾巨冂 丨丅 丂凵丨匚丨刀巨
-            亼冂刀 日巨匚亼从巨 亼 巳廾口丂丅 亼尺口凵冂刀 从巨 巨匕巨尺丫刀亼丫 日凵丅 丨
-            丂丅丨厶厶 刀口 冂口丅 丂匚亼尺巨 口彳 丨丅 日巨匚亼凵丂巨 丨丅 丅廾巨 口冂巨 口冂巨
-            彳口凵尺 彳丨匕巨 口冂巨 彳口凵尺 丫巨亼廾 丂口 丨丅 亼厶厶 巳口冂巨 丅廾巨冂 丨
-            廾亼匕巨 冂口 匚廾口丨匚巨 日凵丅 丂口 厶口冂巳
         </NTabPane>
     </NTabs>
 </template>

@@ -1,0 +1,8 @@
+{
+    "common": {
+        "primaryColor": "rgb(36, 204, 255)",
+        "primaryColorHover": "rgb(28, 196, 247)",
+        "primaryColorPressed": "rgb(44, 212, 255)",
+        "primaryColorSuppl": "rgba(42, 144, 148, 1)"
+    }
+}

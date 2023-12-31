@@ -1,7 +1,5 @@
 /// <reference types="vite/client" />
-/// <reference types="vue/macros-global" />
-/// <reference types="vite-plugin-pages/client" />
-/// <reference types="vite-plugin-md/dist/" />
+/// <reference types="unplugin-vue-router/client" />
 
 declare module '*.vue' {
     import type { DefineComponent } from 'vue'
@@ -11,16 +9,21 @@ declare module '*.vue' {
 
 declare module '*.md' {
     import type { ComponentOptions } from 'vue'
-    const Component: ComponentOptions
-    export default Component
+    const component: ComponentOptions
+    export default component
 }
 
 declare module '*.yaml' {
-    const Content: any
-    export default Content
+    const content: any
+    export default content
+}
+
+declare module 'virtual:datapack' {
+    const datapacks: Record<string, unknown>
+    export default datapacks
 }
 
 declare module '*.vtt' {
-    const Path: string
-    export default Path
+    const path: string
+    export default path
 }

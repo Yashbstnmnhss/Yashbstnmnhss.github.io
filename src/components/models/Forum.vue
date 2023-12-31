@@ -1,14 +1,3 @@
-<route lang="yaml">
-name: kazuha
-meta:
-    keepAlive: false
-    menu:
-        for: jokes
-        key: kazuha
-        icon: file
-        group: footer
-</route>
-
 <script setup lang="ts">
 import {
     NSpace,
@@ -47,8 +36,6 @@ import {
 } from '@vicons/ionicons5'
 import { ref, onMounted } from 'vue'
 import {
-    TextsServices,
-    apiTypes,
     throttle,
     orderBy,
     isInArray,
@@ -56,11 +43,44 @@ import {
     uniqueArray,
     renderMarkdown,
 } from '../../lib'
+import type { ForumContent, ForumInner, ForumInnerKey, DataKey, UID } from '../../lib'
 
 type EditableTextsContent = Pick<
-    apiTypes.TextsContent,
-    'text' | 'title' | 'tags' | 'banInner' | 'responsibleIcon'
+    ForumContent,
+    'text' | 'title' | 'tags' | 'disableInner' | 'responseIcon'
 >
+
+const props = withDefaults(
+    defineProps<{
+        sources: {
+            forum: {
+                getPages: (
+                    page: number,
+                    pageSize: number
+                ) => Promise<{ value: ForumContent[]; total: number }>
+                update: (key: DataKey, content: Partial<ForumContent>) => Promise<void>
+                post: (content: Partial<ForumContent>) => Promise<void>
+                delete: (key: DataKey) => Promise<void>
+            }
+            response?: {
+                post: (from: UID, key: DataKey, inner?: number) => Promise<void>
+                delete: (from: UID, key: DataKey, inner?: number) => Promise<void>
+            }
+            inner?: {
+                delete: (key: DataKey, floor: number) => Promise<void>
+                post: (key: DataKey, content: Partial<ForumInner>) => Promise<ForumInner>
+            }
+        }
+        enableRespond: boolean
+        enableInner: boolean
+        enablePost: boolean
+    }>(),
+    {
+        enableRespond: true,
+        enableInner: true,
+        enablePost: true,
+    }
+)
 
 const store = useMain(),
     message = useMessage(),
@@ -69,12 +89,12 @@ const commentRefDefault: { text: string } = { text: '' },
     postNewRefDefault: EditableTextsContent = {
         title: '',
         text: '',
-        responsibleIcon: '👍',
+        responseIcon: '👍',
         tags: [],
-        banInner: false,
+        disableInner: false,
     },
     postEditRefDefault: Partial<EditableTextsContent> = {}
-const texts = ref<apiTypes.TextsContent[]>([]),
+const texts = ref<ForumContent[]>([]),
     loadingPosts = ref(false),
     loadingResponsible = ref(false),
     loadingPosting = ref(false),
@@ -86,10 +106,10 @@ const texts = ref<apiTypes.TextsContent[]>([]),
     newPostShowing = ref(false),
     editPostShowing = ref(false),
     newCommentShowing = ref(false),
-    postDetailContent = ref<apiTypes.TextsContent>(),
-    postEditContent = ref<apiTypes.TextsContent>(),
-    commentContent = ref<apiTypes.TextsContent>(),
-    commentToContent = ref<apiTypes.TextsInnerKey>(),
+    postDetailContent = ref<ForumContent>(),
+    postEditContent = ref<ForumContent>(),
+    commentContent = ref<ForumContent>(),
+    commentToContent = ref<ForumInnerKey>(),
     commentRef = ref(commentRefDefault),
     postNewRef = ref(postNewRefDefault),
     postEditRef = ref(postEditRefDefault),
@@ -106,7 +126,8 @@ const mapNumber = (input: number) => (input <= 0 ? '' : input.toString())
 
 const loadPosts = () => {
     loadingPosts.value = true
-    TextsServices.getMany(pageCurrent.value, pageSize)
+    props.sources.forum
+        .getPages(pageCurrent.value, pageSize)
         .then(val => {
             loadingPosts.value = false
             texts.value = orderBy(val.value, ['top', 'date'], ['desc', 'desc'])
@@ -118,25 +139,24 @@ const loadPosts = () => {
         })
 }
 
-const loadComments = (post: apiTypes.TextsContent) =>
+const loadComments = (post: ForumContent) =>
     orderBy(post.inners, ['top', 'date'], ['desc', 'asc']).filter(val => typeof val !== 'undefined')
 
-const isResponsibled = (responsible: apiTypes.TextsContent['responsible']) =>
-    isInArray(responsible, selfUID)
+const isResponsibled = (response: ForumContent['response']) => isInArray(response, selfUID)
 
-const isCommented = (inners: apiTypes.TextsContent['inners']) =>
+const isCommented = (inners: ForumContent['inners']) =>
     isInArray(
         inners.filter(val => typeof val !== 'undefined').map(val => val.author),
         selfUID
     )
 
-const isCommentReplied = (under: apiTypes.TextsContent, to: apiTypes.TextsInnerKey) =>
+const isCommentReplied = (under: ForumContent, to: ForumInnerKey) =>
     isInArray(
         under.inners.filter(val => typeof val !== 'undefined').map(val => val.to),
         to
     )
 
-const showPostDetailModal = (post: apiTypes.TextsContent) => {
+const showPostDetailModal = (post: ForumContent) => {
     postDetailContent.value = post
     if (!postDetailContent.value) {
         postDetailShowing.value = false
@@ -147,13 +167,13 @@ const showPostDetailModal = (post: apiTypes.TextsContent) => {
 
 const showNewPostModal = () => (newPostShowing.value = true)
 
-const showCommentModal = (target: apiTypes.TextsContent, to?: apiTypes.TextsInnerKey) => {
+const showCommentModal = (target: ForumContent, to?: ForumInnerKey) => {
     commentContent.value = target
     commentToContent.value = to
     newCommentShowing.value = true
 }
 
-const showEditPostModal = (target: apiTypes.TextsContent) => {
+const showEditPostModal = (target: ForumContent) => {
     if (loadingPostEditing.value || editPostShowing.value) return
     postEditRef.value = postEditContent.value = target
     editPostShowing.value = true
@@ -172,13 +192,14 @@ const editPost = throttle((data: typeof postEditRef.value) => {
     if (!postEditRef.value || !postEditForm.value || !postEditContent.value) return
     postEditForm.value.validate(errs => {
         if (errs || !data.text) return
-        var content: Partial<apiTypes.TextsContent> = {
+        var content: Partial<ForumContent> = {
             ...ensurePostData(data),
             author: selfUID,
         }
         content = assignUndefined(content, postEditContent.value)
         loadingPostEditing.value = true
-        TextsServices.update(postEditContent.value!.key, content)
+        props.sources.forum
+            .update(postEditContent.value!.key, content)
             .then(_ => {
                 editPostShowing.value = false
                 postEditRef.value = postEditRefDefault
@@ -194,12 +215,13 @@ const newPost = throttle((data: typeof postNewRef.value) => {
     if (loadingPosting.value || !postNewForm.value) return
     postNewForm.value.validate(errs => {
         if (errs) return
-        var content: Partial<apiTypes.TextsContent> = {
+        var content: Partial<ForumContent> = {
             ...ensurePostData(data),
             author: selfUID,
         }
         loadingPosting.value = true
-        TextsServices.post(content)
+        props.sources.forum
+            .post(content)
             .then(_ => {
                 newPostShowing.value = false
                 postNewRef.value = postNewRefDefault
@@ -211,9 +233,10 @@ const newPost = throttle((data: typeof postNewRef.value) => {
     })
 }, 1450)
 
-const deletePost = throttle((key: apiTypes.DataKey) => {
+const deletePost = throttle((key: DataKey) => {
     loadingPostDeleting.value = true
-    TextsServices.delete(key)
+    props.sources.forum
+        .delete(key)
         .then(_ => {
             loadPosts()
             message.success('冷吟放逐')
@@ -222,59 +245,59 @@ const deletePost = throttle((key: apiTypes.DataKey) => {
         .finally(() => (loadingPostDeleting.value = false))
 }, 1450)
 
-const responsible = throttle((target: apiTypes.TextsContent, inner?: apiTypes.TextsInner) => {
-    const innerIndex = inner?.responsible.findIndex(val => val === selfUID)
-    const targetIndex = target.responsible.findIndex(val => val === selfUID)
+const respond = throttle((target: ForumContent, inner?: ForumInner) => {
+    if (!props.enableRespond) return
+    const innerIndex = inner?.response.findIndex(val => val === selfUID)
+    const targetIndex = target.response.findIndex(val => val === selfUID)
     function update() {
         if (inner) {
             if (typeof innerIndex === 'number' && innerIndex >= 0)
-                inner.responsible.splice(innerIndex, 1)
-            else inner.responsible = inner.responsible.concat(selfUID)
+                inner.response.splice(innerIndex, 1)
+            else inner.response = inner.response.concat(selfUID)
         } else {
-            if (targetIndex >= 0) target.responsible.splice(targetIndex, 1)
-            else target.responsible = target.responsible.concat(selfUID)
+            if (targetIndex >= 0) target.response.splice(targetIndex, 1)
+            else target.response = target.response.concat(selfUID)
         }
     }
     update()
     const request = () =>
         inner
             ? typeof innerIndex === 'number' && innerIndex >= 0
-                ? TextsServices.deleteResponsible(selfUID, target.key, inner.key)
-                : TextsServices.postResponsible(selfUID, target.key, inner.key)
+                ? props.sources.response?.delete(selfUID, target.key, inner.key)
+                : props.sources.response?.post(selfUID, target.key, inner.key)
             : targetIndex >= 0
-            ? TextsServices.deleteResponsible(selfUID, target.key)
-            : TextsServices.postResponsible(selfUID, target.key)
-    request().catch(_ => message.error('反应失败'))
+            ? props.sources.response?.delete(selfUID, target.key)
+            : props.sources.response?.post(selfUID, target.key)
+    request()?.catch(_ => message.error('反应失败'))
 }, 1000)
 
-const newComment = throttle(
-    (text: string, target: apiTypes.TextsContent, inner?: apiTypes.TextsInnerKey) => {
-        if (!commentForm.value) return
-        commentForm.value.validate(errs => {
-            if (errs) return
-            if (!target || !text || text.length <= 0) return
-            loadingCommenting.value = true
-            TextsServices.postInner(target.key, {
+const newComment = throttle((text: string, target: ForumContent, inner?: ForumInnerKey) => {
+    if (!props.enableInner) return
+    if (!commentForm.value) return
+    commentForm.value.validate(errs => {
+        if (errs) return
+        if (!target || !text || text.length <= 0) return
+        loadingCommenting.value = true
+        props.sources.inner
+            ?.post(target.key, {
                 text,
                 to: inner,
                 author: selfUID,
-                responsible: [],
-                banInner: false,
+                response: [],
+                disableInner: false,
             })
-                .then(inner => {
-                    newCommentShowing.value = false
-                    commentRef.value = commentRefDefault
-                    message.success('闲醉成功')
-                    target.inners[inner.key] = inner
-                })
-                .catch(_ => message.error('闲醉..拒绝了你'))
-                .finally(() => (loadingCommenting.value = false))
-        })
-    },
-    1450
-)
+            .then(inner => {
+                newCommentShowing.value = false
+                commentRef.value = commentRefDefault
+                message.success('闲醉成功')
+                target.inners[inner.key] = inner
+            })
+            .catch(_ => message.error('闲醉..拒绝了你'))
+            .finally(() => (loadingCommenting.value = false))
+    })
+}, 1450)
 
-const deleteComment = throttle((inner: apiTypes.TextsInnerKey, key: apiTypes.DataKey) => {
+const deleteComment = throttle((inner: ForumInnerKey, key: DataKey) => {
     var target = texts.value.find(val => val.key === key)
     if (!target) {
         loadPosts()
@@ -285,18 +308,12 @@ const deleteComment = throttle((inner: apiTypes.TextsInnerKey, key: apiTypes.Dat
         .findIndex(val => val.key === inner)
     target.inners.splice(index, 1)
     loadingCommentDeleting.value = true
-    TextsServices.deleteInner(key, index)
+    props.sources.inner
+        ?.delete(key, index)
         .then(_ => message.success('闲醉放逐咯'))
         .catch(_ => message.error('未能成功放逐..'))
         .finally(() => (loadingCommentDeleting.value = false))
 }, 1450)
-
-const moveTo = (id: string) => {
-    var target = document.getElementById(id)
-    if (!target) return
-    target.scrollIntoView()
-    target.focus()
-}
 </script>
 
 <template>
@@ -304,6 +321,7 @@ const moveTo = (id: string) => {
         <NSpace justify="space-between">
             <NSpace>
                 <NButton
+                    :disabled="!props.enablePost"
                     type="success"
                     @click="showNewPostModal()"
                     size="small"
@@ -387,12 +405,12 @@ const moveTo = (id: string) => {
                             <NSpace justify="space-between">
                                 <NSpace>
                                     <NTooltip
-                                        v-if="item.responsible"
+                                        v-if="props.enableRespond && item.response"
                                         trigger="hover"
-                                        :disabled="item.responsible.length == 0"
+                                        :disabled="item.response.length == 0"
                                     >
                                         <NEllipsis :tooltip="false" style="max-width: 10rem">
-                                            {{ item.responsible.join(',') }}
+                                            {{ item.response.join(',') }}
                                         </NEllipsis>
                                         <template #trigger>
                                             <NButton
@@ -400,23 +418,23 @@ const moveTo = (id: string) => {
                                                 :bordered="false"
                                                 size="small"
                                                 type="info"
-                                                :ghost="!isResponsibled(item.responsible)"
-                                                @click.stop="responsible(item)"
+                                                :ghost="!isResponsibled(item.response)"
+                                                @click.stop="respond(item)"
                                             >
                                                 <template #icon>
                                                     {{
-                                                        item.responsibleIcon ||
-                                                        postNewRefDefault.responsibleIcon
+                                                        item.responseIcon ||
+                                                        postNewRefDefault.responseIcon
                                                     }}
                                                 </template>
-                                                {{ mapNumber(item.responsible.length) }}
+                                                {{ mapNumber(item.response.length) }}
                                             </NButton>
                                         </template>
                                     </NTooltip>
                                     <NTooltip
                                         trigger="hover"
                                         :disabled="item.inners.length == 0"
-                                        v-if="item.inners"
+                                        v-if="props.enableInner && item.inners"
                                     >
                                         <NEllipsis :tooltip="false" style="max-width: 10rem">
                                             {{ item.inners.map(val => val.author).join(',') }}
@@ -428,7 +446,7 @@ const moveTo = (id: string) => {
                                                 size="small"
                                                 type="info"
                                                 :ghost="!isCommented(item.inners)"
-                                                :disabled="item.banInner"
+                                                :disabled="item.disableInner"
                                                 @click.stop="showCommentModal(item)"
                                             >
                                                 <template #icon>
@@ -518,12 +536,16 @@ const moveTo = (id: string) => {
                 <NSpace justify="space-between">
                     <NSpace>
                         <NTooltip
-                            v-if="postDetailContent && postDetailContent.responsible"
+                            v-if="
+                                props.enableRespond &&
+                                postDetailContent &&
+                                postDetailContent.response
+                            "
                             trigger="hover"
-                            :disabled="postDetailContent?.responsible.length == 0"
+                            :disabled="postDetailContent?.response.length == 0"
                         >
                             <NEllipsis :tooltip="false" style="max-width: 10rem">
-                                {{ postDetailContent?.responsible.join(',') }}
+                                {{ postDetailContent?.response.join(',') }}
                             </NEllipsis>
                             <template #trigger>
                                 <NButton
@@ -531,23 +553,23 @@ const moveTo = (id: string) => {
                                     :bordered="false"
                                     size="small"
                                     type="info"
-                                    :ghost="!isResponsibled(postDetailContent?.responsible)"
-                                    @click="responsible(postDetailContent!)"
+                                    :ghost="!isResponsibled(postDetailContent?.response)"
+                                    @click="respond(postDetailContent!)"
                                 >
                                     <template #icon>
                                         {{
-                                            postDetailContent?.responsibleIcon ||
-                                            postNewRefDefault.responsibleIcon
+                                            postDetailContent?.responseIcon ||
+                                            postNewRefDefault.responseIcon
                                         }}
                                     </template>
-                                    {{ mapNumber(postDetailContent?.responsible.length) }}
+                                    {{ mapNumber(postDetailContent?.response.length) }}
                                 </NButton>
                             </template>
                         </NTooltip>
                         <NTooltip
                             trigger="hover"
                             :disabled="postDetailContent?.inners.length == 0"
-                            v-if="postDetailContent?.inners"
+                            v-if="props.enableInner && postDetailContent?.inners"
                         >
                             <NEllipsis :tooltip="false" style="max-width: 10rem">
                                 {{ postDetailContent?.inners.map(val => val.author).join(',') }}
@@ -559,7 +581,7 @@ const moveTo = (id: string) => {
                                     type="info"
                                     :loading="loadingCommenting"
                                     :ghost="!isCommented(postDetailContent?.inners)"
-                                    :disabled="postDetailContent?.banInner === true"
+                                    :disabled="postDetailContent?.disableInner === true"
                                     @click="showCommentModal(postDetailContent!)"
                                 >
                                     <template #icon>
@@ -654,12 +676,12 @@ const moveTo = (id: string) => {
                             <NSpace justify="space-between">
                                 <NSpace>
                                     <NTooltip
-                                        v-if="inner.responsible"
+                                        v-if="inner.response"
                                         trigger="hover"
-                                        :disabled="inner.responsible.length == 0"
+                                        :disabled="inner.response.length == 0"
                                     >
                                         <NEllipsis :tooltip="false" style="max-width: 10rem">
-                                            {{ inner.responsible.join(',') }}
+                                            {{ inner.response.join(',') }}
                                         </NEllipsis>
                                         <template #trigger>
                                             <NButton
@@ -667,16 +689,16 @@ const moveTo = (id: string) => {
                                                 :bordered="false"
                                                 size="small"
                                                 type="info"
-                                                :ghost="!isResponsibled(inner.responsible)"
-                                                @click.stop="responsible(postDetailContent!, inner)"
+                                                :ghost="!isResponsibled(inner.response)"
+                                                @click.stop="respond(postDetailContent!, inner)"
                                             >
                                                 <template #icon>
                                                     {{
-                                                        inner.responsibleIcon ||
-                                                        postNewRefDefault.responsibleIcon
+                                                        inner.responseIcon ||
+                                                        postNewRefDefault.responseIcon
                                                     }}
                                                 </template>
-                                                {{ mapNumber(inner.responsible.length) }}
+                                                {{ mapNumber(inner.response.length) }}
                                             </NButton>
                                         </template>
                                     </NTooltip>
@@ -688,7 +710,7 @@ const moveTo = (id: string) => {
                                         :ghost="
                                             !isCommentReplied(postDetailContent!, inner.key)
                                         "
-                                        :disabled="inner.banInner === true"
+                                        :disabled="inner.disableInner === true"
                                         @click.stop="
                                             showCommentModal(postDetailContent!, inner.key)
                                         "
@@ -783,9 +805,9 @@ const moveTo = (id: string) => {
                     </NFormItemGi>
                     <NFormItemGi span="1" path="resicon" label="反应">
                         <NInput
-                            v-model:value="postNewRef.responsibleIcon"
-                            :placeholder="postNewRefDefault.responsibleIcon"
-                            :default-value="postNewRefDefault.responsibleIcon"
+                            v-model:value="postNewRef.responseIcon"
+                            :placeholder="postNewRefDefault.responseIcon"
+                            :default-value="postNewRefDefault.responseIcon"
                             clearable
                             maxlength="5"
                             :count-graphemes="
@@ -797,7 +819,7 @@ const moveTo = (id: string) => {
                         />
                     </NFormItemGi>
                     <NFormItemGi span="1" path="baninner" label="禁评">
-                        <NSwitch v-model:value="postNewRef.banInner" :default-value="false" />
+                        <NSwitch v-model:value="postNewRef.disableInner" :default-value="false" />
                     </NFormItemGi>
                     <NFormItemGi span="2" path="text" label="内容">
                         <NInput
@@ -862,9 +884,9 @@ const moveTo = (id: string) => {
                     </NFormItemGi>
                     <NFormItemGi span="1" path="resicon" label="反应">
                         <NInput
-                            v-model:value="postEditRef.responsibleIcon"
-                            :placeholder="postNewRefDefault.responsibleIcon"
-                            :default-value="postNewRefDefault.responsibleIcon"
+                            v-model:value="postEditRef.responseIcon"
+                            :placeholder="postNewRefDefault.responseIcon"
+                            :default-value="postNewRefDefault.responseIcon"
                             clearable
                             maxlength="5"
                             :count-graphemes="
@@ -876,7 +898,7 @@ const moveTo = (id: string) => {
                         />
                     </NFormItemGi>
                     <NFormItemGi span="1" path="baninner" label="禁评">
-                        <NSwitch v-model:value="postEditRef.banInner" :default-value="false" />
+                        <NSwitch v-model:value="postEditRef.disableInner" :default-value="false" />
                     </NFormItemGi>
                     <NFormItemGi span="2" path="text" label="内容">
                         <NInput

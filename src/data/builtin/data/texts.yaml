@@ -1,6 +1,7 @@
 menus:
     jokes:
-        # document: 《Crafuzey》
+        opsound: 中华有原崩👍
+        markdowns-branches: 选择
         fuze: 亻寸氵睾
         fuze-sayings: 相遇论
         fuze-sayings-original: 狭义版
@@ -28,10 +29,16 @@ menus:
         joke-home: 主页
         props: 杂项
         kazuha: 冷吟闲醉
+        genshin: 原始人,启动!
         documents: 档案馆
         fuzeblockisnotagame: 付块非游
 views:
     jokes:
+        props:
+            achievements:
+                normal: 成就
+                fantastic: 稀有
+                undefined: 未定
         images-alt: 加载! 加载!! 加载!!! 不择手段地加载!
         videos-alt: 彳亍不支持是吧
         saying-panel:

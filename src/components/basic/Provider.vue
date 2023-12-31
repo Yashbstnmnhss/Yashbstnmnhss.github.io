@@ -17,21 +17,53 @@ import { onMounted, ref, watch } from 'vue'
 import { BuiltInGlobalTheme } from 'naive-ui/lib/themes/interface'
 import highlightjs from 'highlight.js'
 import Achiever from './Achiever.vue'
+import datafiles from '../../lib/datafiles'
 
 const store = useMain()
+
+const { styleOverrides } = defineProps<{
+    styleOverrides?: object
+}>()
 
 const locale = ref<any>(),
     dateLocale = ref<NDateLocale>(),
     theme = ref<BuiltInGlobalTheme>(),
-    hljs = highlightjs,
-    overrides = {
-        common: {
-            primaryColor: 'rgb(36, 204, 255)',
-            primaryColorHover: 'rgb(28, 196, 247)',
-            primaryColorPressed: 'rgb(44, 212, 255)',
-            primaryColorSuppl: 'rgba(42, 144, 148, 1)',
-        },
+    hljs = highlightjs
+
+hljs.registerLanguage('kuo', hljs => {
+    const SYMBOL = {
+        scope: 'symbol',
+        begin: '[^"#\\(\\{\\[\\]\\}\\)\\d\\s][^"#\\s\\(\\)\\[\\]\\{\\}]*',
+        relevance: 0,
     }
+    return {
+        name: 'kuo',
+        contains: [
+            hljs.HASH_COMMENT_MODE,
+            hljs.C_NUMBER_MODE,
+            {
+                scope: 'string',
+                begin: "'",
+                end: "'",
+                contains: [{ begin: '\\\\.' }],
+            },
+            {
+                scope: 'variable',
+                begin: '\\$[^\\s\\(\\)\\[\\]\\{\\}]+',
+                contains: [SYMBOL],
+            },
+            {
+                scope: 'keyword',
+                begin: '(define|if|while|for|set|get|break|return|continue|lambda|[+\\-*/%=<>]|<=|>=|!=|:|and|or|xor|not)',
+            },
+            {
+                scope: 'literal',
+                begin: '(true|false|null)',
+            },
+            SYMBOL,
+        ],
+    }
+})
 
 onMounted(() => {
     languageUpdate(store.language)
@@ -61,7 +93,7 @@ const themeUpdate = (val: Themes) => (theme.value = getTheme(val))
         :locale="zhCN"
         :date-locale="dateZhCN"
         :hljs="hljs"
-        :theme-overrides="overrides"
+        :theme-overrides="styleOverrides || datafiles('theme')"
         class="full"
     >
         <NGlobalStyle />

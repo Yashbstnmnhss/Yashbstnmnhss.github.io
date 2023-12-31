@@ -1,10 +1,13 @@
-import routes from '~pages'
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router/auto'
 
 const history = createWebHashHistory()
 const router = createRouter({
     history: history,
-    routes: [...routes],
+})
+
+router.beforeEach(guard => {
+    let path = guard.name?.toString()
+    if (path !== '' && path !== '/' && path !== '/agsl') alert('请勿僭越')
 })
 
 export default router

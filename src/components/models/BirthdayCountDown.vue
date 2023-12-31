@@ -10,13 +10,16 @@ import {
     NSpace,
     NProgress,
 } from 'naive-ui'
-import { computed, h } from 'vue'
+import { computed, h, onMounted } from 'vue'
 
 const props = defineProps<{
     date: Date
     target: string
     title?: string
     progressTooltip?: string
+}>()
+const emits = defineEmits<{
+    (e: 'onbirthday'): void
 }>()
 
 const today = new Date()
@@ -77,6 +80,10 @@ const progress = computed(() => {
     if (days < 0) return 0
     const daysPercent = Math.ceil((days / 365) * 100)
     return daysPercent
+})
+
+onMounted(() => {
+    if (isTodayBirthday) emits('onbirthday')
 })
 </script>
 

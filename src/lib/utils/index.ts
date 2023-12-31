@@ -3,6 +3,8 @@ import _ from 'lodash'
 import type { Time, TimeScope } from '../types'
 
 export {
+    merge as mergeValues,
+    words as strwords,
     uniqWith as uniqueArrayWith,
     uniq as uniqueArray,
     includes as isInArray,
@@ -41,6 +43,106 @@ export function getUID(length: number = 9, radix = 10) {
     radix ||= chars.length
     for (var i = 0; i < length; i++) uid[i] = chars[0 | (Math.random() * radix)]
     return uid.join('')
+}
+
+/** @todo */
+export function parseLogicRelevant(expression: string) {
+    class StreamReader<T extends ArrayLike<I>, I = T[number]> {
+        private index = 0
+        private readonly stream: T
+        constructor(expression: T) {
+            this.stream = expression
+        }
+        read() {
+            return this.stream[this.index++]
+        }
+        peek() {
+            return this.stream[this.index]
+        }
+        hasNext() {
+            return this.index < this.stream.length
+        }
+        readUtil(item: I) {
+            var result = ''
+            while (this.hasNext() && this.peek() !== item) result += this.read()
+            return result
+        }
+        skip(item: I) {
+            while (this.hasNext() && this.peek() === item) this.read()
+        }
+        peekBackUntil(item: I) {
+            var result = ''
+            var index = this.index - 1
+            while (this.hasBack() && this.stream[index] !== item) result += this.stream[index--]
+            return result
+        }
+        hasBack() {
+            return this.index > 0
+        }
+    }
+
+    const reader = new StreamReader(expression.trim())
+    const WHITESPACE = ' '
+
+    type TokenType = 'NOT' | 'AND' | 'XOR' | 'TEXT' | 'BS' | 'BE'
+    const tokens: [TokenType, string][] = []
+    const operators: Record<string, TokenType> = {
+        '+': 'AND',
+        '^': 'XOR',
+        '-': 'NOT',
+        '(': 'BS',
+        ')': 'BE',
+    }
+
+    while (reader.hasNext()) {
+        const char = reader.peek()
+        if (char in operators) {
+            tokens.push([operators[char], char])
+            reader.read()
+        } else if (char === WHITESPACE) {
+            reader.read()
+        } else {
+            const text = reader.readUtil(char)
+            tokens.push(['TEXT', text])
+        }
+    }
+
+    type AstNode = {
+        operator: 'and' | 'or' | 'xor' | 'not'
+        operands: (string | AstNode)[]
+    }
+    const tokenReader = new StreamReader(tokens)
+    const asts: AstNode[] = []
+    while (tokenReader.hasNext()) {
+        tokenReader.read()
+    }
+    return asts
+}
+
+export function showNotification(title: string, options?: NotificationOptions) {
+    if (Notification.permission !== 'granted')
+        Notification.requestPermission(status => {
+            if (status === 'granted') show()
+            else alert(title)
+        })
+    else show()
+    function show() {
+        new Notification(title, options)
+    }
+}
+
+export function tryMany(functions: (() => void)[], final?: () => void) {
+    if (functions === undefined || functions.length <= 0) return
+    for (const func of functions) {
+        if (func === undefined) continue
+        try {
+            func()
+            return
+        } catch {
+            continue
+        }
+    }
+    final?.()
 }
 
 export function isMobile() {

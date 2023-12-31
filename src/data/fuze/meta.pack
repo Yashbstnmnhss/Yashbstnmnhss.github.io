@@ -1,0 +1,4 @@
+name: fuze
+version: 1.0
+overrides: 
+    sayings: merge

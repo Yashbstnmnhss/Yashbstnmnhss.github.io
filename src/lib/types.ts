@@ -1,3 +1,97 @@
+import { h, type Slot as VueSlot } from 'vue'
+
+export type Datapack = {
+    meta: DatapackMeta
+    files: Record<string, unknown>
+}
+export type DatapackMeta = {
+    name: string
+    version?: string
+    builtin?: boolean
+    overrides?: Record<string, 'merge' | 'replace'>
+}
+
+export type ChatMessage = {
+    type?: 'user' | 'system'
+    avatar?: ReturnType<typeof h> | string | string[]
+    username?: ReturnType<typeof h> | string
+    content: ReturnType<typeof h> | string
+}
+export type UID = string
+export type DataKey = string
+export type ForumInnerKey = number
+export type ForumInner = Omit<ForumContent, 'key' | 'inners'> & {
+    key: ForumInnerKey
+    to?: ForumInnerKey
+}
+export type ForumContent = {
+    key: DataKey
+    title: string
+    text: string
+    response: UID[]
+    responseIcon: string
+    date: Date
+    author: UID
+    top: boolean
+    tags: string[]
+    inners: ForumInner[]
+    disableInner: boolean
+}
+export type ForumFilter = ForumFilter[] | Record<DataKey, any>
+
+export type SelectiveOptionSlotParams = {
+    controller: SelectiveController
+    buttons: SelectionButton[]
+    next: SelectiveController['readNext']
+}
+export type SelectiveController = {
+    renderer: {
+        switchOption(key: string, buttons: SelectionButton[]): void
+        switchPart(key: string): void
+    }
+    loaderAndSaver: {
+        load(): boolean
+        save(label: string, index: number): void
+    }
+    move(label?: string): void
+    readMany(enableSave?: boolean, awaitOption?: boolean): void
+    readNext(enableSave?: boolean): boolean
+}
+export type SelectiveManagerInst = {
+    registerOption: (key: string, template: Slot) => void
+    registerPart: (key: string, template: Slot) => void
+}
+export type Slot<T = any> = VueSlot<T>
+export type RouteType = 'skip' | 'branch' | 'rollback' | 'forward'
+export type SelectionButton = {
+    target?: string | [string]
+    text?: string
+    route?: RouteType
+    icon?: string
+    type?: string
+    clicked?: () => {}
+    condition?: () => boolean
+}
+export type SelectiveRoutes = Record<string, SelectiveRoute[]> & {
+    '&': SelectiveRoute[]
+}
+export type SelectiveRoute = {
+    target: string
+    type?: 'part' | 'option' | 'goto'
+    buttons?: SelectionButton[]
+    action?: () => void
+    condition?: () => boolean
+}
+export type SelectiveLoaderAndSaver = {
+    all: () => SelectiveSaveData[]
+    shift: () => SelectiveSaveData | undefined
+    push: (val: SelectiveSaveData) => void
+    suspend: () => void
+    reset: () => void
+    any: () => boolean
+}
+export type SelectiveSaveData = [label: string, index: number]
+
 export type LogicEnvironment = Record<string, any>
 export type LogicObject = Record<string, any>
 export type LogicFunction = (env: LogicEnvironment) => boolean

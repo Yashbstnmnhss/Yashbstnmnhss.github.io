@@ -1,5 +1,5 @@
 import { Component, h } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router/auto'
 import { NIcon, NEllipsis } from 'naive-ui'
 
 export function renderLink(link: any, label: any) {
@@ -50,6 +50,8 @@ import {
     FileTrayOutline as FileIcon,
     DocumentTextOutline as DocumentTextIcon,
     SettingsOutline as SettingsIcon,
+    GameControllerOutline as GameIcon,
+    LogoJavascript as JSIcon,
 } from '@vicons/ionicons5'
 
 export const Icons: Record<string, Component> = {
@@ -77,4 +79,6 @@ export const Icons: Record<string, Component> = {
     file: FileIcon,
     docText: DocumentTextIcon,
     settings: SettingsIcon,
+    game: GameIcon,
+    js: JSIcon,
 }

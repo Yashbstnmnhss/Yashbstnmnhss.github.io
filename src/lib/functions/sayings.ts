@@ -1,8 +1,9 @@
-import { datafiles } from '../assets'
-import { Logger, assignUndefined, mapValues, isUndefined } from '..'
+import datafiles from '../datafiles'
+import { Logger, assignUndefined, mapValues, uniqueArray } from '..'
 import type { SayingsAuthors, Saying } from '../types'
 
-const data: SayingsAuthors = datafiles.dataSayings
+const data: SayingsAuthors = datafiles('sayings') ?? {}
+
 var sayingsAuthors: SayingsAuthors
 
 export function getSaying(author: string, saying: string) {
@@ -12,6 +13,19 @@ export function getSaying(author: string, saying: string) {
         Logger.error('[Sayings]', 'Unknown saying', saying, 'in', author)
     } else Logger.error('[Sayings]', 'Unknown author', author)
     return
+}
+
+export function getAllAuthorsTextPath() {
+    ensureSayings()
+    return uniqueArray(Object.keys(sayingsAuthors))
+}
+export function getAllTags() {
+    ensureSayings()
+    return uniqueArray(
+        Object.values(sayingsAuthors).flatMap(author =>
+            Object.values(author).flatMap(saying => saying.tags ?? [])
+        )
+    )
 }
 
 export function getAllSayings() {

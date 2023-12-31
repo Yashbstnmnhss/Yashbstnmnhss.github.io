@@ -1,20 +1,12 @@
 <script setup lang="ts">
 import { useLoadingBar } from 'naive-ui'
-import { RouterView } from 'vue-router'
-import { KeepAlive } from 'vue'
+import { RouterView } from 'vue-router/auto'
 import { Logger } from '../../lib'
 import router from '../../route'
 import { useAchiever } from '../../lib'
 
 const achiever = useAchiever()
 const bar = useLoadingBar()
-
-const { transition } = defineProps({
-    transition: {
-        type: Boolean,
-        default: false,
-    },
-})
 
 router.beforeEach(() => bar?.start())
 router.afterEach(() => bar?.finish())
@@ -23,8 +15,6 @@ router.onError(() => {
     Logger.error('[Viewer]', 'router error')
     bar?.error()
 })
-
-const current = router.currentRoute.value
 </script>
 
 <template>
