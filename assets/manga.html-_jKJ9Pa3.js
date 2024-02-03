@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-d6280544","path":"/manga.html","title":"一本好书","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1706951952000,"contributors":[{"name":"Yashbstnmnhss","email":"yashbsntmnhss@qq.com","commits":1}]},"filePathRelative":"manga.md"}');export{t as data};
