@@ -27,7 +27,7 @@ export default defineUserConfig({
 
     theme: defaultTheme({
         logo: '/favicon.ico',
-        navbar: ['/', '/calc'],
+        navbar: ['/', '/calc', '/manga'],
     }),
 
     bundler: viteBundler(),
