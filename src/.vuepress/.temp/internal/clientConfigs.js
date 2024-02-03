@@ -6,6 +6,8 @@ import clientConfig4 from 'D:/BetterFuture/Github/bstnmnhss4/node_modules/@vuepr
 import clientConfig5 from 'D:/BetterFuture/Github/bstnmnhss4/node_modules/@vuepress/plugin-nprogress/lib/client/config.js'
 import clientConfig6 from 'D:/BetterFuture/Github/bstnmnhss4/node_modules/@vuepress/plugin-theme-data/lib/client/config.js'
 import clientConfig7 from 'D:/BetterFuture/Github/bstnmnhss4/node_modules/@vuepress/theme-default/lib/client/config.js'
+import clientConfig8 from 'D:/BetterFuture/Github/bstnmnhss4/src/.vuepress/.temp/sass-palette/load-hope.js'
+import clientConfig9 from 'D:/BetterFuture/Github/bstnmnhss4/src/.vuepress/.temp/md-enhance/config.js'
 
 export const clientConfigs = [
   clientConfig0,
@@ -16,4 +18,6 @@ export const clientConfigs = [
   clientConfig5,
   clientConfig6,
   clientConfig7,
+  clientConfig8,
+  clientConfig9,
 ]
