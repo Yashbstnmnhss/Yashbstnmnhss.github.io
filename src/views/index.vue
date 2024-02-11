@@ -5,31 +5,10 @@ meta:
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto'
+import MusicBox from '../components/models/FuMusicBox.vue'
 import { useMain } from '../store'
-import {
-    NButton,
-    NSpace,
-    NButtonGroup,
-    NDropdown,
-    NIcon,
-    MenuOption as MO,
-    NTooltip,
-    useThemeVars,
-    NH1,
-    NText,
-    NDivider,
-    NScrollbar,
-    NElement,
-    useDialog,
-} from 'naive-ui'
-import {
-    SunnyOutline,
-    MoonOutline,
-    CloudOutline,
-    CloudOfflineOutline,
-    EllipsisHorizontal,
-    InformationOutline,
-} from '@vicons/ionicons5'
+import { toImportInfo } from '../lib'
+import { NFlex, NCard, MenuOption as MO, useThemeVars, useDialog } from 'naive-ui'
 import Logo from '@/assets/images/logo.svg'
 import { onMounted, ref } from 'vue'
 import { getGroupInMenu } from '../route/menu'
@@ -97,94 +76,24 @@ const clickInfo = () => {
 }
 const updateTheme = () =>
     (store.theme = theme.value = theme.value === Themes.dark ? Themes.light : Themes.dark)
-const start = () => router.push(/*'/jokes'*/ '/agsl')
-start()
+
 const select = (key: string) => router.push(`${key}`)
 const open = (url: string) => (window.location.href = url)
+
+const sources = toImportInfo(import.meta.glob('@/assets/sounds/fuze/**/*.mp3', { eager: true }))
 </script>
 
 <template>
-    <NScrollbar>
-        <div class="full wrapper">
-            <NSpace align="center" style="width: 100%">
-                <img
-                    class="zoomin"
-                    :src="Logo"
-                    style="
-                        max-width: 100%;
-                        height: 45vh;
-                        user-select: none;
-                        -webkit-user-drag: none;
-                    "
-                />
-            </NSpace>
-            <NDivider />
-            <NSpace :size="25">
-                <NSpace>
-                    <NDropdown scrollable
-                        ><!--:options="dropdown" @select="key => select(key)">-->
-                        <NButton
-                            type="primary"
-                            size="large"
-                            class="start-button zoomin-small delay1"
-                            @click="start()"
-                        >
-                            启动!
-                        </NButton>
-                    </NDropdown>
-                    <NButtonGroup class="zoomin-small delay2">
-                        <NButton ghost type="default" size="large" @click="updateTheme()">
-                            <NIcon size="20">
-                                <span v-if="theme === Themes.light">
-                                    <SunnyOutline />
-                                </span>
-                                <span v-else>
-                                    <MoonOutline />
-                                </span>
-                            </NIcon>
-                        </NButton>
-                        <NButton @click="clickInfo()" ghost type="default" size="large">
-                            <NIcon size="20">
-                                <InformationOutline />
-                            </NIcon>
-                        </NButton>
-                    </NButtonGroup>
-                </NSpace>
-                <NSpace :size="2" class="zoomin-small delay3">
-                    <NTooltip placement="bottom" v-for="w in websitesAlive">
-                        <template #trigger>
-                            <NButton
-                                size="large"
-                                dashed
-                                :type="w[2] === false ? 'error' : 'success'"
-                                @click="open(w[1])"
-                            >
-                                <template #icon>
-                                    <NIcon>
-                                        <EllipsisHorizontal v-if="w[2] === null" />
-                                        <CloudOutline v-else-if="w[2] === true" />
-                                        <CloudOfflineOutline v-else />
-                                    </NIcon>
-                                </template>
-                                {{ w[0] }}
-                            </NButton>
-                        </template>
-                        {{ w[1] }}
-                        <b>
-                            {{
-                                w[2] === null ? ' - 加载中' : w[2] === true ? ' - 正常' : ' - 异常'
-                            }}
-                        </b>
-                    </NTooltip>
-                </NSpace>
-            </NSpace>
-            <NSpace justify="end" align="end" class="zoomin-small delay3">
-                <NText depth="3">{{ VERSION }}</NText>
-            </NSpace>
-        </div>
-        <!--<div class="genshin">〇神〇神〇神〇神〇神〇神〇神〇神〇神〇神〇神〇神〇神〇神〇神〇神</div>
-    -->
-    </NScrollbar>
+    <NFlex size="large" style="padding: 1rem 1rem" vertical justify="space-around" align="stretch">
+        <NFlex align="baseline" justify="space-between">
+            <img style="width: 15rem" :src="Logo" />
+            {{ new Date().toLocaleDateString() }}
+        </NFlex>
+
+        <NCard title="音盒">
+            <MusicBox :sources="sources.map(val => [val.name, val.path])" />
+        </NCard>
+    </NFlex>
 </template>
 
 <style scoped lang="less">

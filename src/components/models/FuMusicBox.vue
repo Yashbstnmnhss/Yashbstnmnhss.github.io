@@ -1,22 +1,25 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { NSpin, NButton, NSpace, NScrollbar, NRadioButton, NRadioGroup } from 'naive-ui'
-import { toImportInfo, pairsToObject } from '../../lib'
+import { NSpin, NButton, NSpace, NScrollbar, NRadioButton, NRadioGroup, NSelect } from 'naive-ui'
+import { pairsToObject } from '../../lib'
 import NOTEBLOCK from '@/assets/images/textures/note_block.png'
 
 import * as Tone from 'tone'
 import { Sampler } from 'tone'
 
-const sources = toImportInfo(import.meta.glob('@/assets/sounds/fuze/**/*.mp3', { eager: true }))
+const props = defineProps<{
+    sources: [name: string, file: string][]
+}>()
+
 const loading = ref(true)
 const current = ref<keyof typeof SAMPLERS>('en')
 const sounds = ref<(keyof typeof SAMPLERS)[]>([])
 
 const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 const SAMPLERS: Record<string, Sampler> = pairsToObject(
-    sources.map(imp => {
-        sounds.value.push(imp.name)
-        return [imp.name, makeSampler(imp.path)]
+    props.sources.map(([name, file]) => {
+        sounds.value.push(name)
+        return [name, makeSampler(file)]
     })
 )
 function makeSampler(sound: string) {
@@ -86,19 +89,12 @@ onUnmounted(() => {
                     {{ `${n}${i}` }}
                 </NButton>
             </NScrollbar>
-            <NScrollbar x-scrollable trigger="hover">
-                <NRadioGroup v-model:value="current" name="114514">
-                    <!--<NSpace :size="0">-->
-                    <NRadioButton
-                        v-for="r in sounds"
-                        :key="r"
-                        :value="r"
-                        @click="music('C4', SAMPLERS[r], { duration: '4n', velocity: 0.45 })"
-                        :label="r"
-                    />
-                    <!--</NSpace>-->
-                </NRadioGroup>
-            </NScrollbar>
+            <NSelect
+                style="min-width: 15vw"
+                @change="val => music('C4', SAMPLERS[val], { duration: '4n', velocity: 0.45 })"
+                v-model:value="current"
+                :options="sounds.map(val => ({ label: val, value: val }))"
+            />
         </NSpace>
     </NSpin>
 </template>
@@ -130,9 +126,9 @@ onUnmounted(() => {
 .cube3d {
     image-rendering: pixelated;
     position: relative;
-    width: 25vh;
+    width: 5rem;
     aspect-ratio: 1 / 1;
-    height: 25vh;
+    height: 5rem;
     transform-style: preserve-3d;
     animation: CubeRotation 10s linear infinite;
     div {
@@ -147,8 +143,8 @@ onUnmounted(() => {
             position: absolute;
             top: 0;
             left: 0;
-            width: 5vw;
-            height: 5vw;
+            width: 5rem;
+            height: 5rem;
             transform: translateY(-10vh) translateX(7.5vh);
             animation: NoteAppear 0.25s linear 1 forwards;
         }
@@ -161,10 +157,10 @@ onUnmounted(() => {
             background: rgb(36, 204, 255);
         }
         .side {
-            transform: rotateY(calc(90deg * var(--i))) translateZ(12.5vh);
+            transform: rotateY(calc(90deg * var(--i))) translateZ(2.5rem);
         }
         .top {
-            transform: rotateX(calc(90deg * var(--i))) translateZ(12.5vh);
+            transform: rotateX(calc(90deg * var(--i))) translateZ(2.5rem);
         }
     }
 }
