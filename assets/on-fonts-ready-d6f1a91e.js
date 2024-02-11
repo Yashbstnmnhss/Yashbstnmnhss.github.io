@@ -1,1 +1,0 @@
-import{G as d,af as i,d0 as a}from"./index-f75098fd.js";let n,t;const r=()=>{var o,e;n=a?(e=(o=document)===null||o===void 0?void 0:o.fonts)===null||e===void 0?void 0:e.ready:void 0,t=!1,n!==void 0?n.then(()=>{t=!0}):t=!0};r();function s(o){if(t)return;let e=!1;d(()=>{t||n==null||n.then(()=>{e||o()})}),i(()=>{e=!0})}export{s as o};

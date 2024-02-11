@@ -1,0 +1,1 @@
+.vertical-space{display:flex;flex-direction:column;align-items:stretch;justify-items:center}.list-move,.list-enter-active,.list-leave-active{transition:opacity .5s ease-in-out}.list-enter-from,.list-leave-to{opacity:0}
