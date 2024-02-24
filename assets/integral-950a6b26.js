@@ -1,0 +1,1 @@
+import{g as t,L as a,M as o,P as n,F as r,V as s}from"./index-02b03318.js";import{N as c,b as e}from"./route-block-0b7ee8e5.js";const f=t({__name:"integral",setup(p){return(_,i)=>(r(),a(n(c),null,{default:o(()=>[s("123123")]),_:1}))}});typeof e=="function"&&e(f);export{f as default};
